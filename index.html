@@ -1,0 +1,1637 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Außenangreifer Plan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+/* Layout: eine Spalte, Tagesleiste oben, vier Reiter unten (Training, Schmerzen, Progress, Dehnen). Schmerzen ist rot, Progress grün, Dehnen orange. Gym-tauglich: große Tippflächen, Zahlen groß. */
+:root {
+  --bg: #E9EEF3;
+  --surface: #FFFFFF;
+  --surface2: #F2F5F9;
+  --ink: #122033;
+  --muted: #566679;
+  --line: #D2DAE3;
+  --accent: #1B5FC2;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #DCE8FA;
+  --ok: #1E7A46;
+  --ok-ink: #FFFFFF;
+  --ok-soft: #D9F0E2;
+  --warn: #7F5400;
+  --warn-soft: #FBEBC4;
+  --bad: #B3261E;
+  --bad-soft: #FADAD7;
+  /* Dehnen: orange */
+  --s-bg: #F6B06A; --s-surface: #FFF6EA; --s-surface2: #FDE6CC; --s-ink: #2A1708; --s-muted: #4A3320; --s-line: #E3B98A;
+  --s-accent: #B34A00; --s-accent-ink: #FFFFFF; --s-accent-soft: #FFD9AE;
+  /* Progress: grün */
+  --p-bg: #9FD4B0; --p-surface: #F2FBF5; --p-surface2: #DDF1E4; --p-ink: #0F2418; --p-muted: #20402C; --p-line: #A9CDB6;
+  --p-accent: #17653A; --p-accent-ink: #FFFFFF; --p-accent-soft: #C4E8D0;
+  /* Schmerzen: rot */
+  --r-bg: #F2A9A4; --r-surface: #FFF4F3; --r-surface2: #FBDCD9; --r-ink: #2A0A08; --r-muted: #4D2420; --r-line: #E2AEA9;
+  --r-accent: #A81F18; --r-accent-ink: #FFFFFF; --r-accent-soft: #F9CBC7; --r-bad: #B3261E; --r-bad-soft: #FADAD7;
+  /* Knie: Petrol */
+  --k-bg: #A5D3D8; --k-surface: #F1FAFB; --k-surface2: #D9EFF1; --k-ink: #0A2427; --k-muted: #1D4448; --k-line: #A3CBD0;
+  --k-accent: #0B6670; --k-accent-ink: #FFFFFF; --k-accent-soft: #BDE5E9;
+  --font-display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+  --font-body: 'Barlow', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0C1520; --surface: #142130; --surface2: #1B2B3D; --ink: #E7EDF4; --muted: #94A4B9; --line: #27394D;
+    --accent: #6AA5F5; --accent-ink: #0C1520; --accent-soft: #1D3556;
+    --ok: #5CCB8A; --ok-ink: #0C1520; --ok-soft: #173A2B; --warn: #F0C25A; --warn-soft: #3F3314; --bad: #FF8A80; --bad-soft: #4A1F1C;
+    --s-bg: #3B2108; --s-surface: #4A2B0E; --s-surface2: #593515; --s-ink: #FBEBD9; --s-muted: #E0B88E; --s-line: #7A4A1E;
+    --s-accent: #FFA94D; --s-accent-ink: #2A1500; --s-accent-soft: #6B3F12;
+    --p-bg: #0E3321; --p-surface: #164430; --p-surface2: #1D5539; --p-ink: #E6F7EC; --p-muted: #A5D4B7; --p-line: #2E7050;
+    --p-accent: #6FDB9B; --p-accent-ink: #06241A; --p-accent-soft: #1F5C3D;
+    --r-bg: #3A100D; --r-surface: #4B1814; --r-surface2: #5C211C; --r-ink: #FCE8E6; --r-muted: #E8B3AE; --r-line: #7D332D;
+    --r-accent: #FF8F85; --r-accent-ink: #2A0603; --r-accent-soft: #6E2A24; --r-bad: #FFB4AB; --r-bad-soft: #74291F;
+    --k-bg: #0B2A2E; --k-surface: #123A40; --k-surface2: #194A51; --k-ink: #E3F6F8; --k-muted: #9FD0D5; --k-line: #276068;
+    --k-accent: #6FD6E0; --k-accent-ink: #05262A; --k-accent-soft: #1B5961;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0C1520; --surface: #142130; --surface2: #1B2B3D; --ink: #E7EDF4; --muted: #94A4B9; --line: #27394D;
+  --accent: #6AA5F5; --accent-ink: #0C1520; --accent-soft: #1D3556;
+  --ok: #5CCB8A; --ok-ink: #0C1520; --ok-soft: #173A2B; --warn: #F0C25A; --warn-soft: #3F3314; --bad: #FF8A80; --bad-soft: #4A1F1C;
+  --s-bg: #3B2108; --s-surface: #4A2B0E; --s-surface2: #593515; --s-ink: #FBEBD9; --s-muted: #E0B88E; --s-line: #7A4A1E;
+  --s-accent: #FFA94D; --s-accent-ink: #2A1500; --s-accent-soft: #6B3F12;
+  --p-bg: #0E3321; --p-surface: #164430; --p-surface2: #1D5539; --p-ink: #E6F7EC; --p-muted: #A5D4B7; --p-line: #2E7050;
+  --p-accent: #6FDB9B; --p-accent-ink: #06241A; --p-accent-soft: #1F5C3D;
+  --r-bg: #3A100D; --r-surface: #4B1814; --r-surface2: #5C211C; --r-ink: #FCE8E6; --r-muted: #E8B3AE; --r-line: #7D332D;
+  --r-accent: #FF8F85; --r-accent-ink: #2A0603; --r-accent-soft: #6E2A24; --r-bad: #FFB4AB; --r-bad-soft: #74291F;
+    --k-bg: #0B2A2E; --k-surface: #123A40; --k-surface2: #194A51; --k-ink: #E3F6F8; --k-muted: #9FD0D5; --k-line: #276068;
+    --k-accent: #6FD6E0; --k-accent-ink: #05262A; --k-accent-soft: #1B5961;
+  color-scheme: dark;
+}
+/* Tab-Farben: der aktive Reiter setzt die Grundtokens neu */
+body[data-tab="pain"] { --bg: var(--r-bg); --surface: var(--r-surface); --surface2: var(--r-surface2); --ink: var(--r-ink); --muted: var(--r-muted); --line: var(--r-line); --accent: var(--r-accent); --accent-ink: var(--r-accent-ink); --accent-soft: var(--r-accent-soft); --bad: var(--r-bad); --bad-soft: var(--r-bad-soft); }
+body[data-tab="knee"] { --bg: var(--k-bg); --surface: var(--k-surface); --surface2: var(--k-surface2); --ink: var(--k-ink); --muted: var(--k-muted); --line: var(--k-line); --accent: var(--k-accent); --accent-ink: var(--k-accent-ink); --accent-soft: var(--k-accent-soft); }
+body[data-tab="stretch"] { --bg: var(--s-bg); --surface: var(--s-surface); --surface2: var(--s-surface2); --ink: var(--s-ink); --muted: var(--s-muted); --line: var(--s-line); --accent: var(--s-accent); --accent-ink: var(--s-accent-ink); --accent-soft: var(--s-accent-soft); }
+body[data-tab="progress"] { --bg: var(--p-bg); --surface: var(--p-surface); --surface2: var(--p-surface2); --ink: var(--p-ink); --muted: var(--p-muted); --line: var(--p-line); --accent: var(--p-accent); --accent-ink: var(--p-accent-ink); --accent-soft: var(--p-accent-soft); }
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.45 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 8px 130px;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap { max-width: 640px; margin: 0 auto; }
+button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; padding-block: 10px 12px; }
+.kicker { font: 600 12px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 700 32px/1 var(--font-display); text-transform: uppercase; letter-spacing: .02em; margin: 2px 0 0; }
+.stepper { display: flex; align-items: center; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 3px; }
+.stepper button { width: 44px; height: 44px; border: 0; background: transparent; border-radius: 9px; font: 700 24px var(--font-display); }
+.stepper button:disabled { opacity: .3; cursor: default; }
+.stepper .wk { min-width: 96px; text-align: center; font: 700 22px var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
+.phase { margin: 0 0 8px; padding: 10px 12px; border-radius: 10px; background: var(--accent-soft); font-size: 14px; line-height: 1.4; }
+.phase b { font: 700 15px var(--font-display); letter-spacing: .06em; text-transform: uppercase; margin-right: 6px; }
+.cloudstat { margin: 0 0 8px; font-size: 13px; color: var(--muted); text-align: right; }
+.storewarn { margin: 0 0 8px; padding: 10px 12px; border-radius: 10px; background: var(--warn-soft); color: var(--warn); font-size: 14px; font-weight: 500; }
+
+.days { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; padding-block: 8px; }
+.day-btn { position: relative; min-height: 52px; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; font: 700 19px var(--font-display); text-transform: uppercase; letter-spacing: .03em; padding: 0; }
+.day-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.day-btn.today::after { content: ''; position: absolute; left: 50%; bottom: 6px; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: var(--accent); }
+.day-btn.today[aria-pressed="true"]::after { background: var(--accent-ink); }
+
+.dayhead { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-block: 10px 6px; }
+.dayhead .dh { flex: 1; min-width: 0; }
+.dayhead .btn { flex: none; }
+.dayhead h2 { font: 700 30px/1.05 var(--font-display); text-transform: uppercase; letter-spacing: .02em; margin: 0; text-wrap: balance; }
+.dayhead p { margin: 6px 0 0; color: var(--muted); font-size: 15px; max-width: 60ch; }
+.dayhead p.when { color: var(--ink); font: 600 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; }
+.progrow { display: flex; align-items: center; gap: 12px; margin: 10px 0 14px; }
+.prog { flex: 1; height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.prog i { display: block; height: 100%; width: 0; background: var(--ok); transition: width .2s; }
+.progtxt { font: 600 14px var(--font-body); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.list { display: grid; gap: 10px; }
+.ex { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 4px 12px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+.ex.done { background: var(--surface2); }
+.chk { grid-row: 1; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: transparent; display: grid; place-items: center; padding: 0; color: transparent; }
+.chk svg { width: 22px; height: 22px; }
+.ex.done .chk { background: var(--ok); border-color: var(--ok); color: var(--ok-ink); }
+.exmain { min-width: 0; }
+.exname { font: 600 17px/1.25 var(--font-body); margin: 0; overflow-wrap: anywhere; }
+.ex.done .exname { color: var(--muted); }
+.exmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 4px; }
+.sets { font: 700 19px/1 var(--font-display); color: var(--accent); letter-spacing: .02em; }
+.chip { font: 600 12px/1.6 var(--font-body); letter-spacing: .04em; padding: 0 8px; border-radius: 99px; background: var(--surface2); border: 1px solid var(--line); color: var(--muted); }
+.chip.knee { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+.hint { margin: 4px 0 0; font-size: 14px; color: var(--muted); overflow-wrap: anywhere; }
+.wtrow { grid-column: 2; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 6px; }
+.wtrow label { font: 600 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.wt { width: 88px; min-height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface2); color: var(--ink); text-align: center; font: 700 24px var(--font-display); padding: 0 8px; font-variant-numeric: tabular-nums; }
+.last { font-size: 13px; color: var(--muted); }
+.variant { grid-column: 2; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; margin-top: 6px; }
+.variant label { font: 600 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.variant select { flex: 1; min-width: 0; min-height: 40px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface2); color: var(--ink); padding: 0 8px; font: 400 15px var(--font-body); }
+.exedit { grid-column: 2; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.exform { grid-column: 1 / -1; display: grid; gap: 10px; }
+.exform .lbl { display: block; font: 600 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.exform .chkrow { display: flex; align-items: center; gap: 10px; min-height: 44px; font-size: 16px; }
+.exform .chkrow input { width: 22px; height: 22px; accent-color: var(--accent); }
+.exform .acts { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.vb { display: flex; gap: 12px; align-items: center; padding: 12px; border-radius: 12px; background: var(--accent-soft); margin-bottom: 10px; }
+.vb b { font: 700 18px var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
+.vb p { margin: 2px 0 0; font-size: 14px; }
+.rest { padding: 20px 16px; border: 1px dashed var(--line); border-radius: 12px; background: var(--surface); margin-bottom: 10px; }
+.rest p { margin: 0; }
+.addcard { margin-top: 12px; }
+.removed { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+.removed span { min-width: 0; overflow-wrap: anywhere; }
+
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; background: var(--surface); border-top: 1px solid var(--line);
+  padding: 6px max(16px, env(safe-area-inset-right, 0px)) calc(26px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.navbtn { min-height: 52px; min-width: 0; border: 0; background: transparent; border-radius: 10px; color: var(--muted); font: 700 12px var(--font-display); text-transform: uppercase; letter-spacing: 0; padding: 0; overflow: hidden; }
+.navbtn[aria-current="page"] { color: var(--accent); background: var(--accent-soft); }
+.navbtn .dot { display: none; width: 8px; height: 8px; border-radius: 50%; margin-left: 5px; vertical-align: middle; }
+.navbtn .dot.ok { display: inline-block; background: var(--ok); }
+.navbtn .dot.warn { display: inline-block; background: var(--warn); }
+.navbtn .dot.bad { display: inline-block; background: var(--bad); }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.card h3 { font: 700 22px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: .03em; margin: 0 0 10px; }
+.card p { margin: 0 0 8px; }
+.card p:last-child { margin-bottom: 0; }
+.fold { padding: 0 14px; }
+.fold summary { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 52px; cursor: pointer; font: 700 22px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: .03em; }
+.fold summary::-webkit-details-marker { display: none; }
+.fold summary::after { content: '+'; font-size: 26px; color: var(--accent); }
+.fold[open] summary::after { content: '\2212'; }
+.fold .foldbody { padding-block: 0 14px; }
+.sub { font: 700 18px var(--font-display); text-transform: uppercase; letter-spacing: .04em; margin: 16px 0 8px; }
+.banner { padding: 14px; border-radius: 12px; margin-bottom: 12px; font-weight: 500; }
+.banner b { display: block; font: 700 22px/1.1 var(--font-display); text-transform: uppercase; letter-spacing: .03em; margin-bottom: 4px; }
+.banner.ok { background: var(--ok-soft); color: var(--ok); }
+.banner.warn { background: var(--warn-soft); color: var(--warn); }
+.banner.bad { background: var(--bad-soft); color: var(--bad); }
+.banner.none { background: var(--surface); color: var(--muted); border: 1px solid var(--line); }
+
+.field { margin-bottom: 14px; }
+.field > label, .field > .lbl { display: block; font: 600 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.scale { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; }
+.sb { min-height: 46px; border: 1px solid transparent; border-radius: 10px; font: 700 22px var(--font-display); }
+.sb[data-z="ok"] { background: var(--ok-soft); color: var(--ok); }
+.sb[data-z="warn"] { background: var(--warn-soft); color: var(--warn); }
+.sb[data-z="bad"] { background: var(--bad-soft); color: var(--bad); }
+.sb[aria-pressed="true"] { box-shadow: 0 0 0 3px var(--ink); }
+.legend { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.seg.s3 { grid-template-columns: repeat(3, 1fr); margin-bottom: 12px; }
+.seg.s4 { grid-template-columns: repeat(4, 1fr); margin-bottom: 12px; }
+.seg.s4 button { font-size: 15px; white-space: nowrap; padding: 0 2px; }
+.ampel { display: grid; gap: 8px; margin: 0 0 10px; }
+.ampel > div { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 10px; align-items: start; }
+.ampel i { width: 14px; height: 14px; border-radius: 50%; margin-top: 3px; }
+.ampel .g i { background: var(--ok); } .ampel .y i { background: #E0A100; } .ampel .r i { background: var(--bad); }
+.ampel p { margin: 0; font-size: 15px; }
+.kwarn { border-left: 4px solid var(--bad); }
+.seg button { min-height: 46px; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; font: 700 20px var(--font-display); text-transform: uppercase; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.seg.inner button { background: var(--surface2); }
+.seg.inner button[aria-pressed="true"] { background: var(--accent); }
+.in, select.in, textarea.in { width: 100%; min-height: 46px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface2); color: var(--ink); font: 400 16px var(--font-body); padding: 10px 12px; }
+textarea.in { min-height: 76px; resize: vertical; }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.row2 > div { min-width: 0; }
+.in, select.in { min-width: 0; max-width: 100%; }
+input[type="date"].in { display: block; -webkit-appearance: none; appearance: none; min-width: 0; text-align: left; line-height: 1.2; }
+input[type="date"].in::-webkit-date-and-time-value { text-align: left; min-width: 0; }
+select.in { text-overflow: ellipsis; }
+@media (max-width: 330px) { .row2 { grid-template-columns: minmax(0, 1fr); } }
+.btn { min-height: 48px; padding: 0 18px; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); font: 700 20px var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.small { min-height: 40px; font-size: 16px; padding: 0 12px; }
+.btn.danger { border-color: var(--bad); color: var(--bad); background: transparent; }
+.msg { margin: 8px 0 0; min-height: 20px; font-size: 14px; color: var(--muted); }
+
+.trend { position: relative; height: 80px; display: flex; align-items: flex-end; gap: 4px; border-bottom: 1px solid var(--line); margin-top: 4px; }
+.trend .bar { flex: 1; min-width: 0; min-height: 3px; border-radius: 4px 4px 0 0; }
+.trend .bar[data-z="ok"] { background: var(--ok); }
+.trend .bar[data-z="warn"] { background: var(--warn); }
+.trend .bar[data-z="bad"] { background: var(--bad); }
+.trend .thr { position: absolute; left: 0; right: 0; bottom: 30%; border-top: 1px dashed var(--muted); pointer-events: none; }
+
+.entry { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-bottom: 8px; }
+.entry .eh { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.entry .ed { font: 700 20px var(--font-display); text-transform: uppercase; letter-spacing: .03em; }
+.entry .eu { color: var(--muted); font-size: 14px; }
+.entry .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.pill { font: 700 14px/1.7 var(--font-body); padding: 0 10px; border-radius: 99px; }
+.pill[data-z="ok"] { background: var(--ok-soft); color: var(--ok); }
+.pill[data-z="warn"] { background: var(--warn-soft); color: var(--warn); }
+.pill[data-z="bad"] { background: var(--bad-soft); color: var(--bad); }
+.pill[data-z="n"] { background: var(--surface2); color: var(--muted); }
+.entry .note { margin: 8px 0 0; font-size: 15px; overflow-wrap: anywhere; }
+.entry .ef { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+.entry .ef label { font-size: 13px; color: var(--muted); }
+.entry select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface2); color: var(--ink); padding: 0 8px; font: 400 15px var(--font-body); }
+.empty { padding: 18px 14px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); background: var(--surface); }
+.h3 { font: 700 22px var(--font-display); text-transform: uppercase; letter-spacing: .03em; margin: 18px 0 10px; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 10px; }
+.stat { background: var(--surface2); border-radius: 10px; padding: 8px 10px; min-width: 0; }
+.stat .k { font: 600 11px var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.stat .v { font: 700 24px/1.15 var(--font-display); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.stat .v small { font-size: 14px; color: var(--muted); margin-left: 2px; }
+.chart { display: block; width: 100%; height: auto; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .ax { fill: var(--muted); font: 500 11px var(--font-body); }
+.chart .ar { fill: var(--accent-soft); opacity: .7; }
+.chart .ln { fill: none; stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.chart .dt { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.chart .dl { fill: var(--accent); stroke: var(--accent); stroke-width: 2; }
+.chart .vl { fill: var(--ink); font: 700 13px var(--font-display); }
+.chartnote { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+.erow { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+.erow:first-child { border-top: 0; }
+.erow .l { min-width: 0; }
+.erow .l b { font: 700 18px var(--font-display); letter-spacing: .02em; }
+.erow .l span { display: block; font-size: 13px; color: var(--muted); }
+.erow .v { font: 700 22px var(--font-display); font-variant-numeric: tabular-nums; margin-left: auto; }
+
+.ampel { display: grid; gap: 8px; }
+.ampel div { display: flex; gap: 10px; align-items: baseline; }
+.ampel .pill { flex: none; min-width: 52px; text-align: center; }
+ul.rules { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.prog3 { display: grid; gap: 8px; }
+.ph { padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface2); }
+.ph.cur { border-color: var(--accent); background: var(--accent-soft); }
+.ph b { display: block; font: 700 18px var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
+.ph span { font-size: 15px; }
+.ph em { font-style: normal; font: 600 12px var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-left: 6px; }
+.small { font-size: 14px; color: var(--muted); }
+/* Tabwechsel: Farben gleiten weich, die Ansicht schiebt zur Seite */
+body { overflow-x: hidden; }
+body, body * { transition: background-color .45s ease, border-color .45s ease, color .45s ease, fill .45s ease, stroke .45s ease; }
+.prog i { transition: width .2s; }
+#app { position: relative; overflow-x: clip; }
+.view.enter-fwd { animation: vin-fwd .45s cubic-bezier(.22, .8, .3, 1) both; }
+.view.enter-back { animation: vin-back .45s cubic-bezier(.22, .8, .3, 1) both; }
+.view.leave { position: absolute; left: 0; right: 0; top: 0; pointer-events: none; }
+.view.leave.to-left { animation: vout-left .45s cubic-bezier(.22, .8, .3, 1) both; }
+.view.leave.to-right { animation: vout-right .45s cubic-bezier(.22, .8, .3, 1) both; }
+@keyframes vin-fwd { from { transform: translate3d(70%, 0, 0); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes vin-back { from { transform: translate3d(-70%, 0, 0); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes vout-left { from { transform: none; opacity: 1; } to { transform: translate3d(-70%, 0, 0); opacity: 0; } }
+@keyframes vout-right { from { transform: none; opacity: 1; } to { transform: translate3d(70%, 0, 0); opacity: 0; } }
+.banner.bad { border: 1px solid var(--bad); }
+@media (prefers-reduced-motion: reduce) {
+  body, body * { transition: none; }
+  .view.enter-fwd, .view.enter-back, .view.leave.to-left, .view.leave.to-right { animation: none; }
+}
+
+.picbox { display: none; grid-column: 1 / -1; margin-top: 6px; background: var(--surface2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 8px 8px; --fig: #C5C9D0; --hot: #D62839; --warm: #F1A5AD; }
+.ex.open .picbox { display: block; animation: musin .25s ease; }
+@keyframes musin { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.exmain.tap { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.exmain.tap:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+.chev { display: inline-block; margin-left: 8px; color: var(--muted); font-size: 15px; transition: transform .2s; }
+.ex.open .chev { transform: rotate(180deg); }
+.fig { width: 100%; height: auto; max-width: 260px; display: block; margin: 0 auto; }
+.fig text { font: 600 9px var(--font-display); letter-spacing: .14em; fill: var(--muted); }
+.sil * { fill: var(--fig); }
+.sil line { stroke: var(--fig); stroke-linecap: round; fill: none; }
+.ms * { fill: var(--warm); stroke: var(--surface2); stroke-width: .5; }
+.mh * { fill: var(--hot); stroke: var(--surface2); stroke-width: .5; }
+.mleg { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 16px; margin-top: 6px; font-size: 13px; color: var(--muted); }
+.mleg span { display: inline-flex; align-items: center; gap: 6px; }
+.mdot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex: none; }
+.mdot.h { background: var(--hot); } .mdot.s { background: var(--warm); }
+.mtags { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 8px; }
+.mtag { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; line-height: 1.2; padding: 3px 9px 3px 7px; border: 1px solid var(--line); border-radius: 99px; background: var(--surface); }
+.mnote { margin: 8px 0 0; font-size: 13px; color: var(--muted); text-align: center; }
+.ex.done .picbox { opacity: .7; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .picbox { --fig: #454B55; --hot: #FF4D5E; --warm: #8D3D48; } }
+:root[data-theme="dark"] .picbox { --fig: #454B55; --hot: #FF4D5E; --warm: #8D3D48; }
+</style>
+<style>html,body{margin:0;padding:0}*{box-sizing:border-box}</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="kicker">Trainingsplan · Außenangreifer</div>
+      <h1>Schlag und Sprung</h1>
+    </div>
+    <div class="stepper" id="stepper" aria-label="Trainingswoche">
+      <button type="button" id="wkMinus" aria-label="Vorherige Woche">&minus;</button>
+      <div class="wk" id="wkLabel" aria-live="polite">Woche 1</div>
+      <button type="button" id="wkPlus" aria-label="Nächste Woche">+</button>
+    </div>
+  </header>
+  <p class="cloudstat" id="cloudstat" hidden></p>
+  <p class="storewarn" id="storewarn" hidden>Dein Browser blockiert das Speichern. Eingaben gehen beim Schließen verloren. Unter „Progress“ ganz unten kannst du die Daten als Backup kopieren.</p>
+  <main id="app"></main>
+</div>
+
+<nav class="nav" aria-label="Bereiche">
+  <button type="button" class="navbtn" data-tab="training">Training</button>
+  <button type="button" class="navbtn" data-tab="pain">Schmerzen<span class="dot" id="kneeDot"></span></button>
+  <button type="button" class="navbtn" data-tab="knee">Knie</button>
+  <button type="button" class="navbtn" data-tab="progress">Progress</button>
+  <button type="button" class="navbtn" data-tab="stretch">Dehnen</button>
+</nav>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'aussenangreifer.v1';
+  var MAXWEEK = 52;
+
+  var PREHAB = [
+    { id: 'ar', name: 'Schulter-Außenrotation mit Band', sets: '2 × 15 je Seite', hint: 'Vor dem Training, leicht.' },
+    { id: 'fp', name: 'Face Pulls oder Band Pull-Aparts', sets: '2 × 15' },
+    { id: 'db', name: 'Dead Bug', sets: '2 × 10 je Seite' },
+    { id: 'ss', name: 'Seitstütz', sets: '2 × 30 Sek. je Seite' }
+  ];
+  var JUMP_EX = { id: 'jump', name: 'Leichte Sprünge: Pogo-Hops oder Box Jumps', sets: '2 × 5–8', chips: [{ t: 'nur bei Schmerz bis 3', k: 1 }], hint: 'Weiche Landung. Bei Schmerz sofort weglassen.' };
+  var DAYS = [
+    { id: 'mo', short: 'Mo', title: 'Volleyball + Prehab', vb: true, note: 'Beine heute nicht belasten, damit du im Training frisch springst.', ex: PREHAB },
+    { id: 'di', short: 'Di', title: 'Oberkörper Kraft + Rotation', note: 'Schwere Sätze mit sauberer Technik. Die Rotation kommt aus Hüfte und Rumpf.', ex: [
+      { id: 'bank', name: 'Bankdrücken oder Schrägbankdrücken', sets: '4 × 5–6', load: true },
+      { id: 'klim', name: 'Klimmzüge', sets: '4 × 6–8', load: true, hint: 'Zusatzgewicht eintragen, 0 für Körpergewicht.' },
+      { id: 'sd', name: 'Kurzhantel-Schulterdrücken', sets: '3 × 8', load: true },
+      { id: 'rud', name: 'Rudern am Kabel oder mit Langhantel', sets: '3 × 8–10', load: true },
+      { id: 'mbr', name: 'Medizinball-Rotationswürfe an die Wand', sets: '4 × 5 je Seite', load: true, hint: 'Explosiv werfen.', alts: [
+        { id: 'cab', name: 'Kabel-Woodchopper (Rotation)', sets: '4 × 8 je Seite', load: true, hint: 'Vom hohen Kabel diagonal nach unten ziehen. Die Kraft kommt aus Hüfte und Rumpf, zügig ausführen.' },
+        { id: 'lm', name: 'Landmine-Rotation', sets: '4 × 8 je Seite', load: true, hint: 'Stange in einem Bogen von Hüfte zu Hüfte schwingen, Arme gestreckt.' },
+        { id: 'band', name: 'Band-Rotationszug', sets: '4 × 10 je Seite', load: true, hint: 'Band auf Brusthöhe befestigen, aus der Hüfte aufdrehen und schnell durchziehen.' }
+      ] },
+      { id: 'pal', name: 'Pallof Press', sets: '3 × 10 je Seite', load: true }
+    ] },
+    { id: 'mi', short: 'Mi', title: 'Volleyball', vb: true, note: 'Optional vor dem Training: kurzes Schulter-Prehab.', ex: PREHAB },
+    { id: 'do', short: 'Do', title: 'Beine schwer', note: 'Wichtigster Knie-Tag. Die Patellasehne wird mit langsamem Tempo und begrenzter Tiefe aufgebaut.', ex: [
+      { id: 'iso', name: 'Isometrie: Spanische Kniebeuge oder Beinstrecker', sets: '5 × 45 Sek.', load: true, chips: [{ t: '60°', k: 1 }], hint: 'Ca. 70 % Anstrengung. Wirkt schmerzlindernd auf die Sehne.' },
+      { id: 'bp', name: 'Beinpresse oder Boxkniebeuge', sets: '4 × 6–8', load: true, chips: [{ t: 'Tempo 3-1-3', k: 1 }, { t: 'bis 90°', k: 1 }] },
+      { id: 'rdl', name: 'Rumänisches Kreuzheben', sets: '3 × 8', load: true },
+      { id: 'bsq', name: 'Bulgarische Split Squats', sets: '3 × 8 je Bein', load: true, chips: [{ t: 'flache Tiefe', k: 1 }], hint: 'Bei Schmerz weglassen.' },
+      { id: 'cs', name: 'Wadenheben stehend', sets: '3 × 12', load: true },
+      { id: 'csi', name: 'Wadenheben sitzend', sets: '3 × 12', load: true },
+      { id: 'pl', name: 'Plank oder Dead Bug', sets: '3 × 30–45 Sek.' }
+    ] },
+    { id: 'fr', short: 'Fr', title: 'Oberkörper Power + Core', note: 'Schnelligkeit vor Gewicht. Schlagbewegung und Schulterschutz stehen im Mittelpunkt.', ex: [
+      { id: 'mbo', name: 'Medizinball-Überkopfwürfe (Schlagsimulation)', sets: '4 × 6', load: true, hint: 'Explosiv, Körperspannung halten.', alts: [
+        { id: 'cab', name: 'Hoher Kabelzug einarmig: Schlagsimulation', sets: '4 × 6 je Seite', load: true, hint: 'Griff hinter dem Kopf starten, wie beim Angriffsschlag explosiv nach vorn unten ziehen.' },
+        { id: 'band', name: 'Band-Schlagsimulation über Kopf', sets: '4 × 8 je Seite', load: true, hint: 'Band oben befestigen, den Schlagarm schnell durchziehen. Körperspannung halten.' },
+        { id: 'pull', name: 'Kurzhantel-Pullover', sets: '4 × 8', load: true, hint: 'Hantel kontrolliert hinter den Kopf absenken und mit Rumpfspannung zurückziehen.' }
+      ] },
+      { id: 'lm', name: 'Landmine Press oder Kurzhantel-Snatch', sets: '3 × 5 je Seite', load: true },
+      { id: 'lie', name: 'Liegestütze explosiv oder mit Klatschen', sets: '3 × 6' },
+      { id: 'fpu', name: 'Face Pulls und Außenrotation', sets: '3 × 15', load: true, hint: 'Leicht, schützt die Schulter des Angreifers.' },
+      { id: 'hb', name: 'Hängendes Beinheben', sets: '3 × 10' },
+      { id: 'sst', name: 'Seitstütz', sets: '3 × 30 Sek. je Seite' }
+    ] },
+    { id: 'sa', short: 'Sa', title: 'Hüfte und Rückseite', note: 'Gesäß und hintere Oberschenkel entlasten das Knie beim Absprung.', ex: [
+      { id: 'ht', name: 'Hip Thrust', sets: '4 × 8', load: true },
+      { id: 'nc', name: 'Nordic Curl oder Beinbeuger-Maschine', sets: '3 × 6–8', load: true },
+      { id: 'sl', name: 'Seitliche Ausfallschritte', sets: '3 × 8 je Seite', load: true, chips: [{ t: 'langsam', k: 1 }] },
+      { id: 'gb', name: 'Einbeinige Glute Bridge', sets: '3 × 10' },
+      { id: 'mob', name: 'Mobility: Hüfte, Sprunggelenk, Brustwirbelsäule', sets: '10–15 Min.' }
+    ] },
+    { id: 'so', short: 'So', title: 'Pause', rest: true, note: 'Locker Rad fahren oder spazieren. Das Knie darf ruhen.', ex: [] }
+  ];
+
+  /* ---------- Dehnroutinen: Übungsbibliothek und Tagesplan ---------- */
+  var SX = {
+    cross: { name: 'Cross-Body-Schulterdehnung', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Schlagarm' }], hint: 'Arm quer vor die Brust ziehen, die Schulter bleibt unten. Zuerst den Schlagarm, dann den anderen.' },
+    door: { name: 'Brustdehnung im Türrahmen', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Brust' }], hint: 'Unterarm am Rahmen, Ellbogen auf Schulterhöhe, den Oberkörper langsam nach vorn drehen.' },
+    door2: { name: 'Brustdehnung im Türrahmen, zwei Höhen', sets: '2 × 30 Sek. je Höhe', chips: [{ t: 'Brust' }], hint: 'Einmal mit dem Ellbogen auf Schulterhöhe, einmal etwas höher. So dehnst du unterschiedliche Teile der Brust.' },
+    lat: { name: 'Lat-Dehnung in der Kindhaltung', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Latissimus' }], hint: 'Beide Arme nach vorn legen und mit den Händen zu einer Seite wandern, bis die Flanke zieht.' },
+    latpost: { name: 'Lat-Dehnung am Pfosten', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Latissimus' }], hint: 'Eine Hand am Pfosten oder Türrahmen, das Gesäß nach hinten schieben und die Flanke durchhängen lassen.' },
+    tri: { name: 'Trizepsdehnung über Kopf', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Trizeps' }], hint: 'Der Ellbogen zeigt zur Decke. Mit der anderen Hand sanft am Ellbogen nach hinten ziehen.' },
+    forearm: { name: 'Unterarm- und Handgelenkdehnung', sets: '2 × 20 Sek. je Seite', chips: [{ t: 'Unterarm' }], hint: 'Arm strecken und die Finger sanft mit der anderen Hand zurückziehen, erst Handfläche nach vorn, dann nach unten.' },
+    book: { name: 'Open Book (Brustwirbelsäule drehen)', sets: '2 × 8 je Seite', chips: [{ t: 'Rotation' }], hint: 'Seitlage, Knie angewinkelt und übereinander. Den oberen Arm weit aufdrehen, der Blick folgt der Hand.' },
+    thread: { name: 'Thread the Needle', sets: '2 × 8 je Seite', chips: [{ t: 'Rotation' }], hint: 'Im Vierfüßlerstand einen Arm unter dem Körper durchfädeln und die Schulter zum Boden sinken lassen.' },
+    hipflex: { name: 'Hüftbeuger im Halbkniestand', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Hüfte' }, { t: 'Polster unters Knie', k: 1 }], hint: 'Gesäß anspannen und das Becken nach vorn schieben. Kein Hohlkreuz.' },
+    calf: { name: 'Wadendehnung an der Wand', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Waden' }], hint: 'Erst mit gestrecktem hinteren Knie, dann das Knie leicht beugen. Die Ferse bleibt am Boden.' },
+    neck: { name: 'Nackendehnung seitlich', sets: '2 × 20 Sek. je Seite', chips: [{ t: 'Nacken' }], hint: 'Das Ohr zur Schulter neigen, die andere Schulter hängt locker nach unten.' },
+    kid: { name: 'Kindhaltung', sets: '2 × 40 Sek.', chips: [{ t: 'Rücken' }], hint: 'Gesäß Richtung Fersen, Stirn ablegen, ruhig in den Rücken atmen. Wenn das Knie schmerzt, ein Kissen zwischen Waden und Oberschenkel legen.' },
+    ninety: { name: '90/90 Hüftrotation', sets: '2 × 8 je Seite', chips: [{ t: 'Hüfte' }], hint: 'Im Sitzen beide Knie auf 90° gebeugt, der Oberkörper bleibt aufrecht. Beide Knie langsam zur anderen Seite kippen.' },
+    frog: { name: 'Adduktorendehnung im Frosch', sets: '2 × 30 Sek.', chips: [{ t: 'Leiste' }, { t: 'Knie sanft', k: 1 }], hint: 'Im Vierfüßlerstand die Knie auseinander, das Gesäß langsam nach hinten schieben. Nur bis ein Ziehen an der Innenseite entsteht.' },
+    butterfly: { name: 'Adduktorendehnung im Sitzen', sets: '2 × 30 Sek.', chips: [{ t: 'Leiste' }], hint: 'Fußsohlen zusammen, Fersen zum Körper, die Knie sinken lassen. Nicht mit den Händen auf die Knie drücken.' },
+    ham: { name: 'Hamstring liegend mit Band', sets: '2 × 30 Sek. je Bein', chips: [{ t: 'Beinrückseite' }], hint: 'Rückenlage, Band um den Fuß, das Bein nach oben ziehen. Das Knie darf leicht gebeugt bleiben.' },
+    fig4: { name: 'Gesäßdehnung Figur 4', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Gesäß' }], hint: 'Rückenlage, den Knöchel auf das andere Knie legen und das untere Bein zur Brust ziehen.' },
+    tsp: { name: 'Brustwirbelsäule über der Rolle', sets: '2 × 45 Sek.', chips: [{ t: 'Brustwirbelsäule' }], hint: 'Faszienrolle oder zusammengerolltes Handtuch quer unter den oberen Rücken, Hände hinter den Kopf. Der Rippenbogen bleibt unten, kein Hohlkreuz.' },
+    quad: { name: 'Oberschenkelvorderseite im Stehen', sets: '2 × 20 Sek. je Seite', chips: [{ t: 'Quadrizeps' }, { t: 'nur ohne Schmerz', k: 1 }], hint: 'Die Ferse nur so nah ans Gesäß, dass kein Zug am Knie entsteht. Bei Schmerz weglassen, die Hüftbeuger-Dehnung reicht.' },
+    wall: { name: 'Beine an der Wand hochlegen', sets: '1 × 3 Min.', chips: [{ t: 'Abschluss' }], hint: 'Rückenlage, die Beine ruhen locker an der Wand. Ruhig atmen und nichts halten.' },
+    calf2: { name: 'Waden stehend und mit gebeugtem Knie', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Waden' }], hint: 'Erst das hintere Bein gestreckt, dann das Knie leicht beugen. Die Ferse bleibt am Boden.' },
+    side: { name: 'Seitliche Rumpfdehnung im Stehen', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Rumpf' }], hint: 'Ein Arm streckt sich über den Kopf zur Seite, die Hüfte schiebt leicht zur Gegenseite.' },
+    catcow: { name: 'Katze und Kuh', sets: '2 × 10', chips: [{ t: 'Wirbelsäule' }], hint: 'Im Vierfüßlerstand langsam rund und dann hohl machen, im Rhythmus der Atmung.' },
+    sphinx: { name: 'Sphinx (Bauchdehnung)', sets: '2 × 20 Sek.', chips: [{ t: 'Bauch' }], hint: 'Auf den Unterarmen aufstützen, die Schultern weg von den Ohren. Bei Druck im unteren Rücken die Ellbogen weiter nach vorn legen.' },
+    pigeon: { name: 'Taube', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Gesäß' }, { t: 'Knie sanft', k: 1 }], hint: 'Das vordere Schienbein liegt schräg vor dem Körper, das hintere Bein ist gestreckt. Bei Zug am Knie lieber Figur 4 liegend nehmen.' },
+    squat: { name: 'Tiefe Hocke halten', sets: '2 × 30 Sek.', chips: [{ t: 'Hüfte' }, { t: 'nur ohne Schmerz', k: 1 }], hint: 'Fersen am Boden, Hände vor der Brust, die Ellbogen drücken die Knie leicht auseinander. Nur so tief, wie das Knie ruhig bleibt.' },
+    ankle: { name: 'Sprunggelenk: Knie zur Wand', sets: '2 × 10 je Seite', chips: [{ t: 'Sprunggelenk' }], hint: 'Der Fuß steht eine Handbreit von der Wand. Das Knie schiebt zur Wand, die Ferse bleibt am Boden.' },
+    twist: { name: 'Liegende Rumpfrotation', sets: '2 × 30 Sek. je Seite', chips: [{ t: 'Rücken' }], hint: 'Rückenlage, die Knie fallen zu einer Seite, beide Schultern bleiben am Boden.' }
+  };
+  /* Reihenfolge wie DAYS: Mo bis So */
+  var STRETCH = [
+    { title: 'Schulter, Brust und Hüfte', when: 'Nach dem Volleyball oder abends · ca. 10 Min.', vb: true, note: 'Schlagarm und Hüfte nach den vielen Sprüngen und Schlägen lösen. Die Beine bleiben heute bewusst locker.',
+      ids: ['cross', 'door', 'lat', 'book', 'hipflex', 'calf', 'neck'] },
+    { title: 'Brust, Rücken und Rotation', when: 'Nach dem Training · ca. 12 Min.', note: 'Brust, Lat und Unterarme haben heute schwer gearbeitet. Die Rotation hält Hüfte und Brustwirbelsäule beweglich.',
+      ids: ['door2', 'latpost', 'tri', 'cross', 'forearm', 'thread', 'kid'] },
+    { title: 'Hüfte, Rückseite und Schulter', when: 'Nach dem Volleyball oder abends · ca. 12 Min.', vb: true, note: 'Hüfte und Beinrückseite lösen, bevor morgen der schwere Beintag kommt. Dazu der Schlagarm.',
+      ids: ['ninety', 'frog', 'ham', 'fig4', 'calf', 'cross', 'tsp'] },
+    { title: 'Beine und Hüfte, knieschonend', when: 'Nach dem Beintraining · ca. 12 Min.', note: 'Nach dem Knie-Tag nur sanft dehnen. Es darf nichts am Knie ziehen. Bei Schmerz lässt du die Übung weg.',
+      ids: ['hipflex', 'quad', 'ham', 'fig4', 'butterfly', 'calf2', 'wall'] },
+    { title: 'Schulter, Rumpf und Hüfte', when: 'Nach dem Training · ca. 12 Min.', note: 'Schlagarm und Rumpfseiten haben viel Wurfarbeit gemacht. Dazu die Bauchseite und die Hüfte.',
+      ids: ['cross', 'door', 'side', 'catcow', 'thread', 'sphinx', 'hipflex', 'neck'] },
+    { title: 'Hüfte, Rückseite und Rücken', when: 'Nach dem Training oder am Nachmittag · ca. 15 Min.', note: 'Ruhiger Tag für Hüfte, Beinrückseite und Sprunggelenk. Bewegliche Hüften und Sprunggelenke erleichtern einen tiefen Absprung.',
+      ids: ['ham', 'pigeon', 'frog', 'hipflex', 'squat', 'ankle', 'twist', 'kid'] },
+    { title: 'Ganzkörper locker', when: 'Jederzeit · ca. 15 Min.', note: 'Pausentag. Locker durch den ganzen Körper, ruhig atmen und nichts erzwingen.',
+      ids: ['catcow', 'kid', 'thread', 'hipflex', 'ham', 'fig4', 'door', 'neck', 'wall'] }
+  ];
+
+  var PAIN_UNITS = ['Volleyball', 'Beine schwer', 'Oberkörper', 'Hüfte und Rückseite', 'Anderes'];
+  var UNIT_BY_DAY = { mo: 'Volleyball', di: 'Oberkörper', mi: 'Volleyball', 'do': 'Beine schwer', fr: 'Oberkörper', sa: 'Hüfte und Rückseite', so: 'Anderes' };
+  var JUMP_TYPES = { cmj: 'Standsprung', run: 'Anlaufsprung' };
+  var PHASES = [
+    { name: 'Aufbau', weeks: 'Wochen 1–4', text: 'Technik und Tempo, mittlere Gewichte, das Knie beobachten.' },
+    { name: 'Kraft', weeks: 'Wochen 5–8', text: 'Beinpresse und Kniebeuge schwerer, bis ca. 5–6 Wiederholungen nahe am Limit. Keine zusätzlichen Sprünge im Gym.' },
+    { name: 'Sprung', weeks: 'Ab Woche 9', text: 'Nur wenn das Knie ruhig ist: leichte Sprungübungen wie Pogo-Hops oder Box Jumps mit weicher Landung, 2 × 5–8 an Do oder Sa.' }
+  ];
+
+  var jsd = new Date().getDay();
+  var todayIdx = (jsd + 6) % 7;
+  var storageOK = true;
+  var state = { week: 1, weights: {}, done: {}, sdone: {}, pain: [], custom: {}, mod: {}, alt: {}, body: [], jump: [], tab: 'training', day: todayIdx, sday: todayIdx, prog: 'kraft', jtype: 'cmj', kex: null, ts: 0, kph: 0, kday: todayIdx, kdone: {}, start: '', lastWk: '' };
+  var form = null;
+  var editing = false, editKey = null, uid = 0;
+
+  function resetForm() {
+    form = { date: isoToday(), unit: UNIT_BY_DAY[DAYS[todayIdx].id] || 'Anderes', during: null, morning: null, swelling: 'Nein', note: '' };
+  }
+  function isoToday() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  /* Automatischer Wochenwechsel: jede Kalenderwoche (Mo bis So) beginnt leer, die alten Wochen bleiben gespeichert. */
+  function utcDay(iso) { var a = iso.split('-'); return Date.UTC(+a[0], +a[1] - 1, +a[2]); }
+  function isoFromUtc(ms) { var d = new Date(ms); return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0'); }
+  function mondayOf(iso) { var ms = utcDay(iso), wd = (new Date(ms).getUTCDay() + 6) % 7; return isoFromUtc(ms - wd * 86400000); }
+  function autoWeek() {
+    var mon = mondayOf(isoToday());
+    if (state.lastWk === mon && state.start) return false;
+    if (!state.start) state.start = isoFromUtc(utcDay(mon) - (state.week - 1) * 7 * 86400000);
+    var cw = Math.round((utcDay(mon) - utcDay(state.start)) / (7 * 86400000)) + 1;
+    cw = Math.max(1, Math.min(MAXWEEK, cw));
+    var changed = state.week !== cw || state.lastWk !== mon;
+    state.week = cw; state.lastWk = mon;
+    if (changed) { state.day = todayIdx; state.sday = todayIdx; state.kday = todayIdx; }
+    return true;
+  }
+  function isObj(x) { return x && typeof x === 'object' && !Array.isArray(x); }
+  function num(s) { var n = parseFloat(String(s).replace(',', '.')); return isFinite(n) ? n : NaN; }
+  function fmt(n, d) { return n.toLocaleString('de-DE', { maximumFractionDigits: d == null ? 1 : d }); }
+
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      applyData(JSON.parse(raw));
+    } catch (e) { /* leer starten */ }
+  }
+  function applyData(p) {
+    if (!isObj(p)) return false;
+    var wk = parseInt(p.week, 10);
+    state.week = wk >= 1 && wk <= MAXWEEK ? wk : 1;
+    state.ts = typeof p.ts === 'number' ? p.ts : 0;
+    state.kph = (p.kph === 0 || p.kph === 1 || p.kph === 2 || p.kph === 3) ? p.kph : 0;
+    state.kdone = isObj(p.kdone) ? p.kdone : {};
+    state.start = typeof p.start === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(p.start) ? p.start : '';
+    state.lastWk = typeof p.lastWk === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(p.lastWk) ? p.lastWk : '';
+    state.weights = isObj(p.weights) ? p.weights : {};
+    state.done = isObj(p.done) ? p.done : {};
+    state.sdone = isObj(p.sdone) ? p.sdone : {};
+    state.pain = Array.isArray(p.pain) ? p.pain.filter(function (e) { return e && typeof e.during === 'number'; }) : [];
+    state.custom = {};
+    if (isObj(p.custom)) {
+      Object.keys(p.custom).forEach(function (d) {
+        if (Array.isArray(p.custom[d])) state.custom[d] = p.custom[d].filter(function (c) { return c && typeof c.id === 'string' && typeof c.name === 'string'; });
+      });
+    }
+    state.mod = isObj(p.mod) ? p.mod : {};
+    state.alt = isObj(p.alt) ? p.alt : {};
+    state.body = Array.isArray(p.body) ? p.body.filter(function (e) { return e && typeof e.kg === 'number' && typeof e.date === 'string'; }) : [];
+    state.jump = Array.isArray(p.jump) ? p.jump.filter(function (e) { return e && typeof e.cm === 'number' && typeof e.date === 'string' && JUMP_TYPES[e.type]; }) : [];
+    return true;
+  }
+  function snapshot() {
+    return { v: 3, ts: state.ts, start: state.start, lastWk: state.lastWk, kph: state.kph, kdone: state.kdone, week: state.week, weights: state.weights, done: state.done, sdone: state.sdone, pain: state.pain, custom: state.custom, mod: state.mod, alt: state.alt, body: state.body, jump: state.jump };
+  }
+  function save() {
+    state.ts = Date.now();
+    try {
+      localStorage.setItem(KEY, JSON.stringify(snapshot()));
+      storageOK = true;
+    } catch (e) { storageOK = false; }
+    document.getElementById('storewarn').hidden = storageOK;
+    cloudPush();
+  }
+
+  function h(tag, props) {
+    var e = document.createElement(tag);
+    var p = props || {};
+    Object.keys(p).forEach(function (k) {
+      var v = p[k];
+      if (v === false || v == null) return;
+      if (k === 'class') e.className = v;
+      else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), v);
+      else if (v === true) e.setAttribute(k, '');
+      else e.setAttribute(k, v);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (Array.isArray(c)) { c.forEach(function (x) { if (x != null && x !== false) e.append(x.nodeType ? x : document.createTextNode(x)); }); }
+      else if (c != null && c !== false) e.append(c.nodeType ? c : document.createTextNode(c));
+    }
+    return e;
+  }
+  function ns(tag, attrs, text) {
+    var e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); });
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function zone(n) { return n <= 3 ? 'ok' : (n === 4 ? 'warn' : 'bad'); }
+  function key(dayId, exId) { return 'w' + state.week + '|' + dayId + '|' + exId; }
+
+  /* ---------- Übungen auflösen (Original, Varianten, eigene Änderungen) ---------- */
+  function baseList(day) {
+    var list = day.ex.slice();
+    if (state.week >= 9 && (day.id === 'do' || day.id === 'sa')) list.push(JUMP_EX);
+    return list;
+  }
+  function resolved(day, includeHidden) {
+    var out = [];
+    baseList(day).forEach(function (b) {
+      var mk = day.id + '|' + b.id;
+      var mod = state.mod[mk] || {};
+      var altId = state.alt[mk];
+      var alt = altId && b.alts ? b.alts.filter(function (a) { return a.id === altId; })[0] : null;
+      var e = {};
+      Object.keys(b).forEach(function (k) { e[k] = b[k]; });
+      if (alt) {
+        e.name = alt.name; e.sets = alt.sets || b.sets; e.hint = alt.hint || ''; e.load = alt.load != null ? alt.load : b.load; e.chips = []; e.id = b.id + '-' + alt.id;
+      }
+      ['name', 'sets', 'hint'].forEach(function (f) { if (typeof mod[f] === 'string') e[f] = mod[f]; });
+      if (typeof mod.load === 'boolean') e.load = mod.load;
+      e.baseId = b.id; e.baseName = b.name; e.mk = mk; e.hidden = !!mod.hidden; e.altId = alt ? alt.id : null;
+      e.modded = Object.keys(mod).some(function (k) { return k !== 'hidden'; });
+      if (e.hidden && !includeHidden) return;
+      out.push(e);
+    });
+    (state.custom[day.id] || []).forEach(function (c) {
+      out.push({ id: c.id, name: c.name, sets: c.sets || '', hint: c.hint || '', load: !!c.load, custom: true });
+    });
+    return out;
+  }
+  function lastWeight(day, ex) {
+    for (var w = state.week - 1; w >= 1; w--) {
+      var v = state.weights['w' + w + '|' + day.id + '|' + ex.id];
+      if (v) return 'Zuletzt ' + v + ' kg (W' + w + ')';
+    }
+    return '';
+  }
+  function phaseIdx() { return state.week <= 4 ? 0 : (state.week <= 8 ? 1 : 2); }
+
+  var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+  function makeDel(label, onConfirm, cls) {
+    var b = h('button', { type: 'button', class: 'btn small ghost' + (cls ? ' ' + cls : '') }, label);
+    var armed = false, timer = null;
+    b.addEventListener('click', function () {
+      if (!armed) {
+        armed = true; b.textContent = 'Wirklich?'; b.classList.add('danger');
+        timer = setTimeout(function () { armed = false; b.textContent = label; b.classList.remove('danger'); }, 3000);
+      } else { clearTimeout(timer); onConfirm(); }
+    });
+    return b;
+  }
+  function dayTabs(current, onPick) {
+    var tabs = h('div', { class: 'days', role: 'group', 'aria-label': 'Wochentag' });
+    DAYS.forEach(function (d, i) {
+      tabs.append(h('button', {
+        type: 'button', class: 'day-btn' + (i === todayIdx ? ' today' : ''), 'aria-pressed': String(i === current),
+        'aria-label': d.short + ': ' + d.title + (i === todayIdx ? ' (heute)' : ''),
+        onclick: function () { onPick(i); }
+      }, d.short));
+    });
+    return tabs;
+  }
+
+  /* ---------- Training ---------- */
+  function progressOf(day) {
+    var list = resolved(day, false), d = 0;
+    list.forEach(function (ex) { if (state.done[key(day.id, ex.id)]) d++; });
+    return { done: d, total: list.length };
+  }
+  function exForm(init, submitLabel, onSubmit, onCancel) {
+    var n = ++uid;
+    var name = h('input', { class: 'in', type: 'text', id: 'xn' + n, maxlength: '80', value: init.name || '', placeholder: 'z. B. Kabel-Woodchopper', autocomplete: 'off' });
+    var sets = h('input', { class: 'in', type: 'text', id: 'xs' + n, maxlength: '40', value: init.sets || '', placeholder: 'z. B. 3 × 10', autocomplete: 'off' });
+    var hint = h('input', { class: 'in', type: 'text', id: 'xh' + n, maxlength: '140', value: init.hint || '', placeholder: 'optional', autocomplete: 'off' });
+    var loadc = h('input', { type: 'checkbox', id: 'xl' + n });
+    loadc.checked = !!init.load;
+    var msg = h('p', { class: 'msg', 'aria-live': 'polite' });
+    var f = h('form', { class: 'exform' },
+      h('div', null, h('label', { 'for': 'xn' + n, class: 'lbl' }, 'Übung'), name),
+      h('div', null, h('label', { 'for': 'xs' + n, class: 'lbl' }, 'Sätze × Wiederholungen'), sets),
+      h('div', null, h('label', { 'for': 'xh' + n, class: 'lbl' }, 'Hinweis'), hint),
+      h('label', { class: 'chkrow', 'for': 'xl' + n }, loadc, 'Gewicht in kg eintragen'),
+      h('div', { class: 'acts' }, h('button', { type: 'submit', class: 'btn small' }, submitLabel), onCancel ? h('button', { type: 'button', class: 'btn small ghost', onclick: onCancel }, 'Abbrechen') : null),
+      msg);
+    f.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var nm = name.value.trim();
+      if (!nm) { msg.textContent = 'Bitte einen Namen eingeben.'; return; }
+      onSubmit({ name: nm, sets: sets.value.trim(), hint: hint.value.trim(), load: loadc.checked });
+    });
+    return f;
+  }
+var MUS = (function () {
+var E = (cx, cy, rx, ry, r = 0) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${r} ${cx} ${cy})"/>`;
+var P = d => `<path d="${d}"/>`;
+var NECK = '<rect x="44.5" y="21" width="11" height="10" rx="3.5"/>';
+var SHO = E(70, 39, 6.2, 6.8);
+var FORE = E(82, 89, 3.5, 13, -15);
+var ANK = E(61.5, 196, 4.6, 4.4);
+
+/* f = Vorderansicht, b = Rückansicht; jeweils die rechte Körperhälfte, die linke wird gespiegelt */
+var M = {
+  brust:    { l: 'Brustmuskel', f: P('M50.5 38 Q61 36 68 41 Q69 54 51 57 Z') },
+  serratus: { l: 'Sägemuskel (Serratus)', f: E(64.5, 62, 2.8, 7) },
+  schulter: { l: 'Schulter (Deltamuskel)', f: SHO, b: SHO },
+  bizeps:   { l: 'Bizeps', f: E(74, 55, 3.9, 10, -13) },
+  trizeps:  { l: 'Trizeps', b: E(74, 55, 4.3, 10.5, -13) },
+  unterarm: { l: 'Unterarm', f: FORE, b: FORE },
+  bauch:    { l: 'Gerader Bauchmuskel', f: '<rect x="44" y="59" width="12" height="30" rx="4"/>' },
+  schraeg:  { l: 'Schräge Bauchmuskeln', f: P('M59 62 L65.5 61 Q63 76 63.5 90 L59 91 Z') },
+  huefte:   { l: 'Hüftbeuger', f: E(56, 101, 3.6, 8, -12) },
+  quad:     { l: 'Oberschenkelvorderseite', f: E(62.5, 129, 5, 18, -3) },
+  adduktor: { l: 'Adduktoren (Innenseite)', f: E(56.5, 125, 2.5, 12, -2) },
+  schien:   { l: 'Schienbeinmuskel', f: E(62, 168, 2.4, 14) },
+  nacken:   { l: 'Nacken', f: NECK, b: NECK },
+  trapez:   { l: 'Trapezmuskel', f: P('M55.5 29.5 L62 33 L66 36 L59 38 Z'), b: P('M50 27 L61 32 L67.5 36 L58.5 47 L50 65 Z') },
+  rhomboid: { l: 'Rhomboiden (mittlerer Rücken)', b: P('M51 43 L58 45 L59 58 L51 62 Z') },
+  lat:      { l: 'Breiter Rückenmuskel (Latissimus)', b: P('M52 60 Q60 47 68 47 Q68 64 63 84 L52 88 Z') },
+  rotator:  { l: 'Rotatorenmanschette', b: E(63, 46, 4.2, 5.2) },
+  ruecken:  { l: 'Unterer Rücken', b: P('M50 70 L57 70 L59 104 L50 104 Z') },
+  bws:      { l: 'Brustwirbelsäule', b: P('M50 40 L56 42 L56 68 L50 68 Z') },
+  gluteus:  { l: 'Gesäßmuskel', b: E(58, 110, 8, 9) },
+  gluteMed: { l: 'Seitliches Gesäß', b: E(66, 101, 3.6, 5) },
+  ischio:   { l: 'Oberschenkelrückseite', b: E(61, 131, 6, 17, -3) },
+  wade:     { l: 'Wadenmuskel', b: E(61.5, 166, 5, 14) },
+  sprung:   { l: 'Sprunggelenk', f: ANK, b: ANK }
+};
+
+var MIRROR = 'transform="translate(100 0) scale(-1 1)"';
+var SIL_FIXED = `<ellipse cx="50" cy="13" rx="7.5" ry="9.5"/><rect x="45" y="21" width="10" height="10" rx="3"/><path d="M32 35 Q50 28 68 35 L66 64 Q63 84 66 108 L34 108 Q37 84 34 64 Z"/>`;
+var SIL_HALF = `<line x1="70" y1="38" x2="78" y2="72" stroke-width="10"/><line x1="78" y1="73" x2="86" y2="104" stroke-width="8"/><circle cx="87" cy="110" r="4.2"/><line x1="60" y1="110" x2="62" y2="148" stroke-width="15"/><line x1="62" y1="150" x2="61" y2="196" stroke-width="10.5"/><ellipse cx="61.5" cy="203" rx="6" ry="3.5"/>`;
+
+function layer(keys, cls, view) {
+  var half = keys.map(k => M[k][view] || '').join('');
+  if (!half) return '';
+  return `<g class="${cls}">${half}<g ${MIRROR}>${half}</g></g>`;
+}
+function body(view, h, s) {
+  return `<g class="sil">${SIL_FIXED}${SIL_HALF}<g ${MIRROR}>${SIL_HALF}</g></g>${layer(s, 'ms', view)}${layer(h, 'mh', view)}`;
+}
+function figure(h, s) {
+  var lab = 'Hauptmuskeln: ' + h.map(k => M[k].l).join(', ');
+  return `<svg class="fig" viewBox="0 0 220 226" role="img" aria-label="${lab}">
+    <g>${body('f', h, s)}</g><g transform="translate(120 0)">${body('b', h, s)}</g>
+    <text x="50" y="221" text-anchor="middle">VORNE</text><text x="170" y="221" text-anchor="middle">HINTEN</text></svg>`;
+}
+  var TD = {"ar": [["rotator"], ["schulter"]], "fp": [["schulter", "rhomboid", "trapez"], ["rotator"]], "db": [["bauch", "huefte"], ["schraeg"]], "ss": [["schraeg", "gluteMed"], ["schulter", "bauch", "ruecken"]], "bank": [["brust", "schulter", "trizeps"], ["serratus"], "Schrägbank betont die obere Brust und die vordere Schulter etwas stärker."], "klim": [["lat", "bizeps"], ["rhomboid", "trapez", "unterarm", "trizeps"]], "sd": [["schulter", "trizeps"], ["trapez", "serratus", "bauch"]], "rud": [["lat", "rhomboid", "trapez"], ["bizeps", "schulter", "unterarm", "ruecken"]], "mbr": [["schraeg", "bauch"], ["gluteus", "schulter", "brust", "quad"], "Gleiche Muskeln bei den Varianten Kabel-Woodchopper, Landmine-Rotation und Band-Rotationszug."], "pal": [["schraeg", "bauch"], ["schulter", "brust", "serratus", "gluteMed"], "Der Rumpf hält gegen die Drehung, deshalb arbeitet er isometrisch."], "iso": [["quad"], ["gluteus", "adduktor"]], "bp": [["quad", "gluteus"], ["adduktor", "ischio", "wade"]], "rdl": [["ischio", "gluteus", "ruecken"], ["trapez", "unterarm", "adduktor"]], "bsq": [["quad", "gluteus"], ["adduktor", "gluteMed", "ischio", "huefte"], "Das hintere Bein dehnt dabei den Hüftbeuger."], "cs": [["wade"], [], "Mit gestrecktem Knie arbeitet vor allem der große Wadenmuskel."], "csi": [["wade"], [], "Mit gebeugtem Knie arbeitet vor allem der tiefe Wadenmuskel (Soleus)."], "pl": [["bauch", "schraeg"], ["schulter", "serratus", "gluteus", "huefte", "quad"]], "mbo": [["lat", "bauch", "schulter"], ["brust", "trizeps", "serratus", "schraeg", "gluteus"], "Gleiche Muskeln bei den Varianten hoher Kabelzug einarmig, Band-Schlagsimulation und Kurzhantel-Pullover."], "lm": [["schulter", "trapez", "gluteus"], ["serratus", "brust", "trizeps", "quad", "ischio", "schraeg"], "Der Snatch beansprucht zusätzlich Gesäß und Oberschenkelrückseite für den Schwung."], "lie": [["brust", "schulter", "trizeps"], ["serratus", "bauch"]], "fpu": [["rotator", "rhomboid", "trapez", "schulter"], []], "hb": [["bauch", "huefte"], ["schraeg", "unterarm", "lat"]], "sst": [["schraeg", "gluteMed"], ["schulter", "bauch", "ruecken"]], "ht": [["gluteus"], ["ischio", "quad", "adduktor", "ruecken"]], "nc": [["ischio"], ["wade", "gluteus", "bauch"]], "sl": [["quad", "gluteus", "adduktor"], ["ischio", "gluteMed", "wade"]], "gb": [["gluteus", "ischio"], ["gluteMed", "bauch", "ruecken"]], "mob": [["huefte", "gluteus", "sprung", "bws"], ["adduktor", "wade"]], "jump": [["wade", "quad", "gluteus"], ["ischio", "sprung", "bauch"]]};
+  var SD = {"cross": [["schulter", "rotator"], ["rhomboid", "trapez"]], "door": [["brust", "schulter"], ["bizeps"]], "door2": [["brust", "schulter"], ["bizeps", "serratus"], "Eine Höhe spricht die obere, die andere die untere Brust an."], "lat": [["lat"], ["trizeps", "schraeg", "ruecken"]], "latpost": [["lat"], ["schraeg", "trizeps"]], "tri": [["trizeps"], ["lat", "schulter"]], "forearm": [["unterarm"], []], "neck": [["nacken", "trapez"], []], "side": [["schraeg", "lat"], ["bauch"]], "book": [["bws", "brust"], ["schraeg", "schulter"]], "thread": [["bws", "rhomboid", "schulter"], ["rotator", "trapez"]], "tsp": [["bws"], ["brust", "schulter"]], "catcow": [["ruecken", "bws", "bauch"], ["trapez", "nacken"], "Abwechselnd runder und hohler Rücken: die Rückenstrecker und die Bauchmuskeln werden im Wechsel gedehnt."], "sphinx": [["bauch", "huefte"], ["brust", "ruecken"]], "twist": [["schraeg", "ruecken", "gluteus"], ["brust", "bws"]], "kid": [["ruecken", "lat"], ["gluteus", "quad", "sprung"]], "hipflex": [["huefte", "quad"], ["bauch", "adduktor"]], "ninety": [["gluteus", "gluteMed"], ["huefte", "adduktor"]], "frog": [["adduktor"], ["huefte"]], "butterfly": [["adduktor"], ["ischio", "ruecken"]], "ham": [["ischio"], ["wade", "gluteus"]], "fig4": [["gluteus", "gluteMed"], ["ischio"]], "pigeon": [["gluteus", "gluteMed"], ["huefte", "quad"]], "squat": [["adduktor", "sprung", "gluteus"], ["wade", "ruecken", "quad"]], "quad": [["quad"], ["huefte"]], "calf": [["wade"], []], "calf2": [["wade"], ["sprung"], "Gestrecktes Knie dehnt den großen Wadenmuskel, gebeugtes Knie den tiefen (Soleus)."], "ankle": [["sprung", "wade"], []], "wall": [["ischio", "wade"], ["ruecken", "adduktor"]]};
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  function tag(k, cls) { return '<span class="mtag"><i class="mdot ' + cls + '"></i>' + esc(M[k].l) + '</span>'; }
+  function has(mode, id) { return !!((mode === 's' ? SD : TD)[id]); }
+  function html(mode, id) {
+    var d = (mode === 's' ? SD : TD)[id]; if (!d) return null;
+    var hl = mode === 's' ? 'Gedehnt' : 'Haupt', sl = mode === 's' ? 'Mitgedehnt' : 'Unterstützend';
+    var out = figure(d[0], d[1]);
+    out += '<div class="mleg"><span><i class="mdot h"></i>' + hl + '</span>' + (d[1].length ? '<span><i class="mdot s"></i>' + sl + '</span>' : '') + '</div>';
+    out += '<div class="mtags">' + d[0].map(function (k) { return tag(k, 'h'); }).join('') + d[1].map(function (k) { return tag(k, 's'); }).join('') + '</div>';
+    if (d[2]) out += '<p class="mnote">' + esc(d[2]) + '</p>';
+    return out;
+  }
+  return { html: html, has: has };
+})();
+
+
+  function addMus(card, main, mode, id) {
+    if (!MUS.has(mode, id)) return;
+    var box = h('div', { class: 'picbox', id: 'mus-' + mode + '-' + id });
+    box.innerHTML = MUS.html(mode, id);
+    card.append(box);
+    main.classList.add('tap');
+    main.setAttribute('role', 'button'); main.setAttribute('tabindex', '0'); main.setAttribute('aria-expanded', 'false');
+    main.setAttribute('aria-controls', box.id);
+    main.querySelector('.exname').append(h('span', { class: 'chev', 'aria-hidden': 'true' }, '\u25BE'));
+    function tog() {
+      var o = card.classList.toggle('open');
+      main.setAttribute('aria-expanded', String(o));
+    }
+    main.addEventListener('click', tog);
+    main.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+  }
+  function reorderBox(box, instant) {
+    if (!box || (!instant && !box.parentNode)) return;
+    var items = Array.prototype.slice.call(box.children);
+    var sorted = items.slice().sort(function (a, b) {
+      var da = a.classList.contains('done') ? 1 : 0, db = b.classList.contains('done') ? 1 : 0;
+      return da - db || (a._ord || 0) - (b._ord || 0);
+    });
+    var same = sorted.every(function (n, i) { return n === items[i]; });
+    if (same) return;
+    if (instant) { sorted.forEach(function (n) { box.append(n); }); return; }
+    var first = items.map(function (n) { return n.getBoundingClientRect().top; });
+    sorted.forEach(function (n) { box.append(n); });
+    if (reduceMotion) return;
+    items.forEach(function (n, i) {
+      var dy = first[i] - n.getBoundingClientRect().top;
+      if (!dy) return;
+      n.style.transition = 'none'; n.style.transform = 'translateY(' + dy + 'px)';
+      n.getBoundingClientRect();
+      n.style.transition = 'transform .35s ease'; n.style.transform = '';
+      setTimeout(function () { n.style.transition = ''; }, 400);
+    });
+  }
+  function afterCheck(card) { setTimeout(function () { reorderBox(card.parentNode); }, 260); }
+  function exCard(day, ex) {
+    var k = key(day.id, ex.id);
+    var ek = ex.custom ? ('c|' + day.id + '|' + ex.id) : ex.mk;
+    var card = h('div', { class: 'ex' + (state.done[k] ? ' done' : '') });
+    if (editing && editKey === ek) {
+      card.append(h('div', { style: 'grid-column:1 / -1' }, exForm({ name: ex.name, sets: ex.sets, hint: ex.hint, load: ex.load }, 'Speichern', function (v) {
+        if (ex.custom) {
+          (state.custom[day.id] || []).forEach(function (c) { if (c.id === ex.id) { c.name = v.name; c.sets = v.sets; c.hint = v.hint; c.load = v.load; } });
+        } else {
+          var m = state.mod[ex.mk] || {};
+          m.name = v.name; m.sets = v.sets; m.hint = v.hint; m.load = v.load;
+          state.mod[ex.mk] = m;
+        }
+        editKey = null; save(); render();
+      }, function () { editKey = null; render(); })));
+      return card;
+    }
+    var chk = h('button', {
+      type: 'button', class: 'chk', 'aria-pressed': String(!!state.done[k]), 'aria-label': 'Erledigt: ' + ex.name,
+      onclick: function () {
+        if (state.done[k]) delete state.done[k]; else state.done[k] = true;
+        card.classList.toggle('done', !!state.done[k]);
+        chk.setAttribute('aria-pressed', String(!!state.done[k]));
+        save(); updateProgress(day); afterCheck(card);
+      }
+    });
+    chk.innerHTML = CHECK;
+    var meta = h('div', { class: 'exmeta' }, ex.sets ? h('span', { class: 'sets' }, ex.sets) : null);
+    (ex.chips || []).forEach(function (c) { meta.append(h('span', { class: 'chip' + (c.k ? ' knee' : '') }, c.t)); });
+    if (ex.custom) meta.append(h('span', { class: 'chip' }, 'eigene'));
+    card.append(chk, h('div', { class: 'exmain' }, h('p', { class: 'exname' }, ex.name), meta, ex.hint ? h('p', { class: 'hint' }, ex.hint) : null));
+    if (!ex.custom) addMus(card, card.querySelector('.exmain'), 't', ex.baseId);
+
+    if (ex.alts) {
+      var vid = 'v-' + day.id + '-' + ex.baseId;
+      var sel = h('select', { id: vid, onchange: function (e) {
+        var v = e.target.value, m = state.mod[ex.mk];
+        if (m) { ['name', 'sets', 'hint', 'load'].forEach(function (f) { delete m[f]; }); if (!Object.keys(m).length) delete state.mod[ex.mk]; }
+        if (v) state.alt[ex.mk] = v; else delete state.alt[ex.mk];
+        save(); render();
+      } });
+      var o0 = h('option', { value: '' }, 'Original: ' + ex.baseName);
+      sel.append(o0);
+      ex.alts.forEach(function (a) { var o = h('option', { value: a.id }, a.name); if (ex.altId === a.id) o.selected = true; sel.append(o); });
+      card.append(h('div', { class: 'variant' }, h('label', { 'for': vid }, 'Variante'), sel));
+    }
+    if (ex.load) {
+      var id = 'wt-' + day.id + '-' + ex.id;
+      var inp = h('input', {
+        type: 'text', id: id, class: 'wt', inputmode: 'decimal', maxlength: '6', autocomplete: 'off', placeholder: 'kg',
+        value: state.weights[k] || '',
+        oninput: function () {
+          var v = inp.value.trim();
+          if (v) state.weights[k] = v; else delete state.weights[k];
+          save();
+        }
+      });
+      var lw = lastWeight(day, ex);
+      card.append(h('div', { class: 'wtrow' }, h('label', { 'for': id }, 'Gewicht kg'), inp, lw ? h('span', { class: 'last' }, lw) : null));
+    }
+    if (editing) {
+      var acts = h('div', { class: 'exedit' }, h('button', { type: 'button', class: 'btn small ghost', onclick: function () { editKey = ek; render(); } }, 'Ändern'));
+      if (ex.custom) {
+        acts.append(makeDel('Löschen', function () {
+          state.custom[day.id] = (state.custom[day.id] || []).filter(function (c) { return c.id !== ex.id; });
+          save(); render();
+        }));
+      } else {
+        if (ex.modded) acts.append(h('button', { type: 'button', class: 'btn small ghost', onclick: function () { delete state.mod[ex.mk]; save(); render(); } }, 'Original'));
+        acts.append(makeDel('Entfernen', function () {
+          var m = state.mod[ex.mk] || {}; m.hidden = true; state.mod[ex.mk] = m; save(); render();
+        }));
+      }
+      card.append(acts);
+    }
+    return card;
+  }
+  function viewTraining() {
+    var day = DAYS[state.day];
+    var ph = PHASES[phaseIdx()];
+    var view = h('div', { class: 'view' });
+    view.append(h('div', { class: 'phase' }, h('b', null, ph.name), ph.text));
+
+    view.append(dayTabs(state.day, function (i) { state.day = i; editKey = null; render(); }));
+
+    view.append(h('div', { class: 'dayhead' },
+      h('div', { class: 'dh' }, h('h2', null, day.title), h('p', null, day.note)),
+      h('button', { type: 'button', class: 'btn small ghost', 'aria-pressed': String(editing), onclick: function () { editing = !editing; editKey = null; render(); } }, editing ? 'Fertig' : 'Bearbeiten')));
+
+    var list = resolved(day, false);
+    if (day.rest) {
+      view.append(h('div', { class: 'rest' }, h('p', null, 'Heute steht nichts im Plan. Wenn das Knie nach der Woche zwickt, ist das ein guter Tag für Eis, Beine hoch und Ruhe. Eine lockere Dehnroutine findest du im Tab Dehnen.')));
+      if (!list.length && !editing) return view;
+    }
+    if (list.length) {
+      view.append(h('div', { class: 'progrow' }, h('div', { class: 'prog' }, h('i', { id: 'progbar' })), h('div', { class: 'progtxt', id: 'progtxt' })));
+    }
+    if (day.vb) {
+      view.append(h('div', { class: 'vb' }, h('div', null, h('b', null, 'Volleyballtraining'), h('p', null, 'Das Training liefert genug Sprünge. Im Gym heute keine zusätzlichen Sprünge.'))));
+    }
+    var box = h('div', { class: 'list' });
+    list.forEach(function (ex, i) { var c = exCard(day, ex); c._ord = i; box.append(c); });
+    if (!editing) reorderBox(box, true);
+    view.append(box);
+
+    if (editing) {
+      view.append(h('div', { class: 'card addcard' }, h('h3', null, 'Übung hinzufügen'),
+        exForm({}, 'Hinzufügen', function (v) {
+          var arr = state.custom[day.id] || (state.custom[day.id] = []);
+          arr.push({ id: 'c' + Date.now(), name: v.name, sets: v.sets, hint: v.hint, load: v.load });
+          save(); render();
+        }, null)));
+      var hid = resolved(day, true).filter(function (e) { return e.hidden; });
+      if (hid.length) {
+        var hc = h('div', { class: 'card' }, h('h3', null, 'Entfernte Übungen'));
+        hid.forEach(function (e) {
+          hc.append(h('div', { class: 'removed' }, h('span', null, e.name),
+            h('button', { type: 'button', class: 'btn small ghost', onclick: function () {
+              var m = state.mod[e.mk]; if (m) { delete m.hidden; if (!Object.keys(m).length) delete state.mod[e.mk]; }
+              save(); render();
+            } }, 'Zurückholen')));
+        });
+        view.append(hc);
+      }
+      view.append(h('p', { class: 'small' }, 'Änderungen gelten für alle Wochen. Bereits eingetragene Gewichte bleiben gespeichert.'));
+    }
+    setTimeout(function () { updateProgress(day); }, 0);
+    return view;
+  }
+  function updateProgress(day) {
+    var p = progressOf(day);
+    var bar = document.getElementById('progbar'), txt = document.getElementById('progtxt');
+    if (!bar || !txt) return;
+    bar.style.width = (p.total ? Math.round(p.done / p.total * 100) : 0) + '%';
+    txt.textContent = p.done + ' von ' + p.total + ' erledigt';
+  }
+
+  /* ---------- Dehnen ---------- */
+  function skey(dayId, exId) { return 'w' + state.week + '|' + dayId + '|' + exId; }
+  function stretchList(i) {
+    return STRETCH[i].ids.map(function (id) {
+      var x = SX[id]; if (!x) return null;
+      var e = {}; Object.keys(x).forEach(function (k) { e[k] = x[k]; }); e.id = id; return e;
+    }).filter(Boolean);
+  }
+  function updateSProgress() {
+    var day = DAYS[state.sday], list = stretchList(state.sday), d = 0;
+    list.forEach(function (x) { if (state.sdone[skey(day.id, x.id)]) d++; });
+    var bar = document.getElementById('sprogbar'), txt = document.getElementById('sprogtxt');
+    if (!bar || !txt) return;
+    bar.style.width = (list.length ? Math.round(d / list.length * 100) : 0) + '%';
+    txt.textContent = d + ' von ' + list.length + ' erledigt';
+  }
+  function stretchCard(day, x) {
+    var k = skey(day.id, x.id);
+    var card = h('div', { class: 'ex' + (state.sdone[k] ? ' done' : '') });
+    var chk = h('button', {
+      type: 'button', class: 'chk', 'aria-pressed': String(!!state.sdone[k]), 'aria-label': 'Erledigt: ' + x.name,
+      onclick: function () {
+        if (state.sdone[k]) delete state.sdone[k]; else state.sdone[k] = true;
+        card.classList.toggle('done', !!state.sdone[k]);
+        chk.setAttribute('aria-pressed', String(!!state.sdone[k]));
+        save(); updateSProgress(); afterCheck(card);
+      }
+    });
+    chk.innerHTML = CHECK;
+    var meta = h('div', { class: 'exmeta' }, h('span', { class: 'sets' }, x.sets));
+    (x.chips || []).forEach(function (c) { meta.append(h('span', { class: 'chip' + (c.k ? ' knee' : '') }, c.t)); });
+    card.append(chk, h('div', { class: 'exmain' }, h('p', { class: 'exname' }, x.name), meta, x.hint ? h('p', { class: 'hint' }, x.hint) : null));
+    addMus(card, card.querySelector('.exmain'), 's', x.id);
+    return card;
+  }
+  function viewStretch() {
+    var day = DAYS[state.sday], sd = STRETCH[state.sday];
+    var view = h('div', { class: 'view' });
+    view.append(h('div', { class: 'phase' }, h('b', null, 'So dehnst du'), 'Halten, bis ein leichtes Ziehen entsteht (3 von 10). Weiteratmen und nicht wippen. Am Knie nie in den Schmerz dehnen. Vor dem Spiel aufwärmen statt lange halten.'));
+    view.append(dayTabs(state.sday, function (i) { state.sday = i; render(); }));
+    view.append(h('div', { class: 'dayhead' },
+      h('div', { class: 'dh' }, h('h2', null, sd.title), h('p', null, sd.note), h('p', { class: 'when' }, sd.when))));
+    view.append(h('div', { class: 'progrow' }, h('div', { class: 'prog' }, h('i', { id: 'sprogbar' })), h('div', { class: 'progtxt', id: 'sprogtxt' })));
+    if (sd.vb) {
+      view.append(h('div', { class: 'vb' }, h('div', null, h('b', null, 'Volleyballtraining'), h('p', null, 'Vor dem Training nur dynamisch aufwärmen. Diese Routine kommt danach oder am Abend.'))));
+    }
+    var box = h('div', { class: 'list' });
+    stretchList(state.sday).forEach(function (x, i) { var c = stretchCard(day, x); c._ord = i; box.append(c); });
+    reorderBox(box, true);
+    view.append(box);
+    setTimeout(updateSProgress, 0);
+    return view;
+  }
+
+
+  /* ---------- Knie: Jumper's-Knee-Plan ---------- */
+  var KPH = [
+    { id: 'p1', btn: 'Ruhe', name: 'Phase 1: Beruhigen', when: 'ca. Woche 1–3',
+      goal: 'Die Sehne beruhigen und Hüfte und Waden stabil machen. Isometrische Halteübungen wirken schmerzlindernd und sind gut verträglich.',
+      next: 'Weiter zu Phase 2, wenn die Isometrie mit höchstens 2 von 10 Schmerz klappt und das Knie am nächsten Morgen nicht schlechter ist (mindestens 1 bis 2 Wochen).',
+      items: [
+        { id: 'iso', name: 'Isometrie: Spanische Kniebeuge oder Beinstrecker', sets: '5 × 45 Sek.', chips: [{ t: '60° Kniewinkel', k: 1 }], hint: 'Ca. 70 % Anstrengung, 2 Min. Pause zwischen den Sätzen. An Volleyballtagen 30 bis 60 Min. vor dem Training.', mus: 'iso' },
+        { id: 'gb', name: 'Glute Bridge', sets: '3 × 12', hint: 'Langsam, oben 2 Sek. halten. Eine starke Hüfte nimmt Last vom Knie.', mus: 'gb' },
+        { id: 'cs', name: 'Wadenheben beidbeinig, langsam', sets: '3 × 12', hint: '3 Sek. hoch, 3 Sek. runter.', mus: 'cs' },
+        { id: 'bike', name: 'Locker Rad fahren oder spazieren', sets: '10–15 Min.', hint: 'Kaum Widerstand. Das hält die Sehne durchblutet.' }
+      ] },
+    { id: 'p2', btn: 'Kraft', name: 'Phase 2: Kraft aufbauen', when: 'ca. Woche 3–8',
+      goal: 'Die Sehne mit langsamer, schwerer Kraftarbeit belastbarer machen. Kraft an 3 Tagen, an den übrigen Tagen Isometrie und Hüfte.',
+      next: 'Weiter zu Phase 3, wenn du die Beinpresse mit deutlich mehr Gewicht als am Anfang schmerzarm (höchstens 3 von 10) schaffst und das Knie am nächsten Morgen ruhig ist.',
+      items: [
+        { id: 'iso', name: 'Isometrie als Aufwärmen', sets: '4 × 30–45 Sek.', chips: [{ t: '60° Kniewinkel', k: 1 }], hint: 'Spanische Kniebeuge oder Beinstrecker, ca. 70 % Anstrengung.', mus: 'iso' },
+        { id: 'gb', name: 'Glute Bridge', sets: '3 × 12', hint: 'Langsam, oben 2 Sek. halten.', mus: 'gb' },
+        { id: 'bp', name: 'Beinpresse langsam und schwer', sets: '4 × 8–10', days: [1, 3, 5], chips: [{ t: 'Tempo 3-1-3', k: 1 }, { t: 'bis 90°', k: 1 }], hint: 'Gewicht über die Wochen steigern, solange der Schmerz bei höchstens 3 bis 4 von 10 bleibt. Am Donnerstag ersetzt das die Beinpresse aus dem Trainingsplan.', mus: 'bp' },
+        { id: 'ext', name: 'Beinstrecker langsam', sets: '3 × 10', days: [1, 3, 5], chips: [{ t: 'Tempo 3-0-3', k: 1 }], hint: 'Bei Schmerz den Bewegungsumfang verkleinern. 3 Sek. hoch, 3 Sek. runter.', mus: 'iso' },
+        { id: 'cs1', name: 'Wadenheben einbeinig', sets: '3 × 12', days: [1, 3, 5], hint: 'Ganzer Bewegungsumfang, langsam.', mus: 'cs' }
+      ] },
+    { id: 'p3', btn: 'Last', name: 'Phase 3: Belastung und Federkraft', when: 'ca. Woche 8–14',
+      goal: 'Die Sehne wieder als Feder trainieren: einbeinige Kraft und danach vorsichtige, kurze Sprungformen.',
+      next: 'Weiter zu Phase 4, wenn Pogo-Hops und Seilspringen mit höchstens 2 von 10 Schmerz klappen und die einbeinige Kniebeuge sauber und schmerzarm ist.',
+      items: [
+        { id: 'iso', name: 'Isometrie vor dem Training', sets: '3 × 30 Sek.', chips: [{ t: '60° Kniewinkel', k: 1 }], hint: 'Hält die Sehne ruhig und aufgewärmt.', mus: 'iso' },
+        { id: 'ss', name: 'Einbeinige Kniebeuge auf Schrägbrett oder Kante', sets: '3 × 8–10 je Bein', days: [1, 3], chips: [{ t: 'Tempo 3-0-3', k: 1 }, { t: 'schmerzarme Tiefe', k: 1 }], hint: 'Nur so tief, wie es schmerzarm geht. Ein Keil unter der Ferse ist erlaubt.', mus: 'bsq' },
+        { id: 'bp', name: 'Beinpresse schwer', sets: '4 × 6–8', days: [1, 3, 5], chips: [{ t: 'bis 90°', k: 1 }], hint: 'Weiter steigern. Am Donnerstag ersetzt das die Beinpresse aus dem Trainingsplan.', mus: 'bp' },
+        { id: 'pogo', name: 'Pogo-Hops', sets: '3 × 10', days: [4], chips: [{ t: 'nur bei Schmerz bis 3', k: 1 }], hint: 'Kurze Bodenkontakte, weich landen. In der ersten Woche nur die halbe Menge.', mus: 'jump' },
+        { id: 'rope', name: 'Seilspringen', sets: '3 × 30 Sek.', days: [4], chips: [{ t: 'nur bei Schmerz bis 3', k: 1 }], hint: 'Locker und flach springen. Bei Schmerz sofort aufhören.', mus: 'jump' }
+      ] },
+    { id: 'p4', btn: 'Spiel', name: 'Phase 4: Zurück zum Spielen', when: 'ab ca. Woche 14',
+      goal: 'Die Sprünge im Volleyball Schritt für Schritt steigern und die Kraft erhalten.',
+      next: 'Du bleibst in dieser Phase. Die Kraft hältst du dauerhaft 2-mal pro Woche, die Isometrie nutzt du als Aufwärmen.',
+      items: [
+        { id: 'iso', name: 'Isometrie vor dem Training', sets: '3 × 30 Sek.', chips: [{ t: '60° Kniewinkel', k: 1 }], hint: 'Vor Volleyball und Sprungtagen.', mus: 'iso' },
+        { id: 'vb', name: 'Volleyball: Sprünge langsam steigern', sets: 'Training', days: [0, 2], hint: 'Die ersten 2 Wochen nur 50 bis 70 % der Angriffssprünge. Dann pro Woche 10 bis 20 % mehr, solange das Knie am nächsten Morgen ruhig bleibt.' },
+        { id: 'bp', name: 'Beinpresse oder Kniebeuge schwer', sets: '4 × 5–6', days: [1, 3], chips: [{ t: 'bis 90°', k: 1 }], hint: 'Kontrolliert, nicht explosiv. Am Donnerstag ersetzt das die Beinpresse aus dem Trainingsplan.', mus: 'bp' },
+        { id: 'ss', name: 'Einbeinige Kniebeuge', sets: '3 × 8 je Bein', days: [1, 3], chips: [{ t: 'schmerzarme Tiefe', k: 1 }], mus: 'bsq' },
+        { id: 'box', name: 'Landungen und Box Jumps', sets: '3 × 5', days: [4], chips: [{ t: 'nur bei Schmerz bis 3', k: 1 }], hint: 'Erst die weiche Landung üben, dann abspringen. Hohe Boxen vermeiden.', mus: 'jump' }
+      ] }
+  ];
+  function kkey(day, id) { return 'k' + state.week + '|' + day.id + '|' + id; }
+  function kneeList() {
+    return KPH[state.kph].items.filter(function (i) { return !i.days || i.days.indexOf(state.kday) >= 0; });
+  }
+  function updateKProgress() {
+    var day = DAYS[state.kday], list = kneeList(), d = 0;
+    list.forEach(function (i) { if (state.kdone[kkey(day, state.kph + '-' + i.id)]) d++; });
+    var bar = document.getElementById('kprogbar'), txt = document.getElementById('kprogtxt');
+    if (!bar || !txt) return;
+    bar.style.width = (list.length ? Math.round(d / list.length * 100) : 0) + '%';
+    txt.textContent = d + ' von ' + list.length + ' erledigt';
+  }
+  function kneeCard(day, it) {
+    var k = kkey(day, state.kph + '-' + it.id);
+    var card = h('div', { class: 'ex' + (state.kdone[k] ? ' done' : '') });
+    var chk = h('button', {
+      type: 'button', class: 'chk', 'aria-pressed': String(!!state.kdone[k]), 'aria-label': 'Erledigt: ' + it.name,
+      onclick: function () {
+        if (state.kdone[k]) delete state.kdone[k]; else state.kdone[k] = true;
+        card.classList.toggle('done', !!state.kdone[k]);
+        chk.setAttribute('aria-pressed', String(!!state.kdone[k]));
+        save(); updateKProgress(); afterCheck(card);
+      }
+    });
+    chk.innerHTML = CHECK;
+    var meta = h('div', { class: 'exmeta' }, h('span', { class: 'sets' }, it.sets));
+    (it.chips || []).forEach(function (c) { meta.append(h('span', { class: 'chip' + (c.k ? ' knee' : '') }, c.t)); });
+    card.append(chk, h('div', { class: 'exmain' }, h('p', { class: 'exname' }, it.name), meta, it.hint ? h('p', { class: 'hint' }, it.hint) : null));
+    if (it.mus) addMus(card, card.querySelector('.exmain'), 't', it.mus);
+    return card;
+  }
+  function viewKnee() {
+    var ph = KPH[state.kph], day = DAYS[state.kday];
+    var view = h('div', { class: 'view' });
+    view.append(h('div', { class: 'phase' }, h('b', null, 'Jumper’s Knee'), 'Jeden Tag eine kurze Einheit. Die Sehne wird durch richtig dosierte Belastung besser, nicht durch Schonen. Maßstab ist der Schmerz: bis 3 von 10 ist in Ordnung.'));
+    var seg = h('div', { class: 'seg s4', role: 'group', 'aria-label': 'Phase' });
+    KPH.forEach(function (p, i) {
+      seg.append(h('button', { type: 'button', 'aria-pressed': String(i === state.kph), onclick: function () { state.kph = i; save(); render(); } }, (i + 1) + ' ' + p.btn));
+    });
+    view.append(seg);
+    view.append(h('div', { class: 'card' }, h('h3', null, ph.name), h('p', { class: 'small' }, ph.when), h('p', null, ph.goal), h('p', null, h('b', null, 'Wie weiter: '), ph.next)));
+    view.append(dayTabs(state.kday, function (i) { state.kday = i; render(); }));
+    view.append(h('div', { class: 'dayhead' }, h('div', { class: 'dh' }, h('h2', null, 'Heute dran'), h('p', null, day.vb ? 'Volleyballtag: Isometrie vor dem Training als Aufwärmen.' : 'Nimm dir ca. 15 bis 25 Minuten.'))));
+    var list = kneeList();
+    view.append(h('div', { class: 'progrow' }, h('div', { class: 'prog' }, h('i', { id: 'kprogbar' })), h('div', { class: 'progtxt', id: 'kprogtxt' })));
+    var box = h('div', { class: 'list' });
+    list.forEach(function (it, i) { var c = kneeCard(day, it); c._ord = i; box.append(c); });
+    reorderBox(box, true);
+    view.append(box);
+    view.append(h('div', { class: 'h3' }, 'Die Schmerz-Ampel'));
+    var amp = h('div', { class: 'card' });
+    var ap = h('div', { class: 'ampel' });
+    [['g', '0 bis 3 von 10: in Ordnung. Du kannst wie geplant weitermachen.'], ['y', '4 bis 5 von 10: etwas weniger machen, zum Beispiel weniger Gewicht, weniger Tiefe oder ein Satz weniger.'], ['r', 'ab 6 von 10 oder stechend: für heute abbrechen und das Knie ruhen lassen.']].forEach(function (a) {
+      ap.append(h('div', { class: a[0] }, h('i'), h('p', null, a[1])));
+    });
+    amp.append(ap, h('p', { class: 'small' }, 'Entscheidend ist der nächste Morgen. Sind die ersten Schritte steifer oder schmerzhafter als sonst, geh am nächsten Tag eine Stufe zurück. Trage Schmerzen im Tab Schmerzen ein.'));
+    view.append(amp);
+    view.append(h('div', { class: 'card kwarn' }, h('h3', null, 'Arzt oder Physio'), h('p', null, 'Lass Knieschmerzen ärztlich abklären, besonders bei Verdacht auf ein Knochenmarködem oder eine andere Verletzung. Zeig diesen Plan deinem Arzt oder Physiotherapeuten, bevor du Phase 2 oder höher machst.'), h('p', null, 'Geh früher hin bei Schmerz in Ruhe oder nachts, Schwellung, einem Gefühl von Instabilität oder wenn der Schmerz trotz weniger Belastung nach 2 Wochen nicht besser wird. Dieser Plan ist eine allgemeine Anleitung und keine Diagnose.')));
+    setTimeout(updateKProgress, 0);
+    return view;
+  }
+
+  /* ---------- Diagramm ---------- */
+  function niceStep(raw) {
+    var p = Math.pow(10, Math.floor(Math.log10(raw)));
+    var f = raw / p;
+    return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p;
+  }
+  function shortDate(ts) {
+    var d = new Date(ts);
+    return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.';
+  }
+  function lineChart(pts, o) {
+    var W = 320, H = 190, ml = 42, mr = 22, mt = 20, mb = 28, iw = W - ml - mr, ih = H - mt - mb;
+    var svg = ns('svg', { viewBox: '0 0 ' + W + ' ' + H, 'class': 'chart', role: 'img', 'aria-label': o.label });
+    var xs = pts.map(function (p) { return p.x; }), ys = pts.map(function (p) { return p.y; });
+    var xmin = Math.min.apply(null, xs), xmax = Math.max.apply(null, xs);
+    if (xmin === xmax) { var pad = o.xKind === 'date' ? 86400000 * 3 : 1; xmin -= pad; xmax += pad; }
+    var ymin = Math.min.apply(null, ys), ymax = Math.max.apply(null, ys);
+    if (ymin === ymax) { var sp = o.minSpan || 2; ymin -= sp / 2; ymax += sp / 2; }
+    else { var pd = (ymax - ymin) * 0.2; ymin -= pd; ymax += pd; }
+    var step = niceStep((ymax - ymin) / 4);
+    function X(v) { return ml + (v - xmin) / (xmax - xmin) * iw; }
+    function Y(v) { return mt + (1 - (v - ymin) / (ymax - ymin)) * ih; }
+    for (var t = Math.ceil(ymin / step) * step; t <= ymax + 1e-9; t += step) {
+      var tv = Number(t.toFixed(6));
+      svg.append(ns('line', { x1: ml, x2: W - mr, y1: Y(tv), y2: Y(tv), 'class': 'grid' }));
+      svg.append(ns('text', { x: ml - 6, y: Y(tv) + 4, 'text-anchor': 'end', 'class': 'ax' }, o.yFmt(tv)));
+    }
+    var uniq = [];
+    xs.forEach(function (v) { if (uniq.indexOf(v) < 0) uniq.push(v); });
+    var last = uniq.length - 1;
+    var pick = uniq.length <= 5 ? uniq : [uniq[0], uniq[Math.round(last / 3)], uniq[Math.round(2 * last / 3)], uniq[last]];
+    var kept = [];
+    for (var i = pick.length - 1; i >= 0; i--) {
+      var px = X(pick[i]);
+      if (!kept.length || kept[0].px - px >= 40) kept.unshift({ px: px, v: pick[i] });
+    }
+    kept.forEach(function (k) {
+      svg.append(ns('text', { x: k.px, y: H - 8, 'text-anchor': 'middle', 'class': 'ax' }, o.xFmt(k.v)));
+    });
+    var d = pts.map(function (p, i2) { return (i2 ? 'L' : 'M') + X(p.x).toFixed(1) + ' ' + Y(p.y).toFixed(1); }).join(' ');
+    var base = (mt + ih).toFixed(1);
+    if (pts.length > 1) svg.append(ns('path', { d: d + ' L' + X(pts[pts.length - 1].x).toFixed(1) + ' ' + base + ' L' + X(pts[0].x).toFixed(1) + ' ' + base + ' Z', 'class': 'ar' }));
+    if (pts.length > 1) svg.append(ns('path', { d: d, 'class': 'ln' }));
+    pts.forEach(function (p, i3) {
+      var isLast = i3 === pts.length - 1;
+      svg.append(ns('circle', { cx: X(p.x), cy: Y(p.y), r: isLast ? 5 : 3.5, 'class': isLast ? 'dl' : 'dt' }));
+    });
+    var lp = pts[pts.length - 1], lx = X(lp.x);
+    svg.append(ns('text', { x: lx, y: Y(lp.y) - 10, 'text-anchor': lx > W - 34 ? 'end' : 'middle', 'class': 'vl' }, o.valFmt ? o.valFmt(lp.y) : o.yFmt(lp.y)));
+    return svg;
+  }
+  function stat(k, v, unit) {
+    return h('div', { class: 'stat' }, h('div', { class: 'k' }, k), h('div', { class: 'v' }, v, unit ? h('small', null, unit) : null));
+  }
+  function signed(n, d, unit) { return (n > 0 ? '+' : (n < 0 ? '−' : '±')) + fmt(Math.abs(n), d) + (unit || ''); }
+  function fmtDate(iso) {
+    try { return new Date(iso + 'T12:00:00').toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit' }); }
+    catch (e) { return iso; }
+  }
+  function dateTs(iso) { return new Date(iso + 'T12:00:00').getTime(); }
+
+  /* ---------- Progress: Kraft, Gewicht, Sprung ---------- */
+  function strengthSeries() {
+    var map = {};
+    Object.keys(state.weights).forEach(function (k) {
+      var p = k.split('|');
+      if (p.length !== 3) return;
+      var w = parseInt(p[0].slice(1), 10), v = num(state.weights[k]);
+      if (!(w >= 1) || !isFinite(v)) return;
+      var id = p[1] + '|' + p[2];
+      (map[id] = map[id] || []).push({ x: w, y: v });
+    });
+    Object.keys(map).forEach(function (id) { map[id].sort(function (a, b) { return a.x - b.x; }); });
+    return map;
+  }
+  function nameMap() {
+    var m = {};
+    DAYS.forEach(function (day) {
+      day.ex.concat([JUMP_EX]).forEach(function (b) {
+        m[day.id + '|' + b.id] = b.name;
+        (b.alts || []).forEach(function (a) { m[day.id + '|' + b.id + '-' + a.id] = a.name; });
+      });
+      (state.custom[day.id] || []).forEach(function (c) { m[day.id + '|' + c.id] = c.name; });
+      resolved(day, true).forEach(function (e) { m[day.id + '|' + e.id] = e.name; });
+    });
+    return m;
+  }
+  function strengthIndex(map) {
+    var perWeek = {}, used = 0;
+    Object.keys(map).forEach(function (id) {
+      var s = map[id].filter(function (p) { return p.y > 0; });
+      if (s.length < 2) return;
+      used++;
+      var base = s[0].y;
+      s.forEach(function (p) { (perWeek[p.x] = perWeek[p.x] || []).push(p.y / base * 100); });
+    });
+    var pts = Object.keys(perWeek).map(function (w) {
+      var a = perWeek[w];
+      return { x: +w, y: a.reduce(function (s, v) { return s + v; }, 0) / a.length };
+    });
+    pts.sort(function (a, b) { return a.x - b.x; });
+    return { pts: pts, used: used };
+  }
+  function viewKraft() {
+    var wrap = h('div', null);
+    var map = strengthSeries(), names = nameMap();
+    var idx = strengthIndex(map);
+    var c1 = h('div', { class: 'card' }, h('h3', null, 'Kraft gesamt'));
+    if (idx.pts.length >= 2) {
+      var first = idx.pts[0], lastp = idx.pts[idx.pts.length - 1];
+      c1.append(h('div', { class: 'stats' }, stat('Aktuell', fmt(lastp.y, 0), '%'), stat('Veränderung', signed(lastp.y - first.y, 0, ' %')), stat('Übungen', String(idx.used))));
+      c1.append(lineChart(idx.pts, { label: 'Kraftverlauf gesamt in Prozent', xKind: 'week', xFmt: function (v) { return 'W' + v; }, yFmt: function (v) { return fmt(v, 0); }, valFmt: function (v) { return fmt(v, 0) + ' %'; }, minSpan: 10 }));
+      c1.append(h('p', { class: 'chartnote' }, 'Pro Übung zählt das erste eingetragene Gewicht als 100 %. Das Diagramm zeigt den Durchschnitt über alle Übungen mit Einträgen aus mindestens zwei Wochen.'));
+    } else {
+      c1.append(h('div', { class: 'empty' }, 'Sobald du bei einer Übung in zwei verschiedenen Wochen ein Gewicht einträgst, erscheint hier der Gesamtverlauf. Das Gewicht trägst du im Tab Training ein.'));
+    }
+    wrap.append(c1);
+
+    var ids = Object.keys(map).sort(function (a, b) { return map[b].length - map[a].length; });
+    var c2 = h('div', { class: 'card' }, h('h3', null, 'Einzelne Übung'));
+    if (!ids.length) {
+      c2.append(h('div', { class: 'empty' }, 'Noch keine Gewichte eingetragen. Bei Übungen mit Körpergewicht, etwa Klimmzügen, steht das Zusatzgewicht.'));
+    } else {
+      if (!state.kex || !map[state.kex]) state.kex = ids[0];
+      var shortOf = {};
+      DAYS.forEach(function (d) { shortOf[d.id] = d.short; });
+      var sel = h('select', { class: 'in', id: 'kexsel', 'aria-label': 'Übung wählen', onchange: function (e) { state.kex = e.target.value; render(); } });
+      ids.forEach(function (id) {
+        var o = h('option', { value: id }, (names[id] || id.split('|')[1]) + ' (' + (shortOf[id.split('|')[0]] || '') + ')');
+        if (id === state.kex) o.selected = true;
+        sel.append(o);
+      });
+      c2.append(h('div', { class: 'field' }, sel));
+      var s = map[state.kex];
+      var best = Math.max.apply(null, s.map(function (p) { return p.y; }));
+      var cur = s[s.length - 1].y;
+      c2.append(h('div', { class: 'stats' }, stat('Zuletzt', fmt(cur), 'kg'), stat('Bestwert', fmt(best), 'kg'), stat('Seit Start', s.length > 1 ? signed(cur - s[0].y, 1) : '–', s.length > 1 ? 'kg' : '')));
+      c2.append(lineChart(s, { label: 'Gewicht pro Woche', xKind: 'week', xFmt: function (v) { return 'W' + v; }, yFmt: function (v) { return fmt(v); }, valFmt: function (v) { return fmt(v) + ' kg'; }, minSpan: 4 }));
+    }
+    wrap.append(c2);
+    return wrap;
+  }
+
+  function viewBody() {
+    var wrap = h('div', null);
+    var date = h('input', { type: 'date', id: 'bdate', class: 'in', value: isoToday() });
+    var kg = h('input', { type: 'text', id: 'bkg', class: 'in', inputmode: 'decimal', maxlength: '6', placeholder: 'z. B. 88,5', autocomplete: 'off' });
+    var msg = h('p', { class: 'msg', 'aria-live': 'polite' });
+    var f = h('form', { class: 'card' }, h('h3', null, 'Körpergewicht'),
+      h('div', { class: 'row2 field' }, h('div', null, h('label', { 'for': 'bdate', class: 'lbl' }, 'Datum'), date), h('div', null, h('label', { 'for': 'bkg', class: 'lbl' }, 'Gewicht in kg'), kg)),
+      h('button', { type: 'submit', class: 'btn' }, 'Eintragen'), msg,
+      h('p', { class: 'small', style: 'margin-top:8px' }, 'Wiege dich möglichst morgens nach dem Toilettengang und vor dem Frühstück. Dann sind die Werte vergleichbar.'));
+    f.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var v = num(kg.value);
+      if (!(v >= 30 && v <= 300)) { msg.textContent = 'Bitte ein Gewicht zwischen 30 und 300 kg eintragen.'; return; }
+      state.body.push({ id: Date.now(), date: date.value || isoToday(), kg: Math.round(v * 10) / 10 });
+      save(); render();
+    });
+    wrap.append(f);
+    var sorted = state.body.slice().sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.id - b.id; });
+    var c = h('div', { class: 'card' }, h('h3', null, 'Verlauf'));
+    if (!sorted.length) {
+      c.append(h('div', { class: 'empty' }, 'Trage oben dein erstes Gewicht ein. Danach siehst du hier, ob es sinkt, gleich bleibt oder steigt.'));
+    } else {
+      var cur = sorted[sorted.length - 1].kg, first = sorted[0].kg;
+      var kgs = sorted.map(function (e) { return e.kg; });
+      var diff = cur - first;
+      c.append(h('div', { class: 'stats' }, stat('Aktuell', fmt(cur), 'kg'), stat('Seit Start', sorted.length > 1 ? signed(diff, 1) : '–', sorted.length > 1 ? 'kg' : ''), stat('Spanne', fmt(Math.min.apply(null, kgs)) + '–' + fmt(Math.max.apply(null, kgs)))));
+      c.append(lineChart(sorted.map(function (e) { return { x: dateTs(e.date), y: e.kg }; }), { label: 'Körpergewicht über die Zeit', xKind: 'date', xFmt: shortDate, yFmt: function (v) { return fmt(v); }, valFmt: function (v) { return fmt(v) + ' kg'; }, minSpan: 2 }));
+      if (sorted.length > 1) c.append(h('p', { class: 'chartnote' }, Math.abs(diff) < 0.3 ? 'Dein Gewicht ist seit dem Start stabil.' : (diff > 0 ? 'Dein Gewicht ist seit dem Start gestiegen.' : 'Dein Gewicht ist seit dem Start gesunken.')));
+    }
+    wrap.append(c);
+    if (sorted.length) {
+      var lc = h('div', { class: 'card' }, h('h3', null, 'Einträge'));
+      sorted.slice().reverse().slice(0, 10).forEach(function (e) {
+        lc.append(h('div', { class: 'erow' }, h('div', { class: 'l' }, h('b', null, fmtDate(e.date))), h('div', { class: 'v' }, fmt(e.kg) + ' kg'),
+          makeDel('Löschen', function () { state.body = state.body.filter(function (x) { return x.id !== e.id; }); save(); render(); })));
+      });
+      if (sorted.length > 10) lc.append(h('p', { class: 'small', style: 'margin-top:8px' }, 'Es werden die letzten 10 Einträge gezeigt. Ältere bleiben im Diagramm erhalten.'));
+      wrap.append(lc);
+    }
+    return wrap;
+  }
+
+  function viewJump() {
+    var wrap = h('div', null);
+    wrap.append(h('div', { class: 'card' }, h('h3', null, 'So misst du'),
+      h('p', { class: 'small' }, 'Stell dich seitlich an eine Wand, strecke einen Arm nach oben und markiere die Reichhöhe mit Kreide an den Fingern. Spring so hoch du kannst und tippe die Wand so weit oben wie möglich an. Der Abstand der beiden Markierungen in cm ist deine Sprunghöhe. Trage den besten von drei Versuchen ein.'),
+      h('p', { class: 'small' }, 'Standsprung: ohne Anlauf, mit Ausholbewegung der Arme. Anlaufsprung: wie beim Angriff mit drei Schritten Anlauf, dann Reichhöhe wie beim Standsprung messen.'),
+      h('p', { class: 'small' }, 'Teste immer unter gleichen Bedingungen: gleiche Schuhe, nach dem Aufwärmen, nicht nach einem harten Beintag. Maximale Sprünge belasten die Patellasehne. Teste nur, wenn das Knie ruhig ist (Schmerz bis 3).')));
+
+    var date = h('input', { type: 'date', id: 'jdate', class: 'in', value: isoToday() });
+    var typ = h('select', { id: 'jtype', class: 'in' });
+    Object.keys(JUMP_TYPES).forEach(function (k) { var o = h('option', { value: k }, JUMP_TYPES[k]); if (k === state.jtype) o.selected = true; typ.append(o); });
+    var cm = h('input', { type: 'text', id: 'jcm', class: 'in', inputmode: 'decimal', maxlength: '5', placeholder: 'z. B. 52', autocomplete: 'off' });
+    var msg = h('p', { class: 'msg', 'aria-live': 'polite' });
+    var f = h('form', { class: 'card' }, h('h3', null, 'Neue Messung'),
+      h('div', { class: 'row2 field' }, h('div', null, h('label', { 'for': 'jdate', class: 'lbl' }, 'Datum'), date), h('div', null, h('label', { 'for': 'jtype', class: 'lbl' }, 'Art'), typ)),
+      h('div', { class: 'field' }, h('label', { 'for': 'jcm', class: 'lbl' }, 'Sprunghöhe in cm'), cm),
+      h('button', { type: 'submit', class: 'btn' }, 'Eintragen'), msg);
+    f.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var v = num(cm.value);
+      if (!(v >= 5 && v <= 150)) { msg.textContent = 'Bitte eine Höhe zwischen 5 und 150 cm eintragen.'; return; }
+      state.jtype = typ.value;
+      state.jump.push({ id: Date.now(), date: date.value || isoToday(), type: typ.value, cm: Math.round(v * 10) / 10 });
+      save(); render();
+    });
+    wrap.append(f);
+
+    var seg = h('div', { class: 'seg inner', role: 'group', 'aria-label': 'Sprungart', style: 'margin-bottom:12px' });
+    Object.keys(JUMP_TYPES).forEach(function (k) {
+      seg.append(h('button', { type: 'button', 'aria-pressed': String(state.jtype === k), onclick: function () { state.jtype = k; render(); } }, JUMP_TYPES[k]));
+    });
+    var items = state.jump.filter(function (e) { return e.type === state.jtype; }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : a.id - b.id; });
+    var c = h('div', { class: 'card' }, h('h3', null, 'Sprunghöhe'), seg);
+    if (!items.length) {
+      c.append(h('div', { class: 'empty' }, 'Noch keine Messung für ' + JUMP_TYPES[state.jtype] + '. Trage oben deine erste Höhe ein, am besten bevor die Sprungübungen im Plan beginnen. So hast du einen Startwert.'));
+    } else {
+      var cur = items[items.length - 1].cm, best = Math.max.apply(null, items.map(function (e) { return e.cm; }));
+      c.append(h('div', { class: 'stats' }, stat('Aktuell', fmt(cur), 'cm'), stat('Bestwert', fmt(best), 'cm'), stat('Seit Start', items.length > 1 ? signed(cur - items[0].cm, 1) : '–', items.length > 1 ? 'cm' : '')));
+      c.append(lineChart(items.map(function (e) { return { x: dateTs(e.date), y: e.cm }; }), { label: 'Sprunghöhe über die Zeit', xKind: 'date', xFmt: shortDate, yFmt: function (v) { return fmt(v); }, valFmt: function (v) { return fmt(v) + ' cm'; }, minSpan: 4 }));
+    }
+    wrap.append(c);
+    if (items.length) {
+      var lc = h('div', { class: 'card' }, h('h3', null, 'Einträge'));
+      items.slice().reverse().slice(0, 10).forEach(function (e) {
+        lc.append(h('div', { class: 'erow' }, h('div', { class: 'l' }, h('b', null, fmtDate(e.date)), h('span', null, JUMP_TYPES[e.type])), h('div', { class: 'v' }, fmt(e.cm) + ' cm'),
+          makeDel('Löschen', function () { state.jump = state.jump.filter(function (x) { return x.id !== e.id; }); save(); render(); })));
+      });
+      wrap.append(lc);
+    }
+    return wrap;
+  }
+  function extrasCards() {
+    var wrap = h('div', null);
+    wrap.append(h('div', { class: 'card' }, h('h3', null, 'Plan anpassen'),
+      h('ul', { class: 'rules' },
+        h('li', null, 'Im Tab Training steht pro Tag „Bearbeiten“. Dort änderst du Übungen, entfernst sie oder fügst eigene hinzu.'),
+        h('li', null, 'Bei Wurfübungen mit Medizinball gibt es unter „Variante“ Alternativen für Kabelzug, Landmine oder Band.'),
+        h('li', null, 'Jede Variante führt ihre eigene Gewichtshistorie, damit der Verlauf nicht vermischt wird.')
+      )));
+    var ta = h('textarea', { class: 'in', id: 'backup', 'aria-label': 'Backup-Daten', placeholder: 'Hier ein Backup einfügen, dann „Einspielen“ tippen.', spellcheck: 'false' });
+    var msg = h('p', { class: 'msg', 'aria-live': 'polite' });
+    var copy = h('button', { type: 'button', class: 'btn ghost small' }, 'Backup kopieren');
+    copy.addEventListener('click', function () {
+      var txt = JSON.stringify(snapshot());
+      function fallback() { ta.value = txt; ta.focus(); ta.select(); msg.textContent = 'Der Text steht im Feld. Markieren und manuell kopieren.'; }
+      try {
+        navigator.clipboard.writeText(txt).then(function () { msg.textContent = 'Backup kopiert. In Notizen einfügen, um es zu sichern.'; }, fallback);
+      } catch (e) { fallback(); }
+    });
+    var imp = h('button', { type: 'button', class: 'btn small' }, 'Einspielen');
+    imp.addEventListener('click', function () {
+      try {
+        var p = JSON.parse(ta.value);
+        if (!applyData(p)) throw new Error('x');
+        save(); render();
+      } catch (e) { msg.textContent = 'Das sieht nicht nach einem Backup aus. Bitte den kompletten Text einfügen.'; }
+    });
+    wrap.append(h('div', { class: 'card' }, h('h3', null, 'Backup'),
+      h('p', { class: 'small' }, 'Deine Eingaben liegen nur in diesem Browser auf diesem Gerät. Kopiere sie ab und zu in die Notizen-App. Das Backup enthält auch deine Übungsänderungen, Gewichte, Messungen und abgehakte Dehnübungen.'),
+      h('div', { style: 'display:flex;gap:8px;flex-wrap:wrap;margin:10px 0' }, copy, imp), ta, msg));
+    return wrap;
+  }
+  function viewProgress() {
+    var view = h('div', { class: 'view' });
+    var seg = h('div', { class: 'seg s3', role: 'group', 'aria-label': 'Verlauf wählen' });
+    [['kraft', 'Kraft'], ['gewicht', 'Gewicht'], ['sprung', 'Sprung']].forEach(function (p) {
+      seg.append(h('button', { type: 'button', 'aria-pressed': String(state.prog === p[0]), onclick: function () { state.prog = p[0]; render(); } }, p[1]));
+    });
+    view.append(seg);
+    view.append(state.prog === 'kraft' ? viewKraft() : (state.prog === 'gewicht' ? viewBody() : viewJump()));
+    view.append(extrasCards());
+    return view;
+  }
+
+  /* ---------- Schmerzen ---------- */
+  function latestEntry() {
+    var best = null;
+    state.pain.forEach(function (e) { if (!best || e.id > best.id) best = e; });
+    return best;
+  }
+  function kneeStatus() {
+    var e = latestEntry();
+    if (!e) return { level: 'none' };
+    var worst = Math.max(e.during || 0, typeof e.morning === 'number' ? e.morning : 0);
+    if (worst >= 5 || e.swelling === 'Ja') return { level: 'bad', e: e };
+    if (worst === 4) return { level: 'warn', e: e };
+    return { level: 'ok', e: e };
+  }
+  function scale(get, set, label, nullable) {
+    var box = h('div', { class: 'scale', role: 'group', 'aria-label': label });
+    function paint() {
+      box.querySelectorAll('.sb').forEach(function (b, i) { b.setAttribute('aria-pressed', String(get() === i)); });
+    }
+    for (var i = 0; i <= 10; i++) {
+      (function (n) {
+        box.append(h('button', {
+          type: 'button', class: 'sb', 'data-z': zone(n), 'aria-pressed': 'false',
+          onclick: function () { set(nullable && get() === n ? null : n); paint(); }
+        }, String(n)));
+      })(i);
+    }
+    paint();
+    return box;
+  }
+  function rulesFold() {
+    var cur = phaseIdx();
+    var p3 = h('div', { class: 'prog3' });
+    PHASES.forEach(function (p, i) {
+      p3.append(h('div', { class: 'ph' + (i === cur ? ' cur' : '') }, h('b', null, p.name + ' · ' + p.weeks, i === cur ? h('em', null, 'jetzt') : null), h('span', null, p.text)));
+    });
+    return h('details', { class: 'card fold' },
+      h('summary', null, 'Ampel, Regeln und Progression'),
+      h('div', { class: 'foldbody' },
+        h('div', { class: 'sub', style: 'margin-top:0' }, 'Schmerzampel'),
+        h('div', { class: 'ampel' },
+          h('div', null, h('span', { class: 'pill', 'data-z': 'ok' }, '0–3'), h('span', null, 'Okay, wenn der Schmerz innerhalb von 24 Stunden abklingt und der Morgen danach nicht schlechter ist.')),
+          h('div', null, h('span', { class: 'pill', 'data-z': 'warn' }, '4'), h('span', null, 'Vorsicht. Umfang und Gewicht an den Beinübungen reduzieren.')),
+          h('div', null, h('span', { class: 'pill', 'data-z': 'bad' }, '5+'), h('span', null, 'Pausieren. Auch bei Schwellung, Ruheschmerz oder Nachtschmerz ärztlich abklären lassen.'))),
+        h('div', { class: 'sub' }, 'Fürs Knie'),
+        h('ul', { class: 'rules' },
+          h('li', null, 'Beinübungen im Tempo 3 Sekunden runter, 1 Sekunde Pause, 3 Sekunden hoch.'),
+          h('li', null, 'Kniebeuge und Beinpresse zunächst nur bis ca. 60–90° Kniewinkel.'),
+          h('li', null, 'Im Gym keine zusätzlichen Sprünge, bis das Knie in Phase 3 ruhig ist. Das Volleyballtraining liefert genug.'),
+          h('li', null, 'Mo und Mi bleiben für die Beine frei, damit du im Training frisch springst.'),
+          h('li', null, 'Bei Verdacht auf Knochenmarködem und Patellaspitzensyndrom zuerst per MRT bei einem Sportorthopäden abklären. Dieser Plan ersetzt keine Diagnose.')),
+        h('div', { class: 'sub' }, 'Progression'),
+        p3));
+  }
+  function viewPain() {
+    var view = h('div', { class: 'view' });
+    var st = kneeStatus();
+    var texts = {
+      none: ['Noch kein Eintrag', 'Trage nach jeder Einheit den Knieschmerz ein. So siehst du früh, ob die Belastung passt.'],
+      ok: ['Im grünen Bereich', 'Letzter Eintrag bis 3 von 10 und keine Schwellung. Plan wie vorgesehen weiterführen.'],
+      warn: ['Vorsicht', 'Letzter Eintrag bei 4 von 10. Heute Umfang und Gewicht an den Beinübungen reduzieren und den nächsten Morgen beobachten.'],
+      bad: ['Belastung pausieren', 'Schmerz ab 5 von 10 oder Schwellung. Beinübungen und Sprünge aussetzen und das Knie ärztlich abklären lassen.']
+    };
+    view.append(h('div', { class: 'banner ' + st.level }, h('b', null, texts[st.level][0]), texts[st.level][1]));
+    view.append(rulesFold());
+
+    if (!form) resetForm();
+    var card = h('form', { class: 'card', id: 'painform' });
+    card.append(h('h3', null, 'Neuer Eintrag'));
+    card.append(h('div', { class: 'row2 field' },
+      h('div', null, h('label', { 'for': 'pdate', class: 'lbl' }, 'Datum'),
+        h('input', { type: 'date', id: 'pdate', class: 'in', value: form.date, onchange: function (e) { form.date = e.target.value; } })),
+      h('div', null, h('label', { 'for': 'punit', class: 'lbl' }, 'Einheit'),
+        (function () {
+          var s = h('select', { id: 'punit', class: 'in', onchange: function (e) { form.unit = e.target.value; } });
+          PAIN_UNITS.forEach(function (u) { var o = h('option', { value: u }, u); if (u === form.unit) o.selected = true; s.append(o); });
+          return s;
+        })())
+    ));
+    card.append(h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Schmerz während der Einheit'),
+      scale(function () { return form.during; }, function (v) { form.during = v; }, 'Schmerz während der Einheit', false),
+      h('p', { class: 'legend' }, '0 kein Schmerz, 10 stärkster Schmerz. Bis 3 ist okay.')));
+    card.append(h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Schmerz am nächsten Morgen (später nachtragen möglich)'),
+      scale(function () { return form.morning; }, function (v) { form.morning = v; }, 'Schmerz am nächsten Morgen', true)));
+    var sw = h('div', { class: 'seg inner' });
+    ['Nein', 'Ja'].forEach(function (v) {
+      sw.append(h('button', {
+        type: 'button', 'aria-pressed': String(form.swelling === v),
+        onclick: function () { form.swelling = v; sw.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.textContent === form.swelling)); }); }
+      }, v));
+    });
+    card.append(h('div', { class: 'field' }, h('span', { class: 'lbl' }, 'Schwellung am Knie'), sw));
+    card.append(h('div', { class: 'field' }, h('label', { 'for': 'pnote', class: 'lbl' }, 'Notiz'),
+      h('textarea', { id: 'pnote', class: 'in', maxlength: '300', placeholder: 'z. B. Spanische Kniebeuge fühlte sich gut an', oninput: function (e) { form.note = e.target.value; } }, form.note)));
+    card.append(h('button', { type: 'submit', class: 'btn' }, 'Eintrag speichern'), h('p', { class: 'msg', id: 'formmsg', 'aria-live': 'polite' }));
+    card.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      if (form.during === null) { document.getElementById('formmsg').textContent = 'Bitte zuerst den Schmerz während der Einheit wählen.'; return; }
+      state.pain.push({ id: Date.now(), date: form.date || isoToday(), unit: form.unit, during: form.during, morning: form.morning, swelling: form.swelling, note: form.note.trim() });
+      save(); resetForm(); render();
+    });
+    view.append(card);
+
+    var sorted = state.pain.slice().sort(function (a, b) { return (a.date < b.date ? -1 : a.date > b.date ? 1 : a.id - b.id); });
+    if (sorted.length >= 2) {
+      var lastN = sorted.slice(-14);
+      var tr = h('div', { class: 'trend', role: 'img', 'aria-label': 'Schmerzverlauf der letzten Einträge' });
+      tr.append(h('div', { class: 'thr' }));
+      lastN.forEach(function (e) { var b = h('div', { class: 'bar', 'data-z': zone(e.during) }); b.style.height = (e.during * 10) + '%'; tr.append(b); });
+      view.append(h('div', { class: 'card' }, h('h3', null, 'Schmerzverlauf'), tr, h('p', { class: 'small', style: 'margin-top:8px' }, 'Schmerz während der Einheit, älteste links. Gestrichelte Linie: Grenze bei 3 von 10.')));
+    }
+
+    view.append(h('div', { class: 'h3' }, 'Einträge'));
+    if (!sorted.length) {
+      view.append(h('div', { class: 'empty' }, 'Hier erscheinen deine Einträge, der neueste oben. Speichere oben den ersten Eintrag nach deiner nächsten Einheit.'));
+    }
+    sorted.slice().reverse().forEach(function (e) {
+      var en = h('div', { class: 'entry' });
+      en.append(h('div', { class: 'eh' }, h('span', { class: 'ed' }, fmtDate(e.date)), h('span', { class: 'eu' }, e.unit || '')));
+      var chips = h('div', { class: 'chips' }, h('span', { class: 'pill', 'data-z': zone(e.during) }, 'Während ' + e.during));
+      if (typeof e.morning === 'number') chips.append(h('span', { class: 'pill', 'data-z': zone(e.morning) }, 'Morgen ' + e.morning));
+      chips.append(h('span', { class: 'pill', 'data-z': e.swelling === 'Ja' ? 'bad' : 'n' }, 'Schwellung ' + (e.swelling || 'Nein')));
+      en.append(chips);
+      if (e.note) en.append(h('p', { class: 'note' }, e.note));
+      var ef = h('div', { class: 'ef' });
+      if (typeof e.morning !== 'number') {
+        var sel = h('select', {
+          'aria-label': 'Morgenwert nachtragen',
+          onchange: function (ev) { if (ev.target.value !== '') { e.morning = parseInt(ev.target.value, 10); save(); render(); } }
+        }, h('option', { value: '' }, 'Morgenwert'));
+        for (var i = 0; i <= 10; i++) sel.append(h('option', { value: String(i) }, String(i)));
+        ef.append(h('label', null, 'Nachtragen:'), sel);
+      }
+      ef.append(makeDel('Löschen', function () { state.pain = state.pain.filter(function (x) { return x.id !== e.id; }); save(); render(); }, 'push'));
+      en.append(ef);
+      view.append(en);
+    });
+    return view;
+  }
+
+  /* ---------- Rahmen ---------- */
+  function setWeekLabel() {
+    document.getElementById('wkLabel').textContent = 'Woche ' + state.week;
+    document.getElementById('wkMinus').disabled = state.week <= 1;
+    document.getElementById('wkPlus').disabled = state.week >= MAXWEEK;
+  }
+  function updateNav() {
+    document.querySelectorAll('.navbtn').forEach(function (b) {
+      if (b.dataset.tab === state.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+    });
+    var dot = document.getElementById('kneeDot');
+    var st = kneeStatus();
+    dot.className = 'dot' + (st.level === 'none' ? '' : ' ' + st.level);
+    document.getElementById('stepper').style.display = (state.tab === 'training' || state.tab === 'stretch' || state.tab === 'knee') ? '' : 'none';
+    document.body.setAttribute('data-tab', state.tab);
+  }
+  var TAB_ORDER = ['training', 'pain', 'knee', 'progress', 'stretch'];
+  var reduceMotion = false;
+  try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { /* ignorieren */ }
+
+  function render(dir) {
+    setWeekLabel();
+    var app = document.getElementById('app');
+    var v = state.tab === 'training' ? viewTraining() : (state.tab === 'progress' ? viewProgress() : (state.tab === 'pain' ? viewPain() : (state.tab === 'knee' ? viewKnee() : viewStretch())));
+    var old = app.querySelector('.view:not(.leave)');
+    app.querySelectorAll('.view.leave').forEach(function (n) { n.remove(); });
+    if (dir && old && !reduceMotion) {
+      old.querySelectorAll('[id]').forEach(function (n) { n.removeAttribute('id'); });
+      old.classList.remove('enter-fwd', 'enter-back');
+      old.classList.add('leave', dir === 'fwd' ? 'to-left' : 'to-right');
+      v.classList.add(dir === 'fwd' ? 'enter-fwd' : 'enter-back');
+      app.prepend(v);
+      var gone = function () { if (old.parentNode) old.remove(); };
+      old.addEventListener('animationend', gone);
+      setTimeout(gone, 700);
+    } else {
+      app.replaceChildren(v);
+    }
+    updateNav();
+  }
+  function goTab(name) {
+    if (name === state.tab || TAB_ORDER.indexOf(name) < 0) return;
+    var dir = TAB_ORDER.indexOf(name) > TAB_ORDER.indexOf(state.tab) ? 'fwd' : 'back';
+    state.tab = name; editKey = null;
+    window.scrollTo(0, 0);
+    render(dir);
+  }
+
+  document.getElementById('wkMinus').addEventListener('click', function () { if (state.week > 1) { state.week--; save(); render(); } });
+  document.getElementById('wkPlus').addEventListener('click', function () { if (state.week < MAXWEEK) { state.week++; save(); render(); } });
+  document.querySelectorAll('.navbtn').forEach(function (b) {
+    b.addEventListener('click', function () { goTab(b.dataset.tab); });
+  });
+
+  /* Wischen mit dem Finger wechselt zum Nachbar-Tab */
+  var sw = null;
+  document.addEventListener('touchstart', function (e) {
+    if (e.touches.length !== 1) { sw = null; return; }
+    var t = e.touches[0];
+    if (t.clientX < 24 || t.clientX > window.innerWidth - 24) { sw = null; return; }
+    sw = { x: t.clientX, y: t.clientY, t: Date.now(), el: e.target };
+  }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (!sw) return;
+    var s = sw; sw = null;
+    var t = e.changedTouches[0], dx = t.clientX - s.x, dy = t.clientY - s.y;
+    if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2 || Date.now() - s.t > 700) return;
+    if (s.el && s.el.closest && s.el.closest('input, textarea, select, .scale, .days, svg.chart')) return;
+    var i = TAB_ORDER.indexOf(state.tab) + (dx < 0 ? 1 : -1);
+    if (i >= 0 && i < TAB_ORDER.length) goTab(TAB_ORDER[i]);
+  }, { passive: true });
+
+  /* Home-Bildschirm-Symbol: wird nur genutzt, wenn der Browser es aus dieser Seite liest */
+  try {
+    var ic = document.createElement('link');
+    ic.rel = 'apple-touch-icon';
+    ic.href = 'data:image/png;base64,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';
+    document.head.appendChild(ic);
+  } catch (e) { /* ignorieren */ }
+
+  resetForm();
+  load();
+  if (autoWeek()) save();
+  render();
+
+  /* ---------- Cloud-Speicher (Konto-gebunden, bleibt auch nach dem Schließen) ---------- */
+  var cloudDoc = null, cloudReady = false, cloudTimer = null, cloudBusy = false, cloudDirty = false;
+  function cloudMsg(t) {
+    var el = document.getElementById('cloudstat'); if (!el) return;
+    el.hidden = !t; el.textContent = t || '';
+  }
+  function cloudPush() {
+    if (!cloudDoc || !cloudReady) return;
+    cloudDirty = true;
+    clearTimeout(cloudTimer);
+    cloudTimer = setTimeout(cloudFlush, 700);
+  }
+  function cloudFlush() {
+    if (cloudBusy) { cloudTimer = setTimeout(cloudFlush, 400); return; }
+    if (!cloudDirty) return;
+    cloudDirty = false; cloudBusy = true;
+    var snap = snapshot();
+    cloudDoc.set({ ts: snap.ts, json: JSON.stringify(snap) }).then(function () {
+      cloudBusy = false; cloudMsg('Gesichert in deinem Konto');
+    }, function () {
+      cloudBusy = false; cloudMsg('Cloud-Sicherung fehlgeschlagen, lokal gespeichert');
+    });
+  }
+  function initCloud() {
+    try {
+      if (!window.claude || !claude.use) return;
+      Promise.all([claude.use('user'), claude.use('db')]).then(function (r) {
+        var user = r[0], db = r[1];
+        if (!user || !db || !user.id) return;
+        return Promise.resolve(user.id()).then(function (id) {
+          cloudDoc = db.collection('data/users/' + id).doc('app');
+          return cloudDoc.get();
+        }).then(function (snap) {
+          var d = snap && snap.exists ? snap.data() : null, remote = null;
+          if (d && typeof d.json === 'string') { try { remote = JSON.parse(d.json); } catch (e) { remote = null; } }
+          var localHas = state.ts > 0;
+          if (remote && typeof remote.ts === 'number' && remote.ts > state.ts) {
+            var typing = document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+            if (applyData(remote)) {
+              if (autoWeek()) save();
+              try { localStorage.setItem(KEY, JSON.stringify(snapshot())); } catch (e) { /* ignorieren */ }
+              if (!typing) render();
+            }
+            cloudReady = true; cloudMsg('Aus deinem Konto geladen');
+          } else {
+            cloudReady = true;
+            if (localHas) { cloudDirty = true; cloudFlush(); } else cloudMsg('Cloud-Sicherung aktiv');
+          }
+        });
+      }).catch(function () { cloudMsg(''); });
+    } catch (e) { /* ignorieren */ }
+  }
+  initCloud();
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible' && autoWeek()) { save(); render(); }
+  });
+})();
+</script>
+
+</body>
+</html>
