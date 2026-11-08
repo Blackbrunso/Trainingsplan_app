@@ -481,6 +481,11 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
   /* Automatischer Wochenwechsel: jede Kalenderwoche (Mo bis So) beginnt leer, die alten Wochen bleiben gespeichert. */
+  /* Wochenwechsel speichern, ohne einen leeren Stand als „neuer“ auszugeben (sonst überschreibt ein frisches Gerät die Cloud). */
+  function saveAuto() {
+    if (state.ts > 0) { save(); return; }
+    try { localStorage.setItem(KEY, JSON.stringify(snapshot())); } catch (e) { /* ignorieren */ }
+  }
   function utcDay(iso) { var a = iso.split('-'); return Date.UTC(+a[0], +a[1] - 1, +a[2]); }
   function isoFromUtc(ms) { var d = new Date(ms); return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0'); }
   function mondayOf(iso) { var ms = utcDay(iso), wd = (new Date(ms).getUTCDay() + 6) % 7; return isoFromUtc(ms - wd * 86400000); }
@@ -1314,6 +1319,40 @@ function figure(h, s) {
         h('li', null, 'Bei Wurfübungen mit Medizinball gibt es unter „Variante“ Alternativen für Kabelzug, Landmine oder Band.'),
         h('li', null, 'Jede Variante führt ihre eigene Gewichtshistorie, damit der Verlauf nicht vermischt wird.')
       )));
+    var ghmsg = h('p', { class: 'msg', 'aria-live': 'polite' });
+    var ghc = h('div', { class: 'card' }, h('h3', null, 'Mit GitHub sichern'));
+    (function () {
+      var cfg = ghCfg();
+      if (cfg) {
+        ghc.append(h('p', { class: 'small' }, 'Verbunden. Deine Daten werden nach jeder Änderung in einem privaten GitHub-Gist gesichert. Auf einem anderen Gerät fügst du dasselbe Token ein, dann wird dein Stand geladen.'));
+        var now = h('button', { type: 'button', class: 'btn small' }, 'Jetzt sichern');
+        now.addEventListener('click', function () { if (!cloudDoc || !cloudReady) { ghmsg.textContent = 'Noch nicht bereit. Bitte kurz warten oder neu verbinden.'; return; } cloudDirty = true; cloudFlush(); ghmsg.textContent = 'Wird gesichert.'; });
+        var off = h('button', { type: 'button', class: 'btn ghost small' }, 'Trennen');
+        off.addEventListener('click', function () { ghSave(null); cloudDoc = null; cloudReady = false; cloudMsg(''); render(); });
+        ghc.append(h('div', { style: 'display:flex;gap:8px;flex-wrap:wrap;margin:10px 0' }, now, off), ghmsg);
+      } else {
+        ghc.append(
+          h('p', { class: 'small' }, 'So bleiben deine Daten auch nach dem Schließen erhalten und du kannst sie auf mehreren Geräten nutzen. Jeder braucht dafür sein eigenes GitHub-Konto.'),
+          h('ol', { class: 'rules' },
+            h('li', null, 'Auf github.com einloggen, dann Settings, Developer settings, Personal access tokens, Tokens (classic), Generate new token (classic).'),
+            h('li', null, 'Name zum Beispiel „Trainingsplan“, nur das Häkchen bei „gist“ setzen, erzeugen und das Token kopieren.'),
+            h('li', null, 'Token hier einfügen und auf Verbinden tippen. Die App legt einen privaten Gist an und sichert dort.')
+          ),
+          h('p', { class: 'small' }, 'Das Token liegt nur auf diesem Gerät. Wer es hat, kann deine Gists lesen und ändern. Gib es niemandem weiter.'));
+        var tok = h('input', { class: 'in', type: 'password', id: 'ghtoken', autocomplete: 'off', spellcheck: 'false', placeholder: 'Token einfügen', 'aria-label': 'GitHub-Token' });
+        var go = h('button', { type: 'button', class: 'btn small' }, 'Verbinden');
+        go.addEventListener('click', function () {
+          var t = tok.value.trim(); if (!t) { ghmsg.textContent = 'Bitte zuerst das Token einfügen.'; return; }
+          ghSave({ token: t }); ghmsg.textContent = 'Verbinde …'; go.disabled = true;
+          ghStart().then(function (ok) {
+            go.disabled = false;
+            if (ok) { render(); } else { ghSave(null); ghmsg.textContent = 'Das hat nicht geklappt. Prüfe das Token (Recht „gist“) und die Internetverbindung.'; }
+          });
+        });
+        ghc.append(tok, h('div', { style: 'margin:10px 0' }, go), ghmsg);
+      }
+    })();
+    wrap.append(ghc);
     var ta = h('textarea', { class: 'in', id: 'backup', 'aria-label': 'Backup-Daten', placeholder: 'Hier ein Backup einfügen, dann „Einspielen“ tippen.', spellcheck: 'false' });
     var msg = h('p', { class: 'msg', 'aria-live': 'polite' });
     var copy = h('button', { type: 'button', class: 'btn ghost small' }, 'Backup kopieren');
@@ -1571,7 +1610,7 @@ function figure(h, s) {
 
   resetForm();
   load();
-  if (autoWeek()) save();
+  if (autoWeek()) saveAuto();
   render();
 
   /* ---------- Cloud-Speicher (Konto-gebunden, bleibt auch nach dem Schließen) ---------- */
@@ -1592,43 +1631,99 @@ function figure(h, s) {
     cloudDirty = false; cloudBusy = true;
     var snap = snapshot();
     cloudDoc.set({ ts: snap.ts, json: JSON.stringify(snap) }).then(function () {
-      cloudBusy = false; cloudMsg('Gesichert in deinem Konto');
+      cloudBusy = false; cloudMsg('Gesichert bei ' + (cloudLabel === 'GitHub' ? 'GitHub' : 'deinem Konto'));
     }, function () {
       cloudBusy = false; cloudMsg('Cloud-Sicherung fehlgeschlagen, lokal gespeichert');
     });
   }
+  var cloudLabel = 'Konto';
+  function cloudSync(doc, label) {
+    cloudDoc = doc; cloudReady = false; cloudLabel = label;
+    return doc.get().then(function (snap) {
+      var d = snap && snap.exists ? snap.data() : null, remote = null;
+      if (d && typeof d.json === 'string') { try { remote = JSON.parse(d.json); } catch (e) { remote = null; } }
+      var localHas = state.ts > 0;
+      if (remote && typeof remote.ts === 'number' && remote.ts > state.ts) {
+        var typing = document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+        if (applyData(remote)) {
+          if (autoWeek()) saveAuto();
+          try { localStorage.setItem(KEY, JSON.stringify(snapshot())); } catch (e) { /* ignorieren */ }
+          if (!typing) render();
+        }
+        cloudReady = true; cloudMsg('Von ' + label + ' geladen');
+      } else {
+        cloudReady = true;
+        if (localHas) { cloudDirty = true; cloudFlush(); } else cloudMsg(label + '-Sicherung aktiv');
+      }
+    });
+  }
+  /* ---------- GitHub-Gist als Speicher (ohne Server, mit eigenem Token) ---------- */
+  var GHKEY = 'aussenangreifer.gh', GHFILE = 'trainingsplan.json', GHDESC = 'Trainingsplan App Daten';
+  function ghCfg() { try { var c = JSON.parse(localStorage.getItem(GHKEY) || 'null'); return c && c.token ? c : null; } catch (e) { return null; } }
+  function ghSave(c) { try { if (c) localStorage.setItem(GHKEY, JSON.stringify(c)); else localStorage.removeItem(GHKEY); } catch (e) { /* ignorieren */ } }
+  function ghFetch(cfg, path, opts) {
+    opts = opts || {};
+    return fetch('https://api.github.com' + path, {
+      method: opts.method || 'GET',
+      headers: { 'Authorization': 'Bearer ' + cfg.token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function (r) {
+      if (!r.ok) { var e = new Error('http ' + r.status); e.status = r.status; throw e; }
+      return r.json();
+    });
+  }
+  function ghAdapter(cfg) {
+    function parse(t) { try { return JSON.parse(t); } catch (e) { return null; } }
+    return {
+      get: function () {
+        var find = cfg.gistId ? Promise.resolve(cfg.gistId) : ghFetch(cfg, '/gists?per_page=100').then(function (list) {
+          var g = list.filter(function (x) { return x.description === GHDESC && x.files && x.files[GHFILE]; })[0];
+          if (g) { cfg.gistId = g.id; ghSave(cfg); }
+          return g ? g.id : null;
+        });
+        return find.then(function (id) {
+          if (!id) return { exists: false };
+          return ghFetch(cfg, '/gists/' + id).then(function (g) {
+            var f = g.files && g.files[GHFILE];
+            if (!f) return { exists: false };
+            if (f.truncated) return fetch(f.raw_url).then(function (r) { return r.text(); }).then(function (t) { return { exists: true, data: function () { return parse(t); } }; });
+            return { exists: true, data: function () { return parse(f.content); } };
+          });
+        });
+      },
+      set: function (d) {
+        var files = {}; files[GHFILE] = { content: JSON.stringify(d) };
+        if (cfg.gistId) return ghFetch(cfg, '/gists/' + cfg.gistId, { method: 'PATCH', body: { files: files } });
+        return ghFetch(cfg, '/gists', { method: 'POST', body: { description: GHDESC, public: false, files: files } }).then(function (g) { cfg.gistId = g.id; ghSave(cfg); });
+      }
+    };
+  }
+  function ghStart() {
+    var cfg = ghCfg(); if (!cfg) return Promise.resolve(false);
+    return cloudSync(ghAdapter(cfg), 'GitHub').then(function () { return true; }, function (e) {
+      cloudDoc = null; cloudReady = false;
+      cloudMsg(e && (e.status === 401 || e.status === 403) ? 'GitHub-Token ungültig oder ohne Gist-Recht' : 'GitHub nicht erreichbar, lokal gespeichert');
+      return false;
+    });
+  }
   function initCloud() {
     try {
-      if (!window.claude || !claude.use) return;
-      Promise.all([claude.use('user'), claude.use('db')]).then(function (r) {
-        var user = r[0], db = r[1];
-        if (!user || !db || !user.id) return;
-        return Promise.resolve(user.id()).then(function (id) {
-          cloudDoc = db.collection('data/users/' + id).doc('app');
-          return cloudDoc.get();
-        }).then(function (snap) {
-          var d = snap && snap.exists ? snap.data() : null, remote = null;
-          if (d && typeof d.json === 'string') { try { remote = JSON.parse(d.json); } catch (e) { remote = null; } }
-          var localHas = state.ts > 0;
-          if (remote && typeof remote.ts === 'number' && remote.ts > state.ts) {
-            var typing = document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
-            if (applyData(remote)) {
-              if (autoWeek()) save();
-              try { localStorage.setItem(KEY, JSON.stringify(snapshot())); } catch (e) { /* ignorieren */ }
-              if (!typing) render();
-            }
-            cloudReady = true; cloudMsg('Aus deinem Konto geladen');
-          } else {
-            cloudReady = true;
-            if (localHas) { cloudDirty = true; cloudFlush(); } else cloudMsg('Cloud-Sicherung aktiv');
-          }
-        });
-      }).catch(function () { cloudMsg(''); });
+      if (window.claude && claude.use) {
+        Promise.all([claude.use('user'), claude.use('db')]).then(function (r) {
+          var user = r[0], db = r[1];
+          if (!user || !db || !user.id) { ghStart(); return; }
+          return Promise.resolve(user.id()).then(function (id) {
+            return cloudSync(db.collection('data/users/' + id).doc('app'), 'Konto');
+          });
+        }).catch(function () { ghStart(); });
+        return;
+      }
+      ghStart();
     } catch (e) { /* ignorieren */ }
   }
   initCloud();
   document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'visible' && autoWeek()) { save(); render(); }
+    if (document.visibilityState === 'visible' && autoWeek()) { saveAuto(); render(); }
   });
 })();
 </script>
