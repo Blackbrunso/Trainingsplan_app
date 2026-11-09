@@ -318,6 +318,45 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
 .ex.done .picbox { opacity: .7; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .picbox { --fig: #454B55; --hot: #FF4D5E; --warm: #8D3D48; } }
 :root[data-theme="dark"] .picbox { --fig: #454B55; --hot: #FF4D5E; --warm: #8D3D48; }
+
+/* Neue Struktur */
+body[data-tab="lib"] { --bg: var(--s-bg); --surface: var(--s-surface); --surface2: var(--s-surface2); --ink: var(--s-ink); --muted: var(--s-muted); --line: var(--s-line); --accent: var(--s-accent); --accent-ink: var(--s-accent-ink); --accent-soft: var(--s-accent-soft); }
+body[data-tab="over"] { --bg: var(--p-bg); --surface: var(--p-surface); --surface2: var(--p-surface2); --ink: var(--p-ink); --muted: var(--p-muted); --line: var(--p-line); --accent: var(--p-accent); --accent-ink: var(--p-accent-ink); --accent-soft: var(--p-accent-soft); }
+.nav { grid-template-columns: repeat(4, 1fr); }
+.navbtn { font-size: 16px; }
+.seg.s6 { grid-template-columns: repeat(6, 1fr); margin-bottom: 12px; }
+.lbl2 { margin: 12px 0 6px; font: 600 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.days.dayschk { position: static; padding-block: 0 12px; }
+.day-btn.has::before { content: ''; position: absolute; right: 6px; top: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
+.addb { grid-row: 1; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--accent); background: var(--accent-soft); color: var(--accent); font: 700 28px/1 var(--font-display); padding: 0; }
+.ex.lib { grid-template-columns: 44px minmax(0, 1fr); }
+.tile { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 12px; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 10px; min-height: 72px; }
+.tile .tt { grid-column: 1; font: 700 26px/1.05 var(--font-display); text-transform: uppercase; letter-spacing: .02em; }
+.tile .ts { grid-column: 1; font-size: 14px; color: var(--muted); }
+.tile .tc { grid-column: 2; grid-row: 1 / span 2; font: 700 34px var(--font-display); color: var(--accent); }
+.tile.big { min-height: 104px; padding: 20px 18px; background: var(--accent-soft); border-color: transparent; }
+.tile.big .tt { font-size: 32px; }
+.tile.small { min-height: 0; padding: 12px 14px; }
+.tile.small .tt { font-size: 21px; }
+.backbar { display: inline-flex; align-items: center; min-height: 44px; margin: 4px 0 4px -6px; padding: 0 10px; border: 0; background: transparent; color: var(--accent); font: 700 20px var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
+.acts2 { display: flex; gap: 8px; flex-wrap: wrap; }
+.pack h3 { margin-bottom: 4px; }
+.ph2 { font: 700 30px/1.05 var(--font-display); text-transform: uppercase; margin: 6px 0 4px; }
+.addrow { margin: 14px 0 4px; }
+.addrow .btn { width: 100%; }
+.mvsel { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface2); color: var(--ink); padding: 0 6px; font: 400 14px var(--font-body); max-width: 150px; }
+.hero { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin: 6px 0 14px; }
+.hero .kick2 { font: 600 12px var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.hero .hh { font: 700 34px/1.05 var(--font-display); text-transform: uppercase; margin: 4px 0 4px; }
+.wkrow { display: grid; grid-template-columns: 28px minmax(0, 1fr) 70px 36px; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); }
+.wkrow b { font: 700 18px var(--font-display); }
+.wkrow .wkt { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wkrow.today b { color: var(--accent); }
+.sheet { position: fixed; inset: 0; z-index: 30; }
+.sheet[hidden] { display: none; }
+.sheet .backdrop { position: absolute; inset: 0; background: rgba(0, 0, 0, .45); }
+.sheetpanel { position: absolute; left: 0; right: 0; bottom: 0; max-height: 88vh; overflow: auto; background: var(--surface); color: var(--ink); border-radius: 18px 18px 0 0; padding: 18px max(20px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); max-width: 640px; margin: 0 auto; box-shadow: 0 -6px 30px rgba(0, 0, 0, .25); animation: musin .22s ease; }
+.sheetpanel h3 { font: 700 26px var(--font-display); text-transform: uppercase; margin: 0 0 2px; }
 </style>
 <style>html,body{margin:0}*{box-sizing:border-box}</style>
 </head>
@@ -336,17 +375,17 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
     </div>
   </header>
   <p class="cloudstat" id="cloudstat" hidden></p>
-  <p class="storewarn" id="storewarn" hidden>Dein Browser blockiert das Speichern. Eingaben gehen beim Schließen verloren. Unter „Progress“ ganz unten kannst du die Daten als Backup kopieren.</p>
+  <p class="storewarn" id="storewarn" hidden>Dein Browser blockiert das Speichern. Eingaben gehen beim Schließen verloren. Unter „Overview“ ganz unten kannst du die Daten als Backup kopieren.</p>
   <main id="app"></main>
 </div>
 
 <nav class="nav" aria-label="Bereiche">
-  <button type="button" class="navbtn" data-tab="training">Training</button>
-  <button type="button" class="navbtn" data-tab="pain">Schmerzen<span class="dot" id="kneeDot"></span></button>
-  <button type="button" class="navbtn" data-tab="knee">Knie</button>
-  <button type="button" class="navbtn" data-tab="progress">Progress</button>
-  <button type="button" class="navbtn" data-tab="stretch">Dehnen</button>
+  <button type="button" class="navbtn" data-tab="home">Start</button>
+  <button type="button" class="navbtn" data-tab="plan">Plan</button>
+  <button type="button" class="navbtn" data-tab="lib">Übungen</button>
+  <button type="button" class="navbtn" data-tab="over">Overview<span class="dot" id="kneeDot"></span></button>
 </nav>
+<div id="sheet" class="sheet" hidden></div>
 
 <script>
 (function () {
@@ -716,7 +755,7 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
   var jsd = new Date().getDay();
   var todayIdx = (jsd + 6) % 7;
   var storageOK = true;
-  var state = { week: 1, weights: {}, done: {}, sdone: {}, pain: [], custom: {}, mod: {}, alt: {}, body: [], jump: [], tab: 'training', day: todayIdx, sday: todayIdx, prog: 'kraft', jtype: 'cmj', kex: null, ts: 0, kph: 0, kday: todayIdx, kdone: {}, start: '', lastWk: '', plan: null, pday: todayIdx, view: 'home', lcat: null, lsub: null, add: null, q: '' };
+  var state = { week: 1, weights: {}, done: {}, sdone: {}, pain: [], custom: {}, mod: {}, alt: {}, body: [], jump: [], tab: 'home', day: todayIdx, sday: todayIdx, prog: 'kraft', jtype: 'cmj', kex: null, ts: 0, kph: 0, kday: todayIdx, kdone: {}, start: '', lastWk: '', plan: null, pday: todayIdx, view: 'home', lcat: null, lsub: null, add: null, q: '' };
   var form = null;
   var editing = false, editKey = null, uid = 0;
 
@@ -744,7 +783,7 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
     cw = Math.max(1, Math.min(MAXWEEK, cw));
     var changed = state.week !== cw || state.lastWk !== mon;
     state.week = cw; state.lastWk = mon;
-    if (changed) { state.day = todayIdx; state.sday = todayIdx; state.kday = todayIdx; }
+    if (changed) { state.pday = todayIdx; state.day = todayIdx; state.sday = todayIdx; state.kday = todayIdx; }
     return true;
   }
   function isObj(x) { return x && typeof x === 'object' && !Array.isArray(x); }
@@ -1120,7 +1159,7 @@ function figure(h, s) {
 
     var list = resolved(day, false);
     if (day.rest) {
-      view.append(h('div', { class: 'rest' }, h('p', null, 'Heute steht nichts im Plan. Wenn das Knie nach der Woche zwickt, ist das ein guter Tag für Eis, Beine hoch und Ruhe. Eine lockere Dehnroutine findest du im Tab Dehnen.')));
+      view.append(h('div', { class: 'rest' }, h('p', null, 'Heute steht nichts im Plan. Wenn das Knie nach der Woche zwickt, ist das ein guter Tag für Eis, Beine hoch und Ruhe. Eine lockere Dehnroutine findest du unter Übungen.')));
       if (!list.length && !editing) return view;
     }
     if (list.length) {
@@ -1318,7 +1357,7 @@ function figure(h, s) {
     [['g', '0 bis 3 von 10: in Ordnung. Du kannst wie geplant weitermachen.'], ['y', '4 bis 5 von 10: etwas weniger machen, zum Beispiel weniger Gewicht, weniger Tiefe oder ein Satz weniger.'], ['r', 'ab 6 von 10 oder stechend: für heute abbrechen und das Knie ruhen lassen.']].forEach(function (a) {
       ap.append(h('div', { class: a[0] }, h('i'), h('p', null, a[1])));
     });
-    amp.append(ap, h('p', { class: 'small' }, 'Entscheidend ist der nächste Morgen. Sind die ersten Schritte steifer oder schmerzhafter als sonst, geh am nächsten Tag eine Stufe zurück. Trage Schmerzen im Tab Schmerzen ein.'));
+    amp.append(ap, h('p', { class: 'small' }, 'Entscheidend ist der nächste Morgen. Sind die ersten Schritte steifer oder schmerzhafter als sonst, geh am nächsten Tag eine Stufe zurück. Trage Schmerzen unter Overview, Schmerzen ein.'));
     view.append(amp);
     view.append(h('div', { class: 'card kwarn' }, h('h3', null, 'Arzt oder Physio'), h('p', null, 'Lass Knieschmerzen ärztlich abklären, besonders bei Verdacht auf ein Knochenmarködem oder eine andere Verletzung. Zeig diesen Plan deinem Arzt oder Physiotherapeuten, bevor du Phase 2 oder höher machst.'), h('p', null, 'Geh früher hin bei Schmerz in Ruhe oder nachts, Schwellung, einem Gefühl von Instabilität oder wenn der Schmerz trotz weniger Belastung nach 2 Wochen nicht besser wird. Dieser Plan ist eine allgemeine Anleitung und keine Diagnose.')));
     setTimeout(updateKProgress, 0);
@@ -1439,7 +1478,7 @@ function figure(h, s) {
       c1.append(lineChart(idx.pts, { label: 'Kraftverlauf gesamt in Prozent', xKind: 'week', xFmt: function (v) { return 'W' + v; }, yFmt: function (v) { return fmt(v, 0); }, valFmt: function (v) { return fmt(v, 0) + ' %'; }, minSpan: 10 }));
       c1.append(h('p', { class: 'chartnote' }, 'Pro Übung zählt das erste eingetragene Gewicht als 100 %. Das Diagramm zeigt den Durchschnitt über alle Übungen mit Einträgen aus mindestens zwei Wochen.'));
     } else {
-      c1.append(h('div', { class: 'empty' }, 'Sobald du bei einer Übung in zwei verschiedenen Wochen ein Gewicht einträgst, erscheint hier der Gesamtverlauf. Das Gewicht trägst du im Tab Training ein.'));
+      c1.append(h('div', { class: 'empty' }, 'Sobald du bei einer Übung in zwei verschiedenen Wochen ein Gewicht einträgst, erscheint hier der Gesamtverlauf. Das Gewicht trägst du bei den Übungen in „Mein Trainingsplan“ ein.'));
     }
     wrap.append(c1);
 
@@ -1562,11 +1601,11 @@ function figure(h, s) {
   }
   function extrasCards() {
     var wrap = h('div', null);
-    wrap.append(h('div', { class: 'card' }, h('h3', null, 'Plan anpassen'),
+    wrap.append(h('div', { class: 'card' }, h('h3', null, 'So passt du den Plan an'),
       h('ul', { class: 'rules' },
-        h('li', null, 'Im Tab Training steht pro Tag „Bearbeiten“. Dort änderst du Übungen, entfernst sie oder fügst eigene hinzu.'),
-        h('li', null, 'Bei Wurfübungen mit Medizinball gibt es unter „Variante“ Alternativen für Kabelzug, Landmine oder Band.'),
-        h('li', null, 'Jede Variante führt ihre eigene Gewichtshistorie, damit der Verlauf nicht vermischt wird.')
+        h('li', null, 'Im Plan steht pro Tag „Bearbeiten“. Dort änderst du Übungen, sortierst sie, verschiebst sie auf einen anderen Tag oder entfernst sie.'),
+        h('li', null, 'Neue Übungen und ganze Programme legst du unter „Übungen“ mit + in den Plan.'),
+        h('li', null, 'Die Zahl der Trainingstage änderst du im Plan unter „Wochenplan einstellen“.')
       )));
     var ghmsg = h('p', { class: 'msg', 'aria-live': 'polite' });
     var ghc = h('div', { class: 'card' }, h('h3', null, 'Mit GitHub sichern'));
@@ -1617,6 +1656,7 @@ function figure(h, s) {
       try {
         var p = JSON.parse(ta.value);
         if (!applyData(p)) throw new Error('x');
+        ensurePlan();
         save(); render();
       } catch (e) { msg.textContent = 'Das sieht nicht nach einem Backup aus. Bitte den kompletten Text einfügen.'; }
     });
@@ -1633,7 +1673,6 @@ function figure(h, s) {
     });
     view.append(seg);
     view.append(state.prog === 'kraft' ? viewKraft() : (state.prog === 'gewicht' ? viewBody() : viewJump()));
-    view.append(extrasCards());
     return view;
   }
 
@@ -1777,6 +1816,378 @@ function figure(h, s) {
     return view;
   }
 
+  /* ---------- Neue Ansichten: Mein Trainingsplan ---------- */
+  function ensurePlan() {
+    if (!state.plan) state.plan = hasLegacyData() ? migratePlan() : emptyPlan();
+    DAYS.forEach(function (d) { if (!state.plan.days[d.id]) state.plan.days[d.id] = { t: '', items: [] }; });
+    if (!Array.isArray(state.plan.vb)) state.plan.vb = [];
+    return state.plan;
+  }
+  function pday(id) { return ensurePlan().days[id]; }
+  function addMusX(card, main, m) {
+    var box = h('div', { class: 'picbox', id: 'mus-x' + (++uid) });
+    box.innerHTML = m.data ? MUS.htmlData(m.data, m.mode) : MUS.html(m.mode, m.id);
+    if (!box.innerHTML) return;
+    card.append(box);
+    main.classList.add('tap'); main.setAttribute('role', 'button'); main.setAttribute('tabindex', '0'); main.setAttribute('aria-expanded', 'false'); main.setAttribute('aria-controls', box.id);
+    main.querySelector('.exname').append(h('span', { class: 'chev', 'aria-hidden': 'true' }, '▾'));
+    function tog() { var o = card.classList.toggle('open'); main.setAttribute('aria-expanded', String(o)); }
+    main.addEventListener('click', tog);
+    main.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } });
+  }
+  function planProgress(dayId) {
+    var items = pday(dayId).items, d = 0;
+    items.forEach(function (it) { if (state.done[key(dayId, it.id)]) d++; });
+    return { done: d, total: items.length };
+  }
+  function updatePlanProgress(dayId) {
+    var p = planProgress(dayId), bar = document.getElementById('progbar'), txt = document.getElementById('progtxt');
+    if (!bar || !txt) return;
+    bar.style.width = (p.total ? Math.round(p.done / p.total * 100) : 0) + '%';
+    txt.textContent = p.done + ' von ' + p.total + ' erledigt';
+  }
+  function lastWeightP(dayId, it) {
+    for (var w = state.week - 1; w >= 1; w--) { var v = state.weights['w' + w + '|' + dayId + '|' + it.id]; if (v) return 'Zuletzt ' + v + ' kg (W' + w + ')'; }
+    return '';
+  }
+  function planCard(day, it, idx, items) {
+    var k = key(day.id, it.id), ek = 'p|' + day.id + '|' + it.id;
+    var card = h('div', { class: 'ex' + (state.done[k] ? ' done' : '') });
+    if (editing && editKey === ek) {
+      card.append(h('div', { style: 'grid-column:1 / -1' }, exForm({ name: it.name, sets: it.sets, hint: it.hint, load: it.load }, 'Speichern', function (v) {
+        it.name = v.name; it.sets = v.sets; it.hint = v.hint; it.load = v.load; editKey = null; save(); render();
+      }, function () { editKey = null; render(); })));
+      return card;
+    }
+    var chk = h('button', { type: 'button', class: 'chk', 'aria-pressed': String(!!state.done[k]), 'aria-label': 'Erledigt: ' + it.name,
+      onclick: function () {
+        if (state.done[k]) delete state.done[k]; else state.done[k] = true;
+        card.classList.toggle('done', !!state.done[k]); chk.setAttribute('aria-pressed', String(!!state.done[k]));
+        save(); updatePlanProgress(day.id); afterCheck(card);
+      } });
+    chk.innerHTML = CHECK;
+    var meta = h('div', { class: 'exmeta' }, it.sets ? h('span', { class: 'sets' }, it.sets) : null);
+    (it.chips || []).forEach(function (c) { meta.append(h('span', { class: 'chip' + (c.k ? ' knee' : '') }, c.t)); });
+    card.append(chk, h('div', { class: 'exmain' }, h('p', { class: 'exname' }, it.name), meta, it.hint ? h('p', { class: 'hint' }, it.hint) : null));
+    var m = musOf(it); if (m) addMusX(card, card.querySelector('.exmain'), m);
+    if (it.load) {
+      var id = 'wt-' + day.id + '-' + it.id;
+      var inp = h('input', { type: 'text', id: id, class: 'wt', inputmode: 'decimal', maxlength: '6', autocomplete: 'off', placeholder: 'kg', value: state.weights[k] || '',
+        oninput: function () { var v = inp.value.trim(); if (v) state.weights[k] = v; else delete state.weights[k]; save(); } });
+      var lw = lastWeightP(day.id, it);
+      card.append(h('div', { class: 'wtrow' }, h('label', { 'for': id }, 'Gewicht kg'), inp, lw ? h('span', { class: 'last' }, lw) : null));
+    }
+    if (editing) {
+      var acts = h('div', { class: 'exedit' });
+      var up = h('button', { type: 'button', class: 'btn small ghost', 'aria-label': 'Nach oben', onclick: function () { if (idx > 0) { items.splice(idx, 1); items.splice(idx - 1, 0, it); save(); render(); } } }, '↑');
+      var dn = h('button', { type: 'button', class: 'btn small ghost', 'aria-label': 'Nach unten', onclick: function () { if (idx < items.length - 1) { items.splice(idx, 1); items.splice(idx + 1, 0, it); save(); render(); } } }, '↓');
+      var mv = h('select', { class: 'mvsel', 'aria-label': 'An anderen Tag verschieben', onchange: function (e) {
+        var t = e.target.value; if (t === '') return;
+        var to = pday(t); items.splice(idx, 1);
+        if (to.items.some(function (x) { return x.id === it.id; })) it.id = it.id + '_' + Date.now() % 1000;
+        to.items.push(it); save(); render();
+      } }, h('option', { value: '' }, 'Verschieben nach …'));
+      DAYS.forEach(function (d) { if (d.id !== day.id) mv.append(h('option', { value: d.id }, d.short)); });
+      acts.append(up, dn, h('button', { type: 'button', class: 'btn small ghost', onclick: function () { editKey = ek; render(); } }, 'Ändern'), mv,
+        makeDel('Entfernen', function () { items.splice(idx, 1); save(); render(); }));
+      card.append(acts);
+    }
+    return card;
+  }
+  function genBox() {
+    var p = ensurePlan();
+    var box = h('details', { class: 'card fold' }, h('summary', null, 'Wochenplan einstellen'));
+    if (!p.n || !trainingDays().length) box.setAttribute('open', '');
+    var body = h('div', { class: 'foldbody' });
+    body.append(h('p', { class: 'small' }, 'Wie viele Tage pro Woche willst oder kannst du trainieren? Die App stellt daraus einen passenden Plan zusammen. Danach kannst du jede Übung ändern, verschieben oder aus der Bibliothek ergänzen.'));
+    var gn = state.genN || p.n || 3;
+    var seg = h('div', { class: 'seg s6', role: 'group', 'aria-label': 'Trainingstage pro Woche' });
+    [1, 2, 3, 4, 5, 6].forEach(function (n) { seg.append(h('button', { type: 'button', 'aria-pressed': String(gn === n), onclick: function () { state.genN = n; render(); } }, String(n))); });
+    body.append(seg);
+    body.append(h('p', { class: 'lbl2' }, 'Volleyballtage (dort bleiben die Beine frei)'));
+    var vb = h('div', { class: 'days dayschk' });
+    DAYS.forEach(function (d, i) {
+      vb.append(h('button', { type: 'button', class: 'day-btn', 'aria-pressed': String(p.vb.indexOf(i) >= 0), onclick: function () {
+        var at = p.vb.indexOf(i); if (at >= 0) p.vb.splice(at, 1); else p.vb.push(i); save(); render();
+      } }, d.short));
+    });
+    body.append(vb);
+    var has = trainingDays().length > 0;
+    var go = h('button', { type: 'button', class: 'btn', onclick: function () {
+      var np = generatePlan(gn, p.vb);
+      state.plan = np; state.genN = null; var first = trainingDays()[0]; state.pday = first == null ? state.pday : first;
+      save(); render();
+    } }, 'Plan für ' + gn + (gn === 1 ? ' Tag' : ' Tage') + ' erstellen');
+    body.append(go);
+    if (has) body.append(h('p', { class: 'small' }, 'Das ersetzt die aktuelle Zuordnung der Übungen. Eingetragene Gewichte und Haken bleiben gespeichert.'));
+    box.append(body);
+    return box;
+  }
+  function viewPlan() {
+    var p = ensurePlan(), day = DAYS[state.pday], pd = pday(day.id);
+    var view = h('div', { class: 'view' });
+    var td = trainingDays();
+    view.append(h('div', { class: 'phase' }, h('b', null, 'Mein Plan'), td.length ? (td.length + (td.length === 1 ? ' Trainingstag' : ' Trainingstage') + ' pro Woche. Tippe auf eine Übung, um zu sehen, welche Muskeln sie trainiert.') : 'Noch leer. Erstelle unten einen Plan oder füge Übungen aus der Bibliothek hinzu.'));
+    view.append(genBox());
+    var tabs = dayTabs(state.pday, function (i) { state.pday = i; editKey = null; render(); });
+    tabs.querySelectorAll('.day-btn').forEach(function (b, i) { if (pday(DAYS[i].id).items.length) b.classList.add('has'); });
+    view.append(tabs);
+    view.append(h('div', { class: 'dayhead' },
+      h('div', { class: 'dh' }, h('h2', null, pd.t || (pd.items.length ? 'Training' : 'Frei')), h('p', null, DAYS[state.pday].short === 'So' ? '' : '')),
+      pd.items.length || editing ? h('button', { type: 'button', class: 'btn small ghost', 'aria-pressed': String(editing), onclick: function () { editing = !editing; editKey = null; render(); } }, editing ? 'Fertig' : 'Bearbeiten') : null));
+    if (editing) {
+      var ti = h('input', { class: 'in', type: 'text', maxlength: '40', value: pd.t || '', placeholder: 'Name des Tages, z. B. Oberkörper', 'aria-label': 'Name des Tages', onchange: function (e) { pd.t = e.target.value.trim(); save(); render(); } });
+      view.append(h('div', { class: 'field' }, ti));
+    }
+    if (p.vb.indexOf(state.pday) >= 0) view.append(h('div', { class: 'vb' }, h('div', null, h('b', null, 'Volleyballtraining'), h('p', null, 'Das Training liefert genug Sprünge. Im Gym heute die Beine eher schonen.'))));
+    if (pd.items.length) {
+      view.append(h('div', { class: 'progrow' }, h('div', { class: 'prog' }, h('i', { id: 'progbar' })), h('div', { class: 'progtxt', id: 'progtxt' })));
+      var box = h('div', { class: 'list' });
+      pd.items.forEach(function (it, i) { var c = planCard(day, it, i, pd.items); c._ord = i; box.append(c); });
+      if (!editing) reorderBox(box, true);
+      view.append(box);
+      var rec = recommendedPerSession();
+      if (pd.items.length > rec) view.append(h('p', { class: 'small', style: 'margin-top:8px' }, 'Das sind viele Übungen für eine Einheit (empfohlen bis ' + rec + ' bei deinen Trainingstagen). Verschiebe einzelne auf einen anderen Tag.'));
+    } else {
+      view.append(h('div', { class: 'rest' }, h('p', null, 'An diesem Tag steht nichts im Plan. Locker spazieren oder Rad fahren geht immer. Eine Dehnroutine findest du unter Übungen.')));
+    }
+    var addRow = h('div', { class: 'addrow' },
+      h('button', { type: 'button', class: 'btn', onclick: function () { state.addDay = state.pday; goView('lib'); } }, '+ Aus Übungen hinzufügen'));
+    view.append(addRow);
+    if (editing) {
+      view.append(h('div', { class: 'card addcard' }, h('h3', null, 'Eigene Übung'), exForm({}, 'Hinzufügen', function (v) {
+        pd.items.push({ id: 'c' + Date.now(), name: v.name, sets: v.sets, hint: v.hint, load: v.load, chips: [] }); save(); render();
+      }, null)));
+      view.append(h('p', { class: 'small' }, 'Änderungen gelten für alle Wochen. Bereits eingetragene Gewichte bleiben gespeichert.'));
+    }
+    setTimeout(function () { updatePlanProgress(day.id); }, 0);
+    return view;
+  }
+
+  /* ---------- Bibliothek (Übungen) ---------- */
+  function backBar(label, fn) {
+    return h('button', { type: 'button', class: 'backbar', onclick: fn }, '‹ ' + label);
+  }
+  function catLabel(c) {
+    if (c === 'stretch') return 'Dehnen';
+    if (c === 'std') return 'Standardplan';
+    if (c.indexOf('reha-') === 0) { var r = REHA_REGIONS.filter(function (x) { return x.id === c.slice(5); })[0]; return 'Reha ' + (r ? r.t.split(' (')[0] : ''); }
+    var k = LIB_CATS.filter(function (x) { return x.id === c; })[0]; return k ? k.t : c;
+  }
+  function libCard(L) {
+    var card = h('div', { class: 'ex lib' });
+    var add = h('button', { type: 'button', class: 'addb', 'aria-label': 'Zum Plan hinzufügen: ' + L.name, onclick: function (e) { e.stopPropagation(); openSheet([L.id], L.name); } }, '+');
+    var meta = h('div', { class: 'exmeta' }, L.sets ? h('span', { class: 'sets' }, L.sets) : null, h('span', { class: 'chip' }, catLabel(L.cat)));
+    (L.chips || []).forEach(function (c) { meta.append(h('span', { class: 'chip' + (c.k ? ' knee' : '') }, c.t)); });
+    card.append(add, h('div', { class: 'exmain' }, h('p', { class: 'exname' }, L.name), meta, L.hint ? h('p', { class: 'hint' }, L.hint) : null));
+    var m = musOf({ lib: L.id }); if (m) addMusX(card, card.querySelector('.exmain'), m);
+    return card;
+  }
+  function libList(ids) {
+    var box = h('div', { class: 'list' });
+    ids.forEach(function (id) { var L = libReg()[id]; if (L) box.append(libCard(L)); });
+    return box;
+  }
+  function packCard(title, desc, ids, onOpen) {
+    var c = h('div', { class: 'card pack' }, h('h3', null, title), h('p', { class: 'small' }, desc + ' · ' + ids.length + ' Übungen'));
+    var row = h('div', { class: 'acts2' });
+    if (onOpen) row.append(h('button', { type: 'button', class: 'btn small ghost', onclick: onOpen }, 'Ansehen'));
+    row.append(h('button', { type: 'button', class: 'btn small', onclick: function () { openSheet(ids, title); } }, 'Zum Plan'));
+    c.append(row); return c;
+  }
+  function tile(title, sub, fn, cls) {
+    return h('button', { type: 'button', class: 'tile' + (cls ? ' ' + cls : ''), onclick: fn }, h('span', { class: 'tt' }, title), h('span', { class: 'ts' }, sub), h('span', { class: 'tc', 'aria-hidden': 'true' }, '›'));
+  }
+  function libNav(cat, sub) { state.lcat = cat; state.lsub = sub || null; window.scrollTo(0, 0); render(); }
+  function viewLib() {
+    var view = h('div', { class: 'view' }), c = state.lcat, s = state.lsub;
+    var tgt = state.addDay != null ? h('div', { class: 'phase' }, h('b', null, 'Für ' + DAYS[state.addDay].short), 'Tippe bei einer Übung auf +, um sie in deinen Plan zu legen.') : null;
+    if (!c) {
+      view.append(h('div', { class: 'phase' }, h('b', null, 'Übungen'), 'Wähle eine Kategorie. Mit + legst du Übungen oder ganze Programme in deinen Trainingsplan.'));
+      if (tgt) view.append(tgt);
+      view.append(tile('Muskeltraining', 'Sprungkraft, Schlagarm, Rumpf, Beine und mehr', function () { libNav('muscle'); }));
+      view.append(tile('Reha', 'Knie, Schulter, Sprunggelenk, Rücken, Hüfte, Hand', function () { libNav('reha'); }));
+      view.append(tile('Dehnen und Mobility', 'Routinen und einzelne Dehnübungen', function () { libNav('stretch'); }));
+      view.append(tile('Alle Übungen', 'Suchen und filtern', function () { libNav('all'); }));
+      return view;
+    }
+    if (c === 'muscle') {
+      if (!s) {
+        view.append(backBar('Übungen', function () { libNav(null); }));
+        view.append(h('div', { class: 'h3' }, 'Trainingsprogramme'));
+        PROGRAMS.forEach(function (p) { view.append(packCard(p.t, p.d, p.ids, function () { libNav('muscle', 'prog:' + p.id); })); });
+        view.append(h('div', { class: 'h3' }, 'Nach Bereich'));
+        LIB_CATS.forEach(function (k) { view.append(tile(k.t, k.d, function () { libNav('muscle', 'cat:' + k.id); }, 'small')); });
+        return view;
+      }
+      view.append(backBar('Muskeltraining', function () { libNav('muscle'); }));
+      if (s.indexOf('prog:') === 0) {
+        var p = PROGRAMS.filter(function (x) { return 'prog:' + x.id === s; })[0];
+        view.append(h('h2', { class: 'ph2' }, p.t), h('p', { class: 'small' }, p.d), h('div', { class: 'acts2', style: 'margin:10px 0' }, h('button', { type: 'button', class: 'btn', onclick: function () { openSheet(p.ids, p.t); } }, 'Ganzes Programm in den Plan')), libList(p.ids));
+      } else {
+        var k = LIB_CATS.filter(function (x) { return 'cat:' + x.id === s; })[0];
+        view.append(h('h2', { class: 'ph2' }, k.t), h('p', { class: 'small' }, k.d), libList(LIB_RAW[k.id].map(function (l) { return l.split('|')[0]; })));
+      }
+      return view;
+    }
+    if (c === 'reha') {
+      if (!s) {
+        view.append(backBar('Übungen', function () { libNav(null); }));
+        view.append(h('div', { class: 'phase' }, h('b', null, 'Reha'), 'Wähle die Körperregion. Diese Übungen ersetzen keine Behandlung. Bei Schmerz in Ruhe, Schwellung oder Instabilität zuerst zum Arzt oder Physio.'));
+        REHA_REGIONS.forEach(function (r) { view.append(tile(r.t, r.d, function () { libNav('reha', r.id); })); });
+        view.append(packCard('Alle Reha-Basics für Volleyball', 'Je zwei Übungen aus jeder Region', ['kp1-iso', 'kp1-gb', 'r-sh2', 'r-sh3', 'r-an2', 'r-an3', 'r-ru2', 'r-ru4', 'r-hu1', 'r-hu5', 'r-fi1', 'r-fi4'], null));
+        return view;
+      }
+      var r = REHA_REGIONS.filter(function (x) { return x.id === s; })[0];
+      view.append(backBar('Reha', function () { libNav('reha'); }), h('h2', { class: 'ph2' }, r.t), h('p', { class: 'small' }, r.d));
+      if (s === 'knie') {
+        var ph = state.lph || 0, seg = h('div', { class: 'seg s4', role: 'group', 'aria-label': 'Phase' });
+        KPH.forEach(function (x, i) { seg.append(h('button', { type: 'button', 'aria-pressed': String(i === ph), onclick: function () { state.lph = i; render(); } }, (i + 1) + ' ' + x.btn)); });
+        var ids = KPH[ph].items.map(function (it) { return 'kp' + (ph + 1) + '-' + it.id; });
+        view.append(seg, h('div', { class: 'card' }, h('h3', null, KPH[ph].name), h('p', { class: 'small' }, KPH[ph].when), h('p', null, KPH[ph].goal),
+          h('div', { class: 'acts2' }, h('button', { type: 'button', class: 'btn small', onclick: function () { openSheet(ids, 'Knie-Reha Phase ' + (ph + 1)); } }, 'Phase in den Plan'),
+            h('button', { type: 'button', class: 'btn small ghost', onclick: function () { goTab('knee'); } }, 'Tagesplan öffnen'))), libList(ids));
+      } else {
+        var rid = REHA_RAW[s].map(function (l) { return l.split('|')[0]; });
+        view.append(h('div', { class: 'acts2', style: 'margin:10px 0' }, h('button', { type: 'button', class: 'btn', onclick: function () { openSheet(rid, 'Reha ' + r.t); } }, 'Ganzes Paket in den Plan')), libList(rid));
+      }
+      return view;
+    }
+    if (c === 'stretch') {
+      view.append(backBar('Übungen', function () { libNav(null); }));
+      view.append(h('div', { class: 'phase' }, h('b', null, 'Dehnen'), 'Halten, bis ein leichtes Ziehen entsteht. Am Knie nie in den Schmerz dehnen.'));
+      view.append(h('div', { class: 'acts2', style: 'margin-bottom:12px' }, h('button', { type: 'button', class: 'btn small', onclick: function () { goTab('stretch'); } }, 'Tägliche Dehnroutine öffnen')));
+      view.append(h('div', { class: 'h3' }, 'Routinen'));
+      STRETCH.forEach(function (sr) { view.append(packCard(sr.title, sr.when.split(' · ')[1] || 'Routine', sr.ids.map(function (i) { return 's-' + i; }), null)); });
+      view.append(h('div', { class: 'h3' }, 'Alle Dehnübungen'), libList(Object.keys(SX).map(function (i) { return 's-' + i; })));
+      return view;
+    }
+    /* Alle Übungen: Suche und Filter */
+    view.append(backBar('Übungen', function () { libNav(null); }));
+    var q = h('input', { class: 'in', type: 'search', placeholder: 'Übung suchen', 'aria-label': 'Übung suchen', value: state.q || '' });
+    var sel = h('select', { class: 'in', 'aria-label': 'Kategorie' }, h('option', { value: '' }, 'Alle Kategorien'));
+    var cats = []; Object.keys(libReg()).forEach(function (id) { var cc = libReg()[id].cat; if (cats.indexOf(cc) < 0) cats.push(cc); });
+    cats.forEach(function (cc) { var o = h('option', { value: cc }, catLabel(cc)); if (cc === state.qc) o.selected = true; sel.append(o); });
+    view.append(h('div', { class: 'row2 field' }, h('div', null, q), h('div', null, sel)));
+    var holder = h('div', { class: 'list' });
+    function fill() {
+      state.q = q.value; state.qc = sel.value;
+      var t = q.value.trim().toLowerCase(), n = 0; holder.replaceChildren();
+      Object.keys(libReg()).forEach(function (id) {
+        var L = libReg()[id];
+        if (sel.value && L.cat !== sel.value) return;
+        if (t && (L.name + ' ' + L.hint).toLowerCase().indexOf(t) < 0) return;
+        if (n++ < 60) holder.append(libCard(L));
+      });
+      if (!n) holder.append(h('div', { class: 'empty' }, 'Nichts gefunden.'));
+      else if (n > 60) holder.append(h('p', { class: 'small' }, 'Es werden die ersten 60 gezeigt. Grenze die Suche ein.'));
+    }
+    q.addEventListener('input', fill); sel.addEventListener('change', fill); fill();
+    view.append(holder);
+    return view;
+  }
+
+  /* ---------- Zum Plan hinzufügen (Sheet) ---------- */
+  function openSheet(ids, title) {
+    state.add = { ids: ids, title: title };
+    state.addSel = state.addDay != null ? [state.addDay] : [];
+    state.addMode = 'same';
+    renderSheet();
+  }
+  function closeSheet() { state.add = null; renderSheet(); }
+  function addToPlan() {
+    var a = state.add, sel = state.addSel.slice().sort(function (x, y) { return x - y; }); if (!a || !sel.length) return;
+    var chunks = [];
+    if (a.ids.length > 1 && state.addMode === 'spread') {
+      var per = Math.ceil(a.ids.length / sel.length);
+      sel.forEach(function (d, i) { chunks.push(a.ids.slice(i * per, (i + 1) * per)); });
+    } else sel.forEach(function () { chunks.push(a.ids); });
+    sel.forEach(function (di, i) {
+      var d = pday(DAYS[di].id);
+      chunks[i].forEach(function (lid) {
+        if (d.items.some(function (x) { return x.lib === lid; })) return;
+        var it = itemFromLib(lid, d.items); if (it) d.items.push(it);
+      });
+      if (!d.t) d.t = a.ids.length > 1 ? a.title.replace(/-Training$/, '') : 'Training';
+    });
+    state.pday = sel[0]; state.addDay = null; state.add = null; editing = false;
+    save(); renderSheet(); goTab('plan');
+  }
+  function renderSheet() {
+    var el = document.getElementById('sheet'); if (!el) return;
+    el.replaceChildren();
+    if (!state.add) { el.hidden = true; document.body.classList.remove('sheetopen'); return; }
+    el.hidden = false; document.body.classList.add('sheetopen');
+    var a = state.add, ensure = ensurePlan(), sel = state.addSel;
+    var panel = h('div', { class: 'sheetpanel', role: 'dialog', 'aria-modal': 'true', 'aria-label': 'Zum Plan hinzufügen' });
+    panel.append(h('h3', null, a.ids.length > 1 ? a.title : 'Zum Plan'), a.ids.length === 1 ? h('p', { class: 'small' }, a.title) : h('p', { class: 'small' }, a.ids.length + ' Übungen'));
+    panel.append(h('p', { class: 'lbl2' }, 'An welchen Tagen?'));
+    var days = h('div', { class: 'days dayschk' });
+    DAYS.forEach(function (d, i) {
+      var b = h('button', { type: 'button', class: 'day-btn' + (pday(d.id).items.length ? ' has' : ''), 'aria-pressed': String(sel.indexOf(i) >= 0), onclick: function () {
+        var at = sel.indexOf(i); if (at >= 0) sel.splice(at, 1); else sel.push(i); renderSheet();
+      } }, d.short);
+      days.append(b);
+    });
+    panel.append(days);
+    var td = trainingDays();
+    if (td.length) panel.append(h('button', { type: 'button', class: 'btn small ghost', style: 'margin-bottom:10px', onclick: function () { state.addSel = td.slice(); renderSheet(); } }, 'Meine Trainingstage (' + td.length + ')'));
+    if (a.ids.length > 1) {
+      var seg = h('div', { class: 'seg inner', role: 'group', 'aria-label': 'Verteilung' });
+      [['same', 'An jedem Tag alle'], ['spread', 'Auf Tage verteilen']].forEach(function (m) {
+        seg.append(h('button', { type: 'button', 'aria-pressed': String(state.addMode === m[0]), onclick: function () { state.addMode = m[0]; renderSheet(); } }, m[1]));
+      });
+      panel.append(seg);
+    }
+    if (sel.length) {
+      var rec = recommendedPerSession(), per = a.ids.length > 1 && state.addMode === 'spread' ? Math.ceil(a.ids.length / sel.length) : a.ids.length;
+      var worst = 0; sel.forEach(function (i) { worst = Math.max(worst, pday(DAYS[i].id).items.length + per); });
+      var txt = a.ids.length > 1 && state.addMode === 'spread' ? 'Etwa ' + per + ' Übungen pro Tag.' : '';
+      if (worst > rec) txt += ' Dann hat ein Tag bis zu ' + worst + ' Übungen. Empfohlen sind bis ' + rec + '. Mit „Auf Tage verteilen“ oder mehr Tagen wird es kürzer.';
+      if (txt) panel.append(h('p', { class: 'small' }, txt));
+    }
+    panel.append(h('div', { class: 'acts2' }, h('button', { type: 'button', class: 'btn', disabled: sel.length ? null : true, onclick: addToPlan }, 'Hinzufügen'), h('button', { type: 'button', class: 'btn ghost', onclick: closeSheet }, 'Abbrechen')));
+    el.append(h('div', { class: 'backdrop', onclick: closeSheet }), panel);
+  }
+
+  /* ---------- Startseite und Overview ---------- */
+  function weekTotals() {
+    var done = 0, total = 0;
+    DAYS.forEach(function (d) { var p = planProgress(d.id); done += p.done; total += p.total; });
+    return { done: done, total: total };
+  }
+  function viewHome() {
+    var view = h('div', { class: 'view' }), p = ensurePlan(), day = DAYS[todayIdx], pd = pday(day.id), pr = planProgress(day.id), wt = weekTotals();
+    var hero = h('div', { class: 'hero' }, h('div', { class: 'kick2' }, 'Heute · ' + day.short + ', Woche ' + state.week),
+      h('div', { class: 'hh' }, pd.items.length ? (pd.t || 'Training') : 'Kein Training geplant'),
+      pd.items.length ? h('div', { class: 'progrow' }, h('div', { class: 'prog' }, h('i', { style: 'width:' + Math.round(pr.done / pr.total * 100) + '%' })), h('div', { class: 'progtxt' }, pr.done + ' von ' + pr.total)) : h('p', { class: 'small' }, trainingDays().length ? 'Heute ist ein freier Tag.' : 'Erstelle in „Mein Trainingsplan“ deinen Wochenplan.'),
+      h('button', { type: 'button', class: 'btn', onclick: function () { state.pday = todayIdx; goTab('plan'); } }, pd.items.length ? 'Training öffnen' : 'Plan öffnen'));
+    view.append(hero);
+    var st = kneeStatus(), ks = { none: 'Noch kein Schmerz-Eintrag', ok: 'Knie im grünen Bereich', warn: 'Knie: Vorsicht', bad: 'Knie: Belastung pausieren' }[st.level];
+    view.append(tile('Mein Trainingsplan', trainingDays().length ? trainingDays().length + ' Trainingstage · ' + wt.done + ' von ' + wt.total + ' erledigt' : 'Wochenplan erstellen und anpassen', function () { goTab('plan'); }, 'big'));
+    view.append(tile('Übungen', 'Muskeltraining, Reha, Dehnen', function () { state.lcat = null; state.lsub = null; goTab('lib'); }, 'big'));
+    view.append(tile('Overview', ks + ' · Fortschritt und Sicherung', function () { goTab('over'); }, 'big'));
+    return view;
+  }
+  function viewOver() {
+    var view = h('div', { class: 'view' }), wt = weekTotals();
+    var wk = h('div', { class: 'card' }, h('h3', null, 'Diese Woche'));
+    if (!wt.total) wk.append(h('div', { class: 'empty' }, 'Noch keine Übungen im Plan. Starte unter „Mein Trainingsplan“.'));
+    else {
+      wk.append(h('div', { class: 'stats' }, stat('Erledigt', String(wt.done)), stat('Geplant', String(wt.total)), stat('Quote', Math.round(wt.done / wt.total * 100), '%')));
+      DAYS.forEach(function (d, i) {
+        var p = planProgress(d.id); if (!p.total) return;
+        wk.append(h('div', { class: 'wkrow' + (i === todayIdx ? ' today' : '') }, h('b', null, d.short), h('span', { class: 'wkt' }, pday(d.id).t || 'Training'),
+          h('div', { class: 'prog' }, h('i', { style: 'width:' + Math.round(p.done / p.total * 100) + '%' })), h('span', { class: 'progtxt' }, p.done + '/' + p.total)));
+      });
+    }
+    view.append(wk);
+    view.append(tile('Fortschritt', 'Kraft, Körpergewicht, Sprunghöhe', function () { goTab('progress'); }));
+    view.append(tile('Schmerzen und Knie', 'Einträge, Ampel und Regeln', function () { goTab('pain'); }));
+    view.append(extrasCards());
+    return view;
+  }
+
   /* ---------- Rahmen ---------- */
   function setWeekLabel() {
     document.getElementById('wkLabel').textContent = 'Woche ' + state.week;
@@ -1785,22 +2196,27 @@ function figure(h, s) {
   }
   function updateNav() {
     document.querySelectorAll('.navbtn').forEach(function (b) {
-      if (b.dataset.tab === state.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+      if (b.dataset.tab === NAVOF[state.tab]) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
     });
     var dot = document.getElementById('kneeDot');
     var st = kneeStatus();
     dot.className = 'dot' + (st.level === 'none' ? '' : ' ' + st.level);
-    document.getElementById('stepper').style.display = (state.tab === 'training' || state.tab === 'stretch' || state.tab === 'knee') ? '' : 'none';
+    document.getElementById('stepper').style.display = (state.tab === 'plan' || state.tab === 'over' || state.tab === 'stretch' || state.tab === 'knee') ? '' : 'none';
     document.body.setAttribute('data-tab', state.tab);
   }
-  var TAB_ORDER = ['training', 'pain', 'knee', 'progress', 'stretch'];
+  var TAB_ORDER = ['home', 'plan', 'lib', 'over', 'knee', 'stretch', 'pain', 'progress'];
+  var MAIN = ['home', 'plan', 'lib', 'over'];
+  var NAVOF = { home: 'home', plan: 'plan', lib: 'lib', knee: 'lib', stretch: 'lib', over: 'over', pain: 'over', progress: 'over' };
+  var BACK = { knee: ['Reha', function () { state.lcat = 'reha'; state.lsub = 'knie'; goTab('lib'); }], stretch: ['Dehnen', function () { state.lcat = 'stretch'; state.lsub = null; goTab('lib'); }], pain: ['Overview', function () { goTab('over'); }], progress: ['Overview', function () { goTab('over'); }] };
   var reduceMotion = false;
   try { reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { /* ignorieren */ }
 
   function render(dir) {
     setWeekLabel();
     var app = document.getElementById('app');
-    var v = state.tab === 'training' ? viewTraining() : (state.tab === 'progress' ? viewProgress() : (state.tab === 'pain' ? viewPain() : (state.tab === 'knee' ? viewKnee() : viewStretch())));
+    var vf = { home: viewHome, plan: viewPlan, lib: viewLib, over: viewOver, progress: viewProgress, pain: viewPain, knee: viewKnee, stretch: viewStretch }[state.tab] || viewHome;
+    var v = vf();
+    if (BACK[state.tab]) v.prepend(backBar(BACK[state.tab][0], BACK[state.tab][1]));
     var old = app.querySelector('.view:not(.leave)');
     app.querySelectorAll('.view.leave').forEach(function (n) { n.remove(); });
     if (dir && old && !reduceMotion) {
@@ -1818,9 +2234,11 @@ function figure(h, s) {
     updateNav();
   }
   function goTab(name) {
-    if (name === state.tab || TAB_ORDER.indexOf(name) < 0) return;
+    if (TAB_ORDER.indexOf(name) < 0) return;
+    if (state.add) { state.add = null; renderSheet(); }
+    if (name === state.tab) { if (name === 'lib') { state.lcat = null; state.lsub = null; window.scrollTo(0, 0); render(); } return; }
     var dir = TAB_ORDER.indexOf(name) > TAB_ORDER.indexOf(state.tab) ? 'fwd' : 'back';
-    state.tab = name; editKey = null;
+    state.tab = name; editKey = null; editing = false;
     window.scrollTo(0, 0);
     render(dir);
   }
@@ -1845,8 +2263,10 @@ function figure(h, s) {
     var t = e.changedTouches[0], dx = t.clientX - s.x, dy = t.clientY - s.y;
     if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2 || Date.now() - s.t > 700) return;
     if (s.el && s.el.closest && s.el.closest('input, textarea, select, .scale, .days, svg.chart')) return;
-    var i = TAB_ORDER.indexOf(state.tab) + (dx < 0 ? 1 : -1);
-    if (i >= 0 && i < TAB_ORDER.length) goTab(TAB_ORDER[i]);
+    var i = MAIN.indexOf(NAVOF[state.tab]);
+    if (i < 0 || NAVOF[state.tab] !== state.tab) return;
+    i += dx < 0 ? 1 : -1;
+    if (i >= 0 && i < MAIN.length) goTab(MAIN[i]);
   }, { passive: true });
 
   /* Home-Bildschirm-Symbol: wird nur genutzt, wenn der Browser es aus dieser Seite liest */
@@ -1859,6 +2279,7 @@ function figure(h, s) {
 
   resetForm();
   load();
+  ensurePlan();
   if (autoWeek()) saveAuto();
   render();
 
@@ -1895,6 +2316,7 @@ function figure(h, s) {
       if (remote && typeof remote.ts === 'number' && remote.ts > state.ts) {
         var typing = document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
         if (applyData(remote)) {
+          ensurePlan();
           if (autoWeek()) saveAuto();
           try { localStorage.setItem(KEY, JSON.stringify(snapshot())); } catch (e) { /* ignorieren */ }
           if (!typing) render();
