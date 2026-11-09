@@ -466,10 +466,257 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
     { name: 'Sprung', weeks: 'Ab Woche 9', text: 'Nur wenn das Knie ruhig ist: leichte Sprungübungen wie Pogo-Hops oder Box Jumps mit weicher Landung, 2 × 5–8 an Do oder Sa.' }
   ];
 
+  /* ---------- Übungsbibliothek (neue Struktur) ----------
+     Zeile: id|Name|Sätze × Wdh.|Gewicht(1/0)|Hinweis|Hauptmuskeln;Unterstützend */
+  var LIB_RAW = {
+    kraft: [
+      'sq|Kniebeuge (Langhantel oder Goblet)|4 × 6–8|1|Kontrolliert, Tiefe nach Kniegefühl.|quad,gluteus;adduktor,ischio,ruecken,bauch',
+      'lunge|Ausfallschritte rückwärts|3 × 8 je Bein|1|Der Schritt nach hinten schont das Knie.|quad,gluteus;adduktor,ischio,gluteMed',
+      'stepup|Step-ups auf die Bank|3 × 8 je Bein|1|Hoher Tritt, aufrechter Oberkörper.|quad,gluteus;ischio,gluteMed,wade',
+      'dl|Kreuzheben (Trap-Bar oder Langhantel)|4 × 5|1|Rücken neutral, Stange nah am Körper.|gluteus,ischio,ruecken;quad,trapez,unterarm',
+      'ohp|Schulterdrücken stehend|4 × 6|1|Rumpf angespannt, kein Hohlkreuz.|schulter,trizeps;trapez,serratus,bauch',
+      'pu|Liegestütze|3 × 10–15||Körper bleibt eine gerade Linie.|brust,schulter,trizeps;serratus,bauch',
+      'row1|Einarmiges Kurzhantelrudern|3 × 10 je Seite|1|Schulter nach hinten unten ziehen.|lat,rhomboid;bizeps,trapez,unterarm',
+      'latp|Latzug|3 × 10|1|Zur oberen Brust ziehen, nicht schwingen.|lat;bizeps,rhomboid,trapez',
+      'dip|Dips oder Bankdrücken eng|3 × 8|1|Schultern tief und stabil halten.|trizeps,brust;schulter',
+      'hipth|Hip Thrust|4 × 8|1|Oben das Gesäß fest anspannen.|gluteus;ischio,quad,adduktor,ruecken',
+      'sldl|Einbeiniges Rumänisches Kreuzheben|3 × 8 je Bein|1|Hüfte nach hinten schieben, Rücken gerade.|ischio,gluteus;ruecken,gluteMed,bauch',
+      'cop|Copenhagen Plank|3 × 20 Sek. je Seite||Innenseite des Oberschenkels und Rumpf.|adduktor,schraeg;gluteMed,bauch',
+      'farm|Farmer’s Walk|3 × 30 m|1|Hoch und stabil gehen.|unterarm,trapez;bauch,schraeg,gluteMed'
+    ],
+    sprung: [
+      'cmj|Counter-Movement-Jump (Standsprung)|4 × 5||Weich landen, zwischen den Sprüngen Pause.|quad,gluteus,wade;ischio,sprung,bauch',
+      'boxj|Box Jumps (mittlere Box)|4 × 4||Weich landen, absteigen statt abspringen.|quad,gluteus,wade;ischio,sprung',
+      'depth|Drop Jump (Niedersprung mit Absprung)|3 × 5||Nur mit ruhigem Knie. Kurzer Bodenkontakt.|quad,gluteus,wade;sprung,ischio',
+      'broad|Weitsprung aus dem Stand|4 × 4||Mit Schwung der Arme, stabil landen.|gluteus,ischio,quad;wade,bauch',
+      'pogo|Pogo-Hops|3 × 10||Kurze Bodenkontakte, Knie fast gestreckt.|wade,sprung;quad',
+      'tuck|Tuck Jumps|3 × 6||Knie zur Brust, weich landen.|quad,huefte,wade;bauch,gluteus',
+      'sljump|Einbeinsprung vorwärts|3 × 4 je Bein||Landung ruhig einfrieren.|quad,gluteus,wade;gluteMed,sprung',
+      'appr|Angriffsanlauf mit Sprung (ohne Ball)|4 × 5||Drei Schritte, Arme schwingen mit.|quad,gluteus,wade;ischio,schulter,bauch',
+      'jsq|Sprung-Kniebeuge mit leichter Last|4 × 5|1|Explosiv hoch, kontrolliert runter.|quad,gluteus;wade,ischio'
+    ],
+    schlag: [
+      'mbs|Medizinball-Schlagwurf über Kopf|4 × 6|1|Explosiv aus Hüfte und Rumpf.|lat,bauch,schulter;brust,trizeps,serratus,gluteus',
+      'mbc|Medizinball Brustpass an die Wand|3 × 8|1|Schnell abdrücken.|brust,trizeps;schulter,serratus',
+      'cabs|Hoher Kabelzug einarmig (Schlagsimulation)|4 × 6 je Seite|1|Wie beim Angriffsschlag nach vorn unten ziehen.|lat,bauch,schulter;trizeps,serratus,schraeg',
+      'er90|Außenrotation 90/90 mit Band|3 × 12 je Seite||Ellbogen auf Schulterhöhe, leicht.|rotator;schulter,rhomboid',
+      'yt|Y-T-W-Heben am Boden|3 × 8 je Haltung||Schulterblätter aktiv, ohne Gewicht oder sehr leicht.|trapez,rhomboid,rotator;schulter',
+      'pullo|Pullover mit Kurzhantel|3 × 10|1|Rumpf gespannt, Arme gestreckt.|lat,serratus;brust,trizeps,bauch',
+      'sera|Serratus-Wall-Slides|3 × 10||Unterarme an der Wand, Schulterblätter nach vorn schieben.|serratus;schulter,trapez',
+      'tpp|Landmine Press einarmig|3 × 8 je Seite|1|Schulterblatt führt die Bewegung.|schulter,serratus,brust;trizeps,bauch',
+      'cuban|Cuban Rotation mit Kurzhantel|3 × 8|1|Leicht, kontrolliert.|rotator,schulter;trapez,rhomboid'
+    ],
+    rumpf: [
+      'plank|Plank|3 × 30–45 Sek.||Körper bleibt in einer Linie.|bauch,schraeg;schulter,serratus,gluteus',
+      'sp|Seitstütz mit Beinheben|3 × 10 je Seite||Becken oben halten.|schraeg,gluteMed;schulter,bauch',
+      'bird|Bird Dog|3 × 10 je Seite||Langsam, Becken ruhig.|ruecken,gluteus;bauch,schulter',
+      'hollow|Hollow Hold|3 × 20 Sek.||Unterer Rücken bleibt am Boden.|bauch;huefte,schraeg',
+      'wood|Kabel-Woodchopper|3 × 10 je Seite|1|Rotation aus Hüfte und Rumpf.|schraeg,bauch;schulter,gluteus,quad',
+      'rt|Russian Twist mit Medizinball|3 × 12|1|Brustkorb offen, Füße am Boden oder leicht oben.|schraeg,bauch;huefte',
+      'ab|Ab-Wheel oder Rollout|3 × 8||Rücken gerade, nur so weit wie kontrolliert.|bauch;schulter,lat,schraeg',
+      'dead|Dead Bug mit Band|3 × 10 je Seite||Rücken bleibt flach.|bauch,huefte;schraeg'
+    ],
+    speed: [
+      'sprint|Kurzsprints 10 m|6 × 10 m||Volle Pause dazwischen, aufrecht beschleunigen.|quad,gluteus,ischio;wade,huefte',
+      'shuffle|Seitliche Shuffle-Schritte|4 × 10 Sek.||Tief bleiben, Füße nicht kreuzen.|gluteMed,quad,adduktor;wade,gluteus',
+      'ladder|Koordinationsleiter|4 × 1 Durchgang||Schnelle, leise Kontakte.|wade,sprung;quad,huefte',
+      'react|Reaktionsstart auf Signal|6 × 5 m||Partner gibt das Signal, direkt explosiv los.|quad,gluteus,wade;ischio',
+      'dive|Hechtrolle oder Abrollen üben|3 × 5||Auf weicher Unterlage, Schulter abrollen.|schulter,lat;bauch,ruecken'
+    ],
+    land: [
+      'land2|Landetraining beidbeinig|3 × 6||Aus kleiner Höhe, Knie über Zehen, leise landen.|quad,gluteus,wade;sprung,ischio',
+      'land1|Einbeinige Landung einfrieren|3 × 5 je Bein||2 Sekunden halten, Knie bleibt stabil.|gluteMed,quad,gluteus;sprung,wade',
+      'bal|Einbeinstand auf instabiler Fläche|3 × 30 Sek. je Bein||Knie weich, Blick nach vorn.|gluteMed,sprung,wade;quad,bauch',
+      'ham|Nordic Hamstring (Beinbeuger)|3 × 5||Langsam nach vorn fallen lassen.|ischio;wade,gluteus,bauch'
+    ]
+  };
+  var LIB_CATS = [
+    { id: 'kraft', t: 'Kraft', d: 'Grundübungen für Beine, Rücken, Brust und Schulter.' },
+    { id: 'sprung', t: 'Sprungkraft', d: 'Sprünge für höheren Absprung und mehr Reichhöhe.' },
+    { id: 'schlag', t: 'Schlagarm und Schulter', d: 'Schlagkraft und Schulterstabilität für Angreifer.' },
+    { id: 'rumpf', t: 'Rumpf und Rotation', d: 'Kraftübertragung von Hüfte in den Schlagarm.' },
+    { id: 'speed', t: 'Schnelligkeit und Agilität', d: 'Antritte, Seitwärtsbewegung, Reaktion.' },
+    { id: 'land', t: 'Landung und Stabilität', d: 'Kniestabilität und sichere Landungen.' }
+  ];
+  /* Trainingsprogramme: fertige Übungspakete aus der Bibliothek */
+  var PROGRAMS = [
+    { id: 'p-sprung', t: 'Sprungkraft-Training', d: 'Mehr Absprunghöhe: Kraft plus Sprünge.', ids: ['sq', 'jsq', 'cmj', 'boxj', 'broad', 'appr', 'hipth', 'land2'] },
+    { id: 'p-schlag', t: 'Schlag-Aufbau-Training', d: 'Schlagkraft aufbauen und die Schulter schützen.', ids: ['mbs', 'cabs', 'pullo', 'tpp', 'er90', 'yt', 'sera', 'wood'] },
+    { id: 'p-rumpf', t: 'Rumpf- und Rotationstraining', d: 'Stabiler Rumpf, kräftige Rotation.', ids: ['plank', 'sp', 'dead', 'wood', 'rt', 'hollow', 'bird', 'cop'] },
+    { id: 'p-bein', t: 'Beinkraft-Training', d: 'Kraft für Absprung und Landung.', ids: ['sq', 'lunge', 'stepup', 'sldl', 'hipth', 'ham', 'cop'] },
+    { id: 'p-ober', t: 'Oberkörper-Kraft', d: 'Druck, Zug, Schulter.', ids: ['pu', 'latp', 'ohp', 'row1', 'dip', 'farm'] },
+    { id: 'p-speed', t: 'Schnelligkeit und Agilität', d: 'Antritt, Seitwärtsschritte, Reaktion.', ids: ['sprint', 'shuffle', 'ladder', 'react', 'dive'] },
+    { id: 'p-land', t: 'Landung und Kniestabilität', d: 'Verletzungsvorbeugung für Knie und Sprunggelenk.', ids: ['land2', 'land1', 'bal', 'ham', 'sljump', 'cop'] },
+    { id: 'p-ganz', t: 'Ganzkörper-Basis', d: 'Ein kompletter Einstieg für wenig Trainingstage.', ids: ['sq', 'pu', 'row1', 'sldl', 'plank', 'cmj'] }
+  ];
+  /* Reha: je Körperregion ein Paket. Das Knie kommt aus den Jumper’s-Knee-Phasen (KPH). */
+  var REHA_RAW = {
+    schulter: [
+      'r-sh1|Pendelübung der Schulter|2 × 20 Sek.||Arm locker hängen lassen, kleine Kreise.|schulter;rotator',
+      'r-sh2|Außenrotation mit Band am Körper|3 × 15 je Seite||Ellbogen am Körper, langsam.|rotator;schulter',
+      'r-sh3|Schulterblatt-Rückzug (Scapula Retraction)|3 × 12||Schulterblätter zusammen und nach unten.|rhomboid,trapez;rotator',
+      'r-sh4|Band Pull-Aparts|3 × 15||Arme gestreckt, leicht.|rhomboid,rotator,trapez;schulter',
+      'r-sh5|Liegende Außenrotation mit Kurzhantel|3 × 12 je Seite|1|Sehr leichtes Gewicht.|rotator;schulter'
+    ],
+    sprung: [
+      'r-an1|Sprunggelenk-Kreisen|2 × 10 je Richtung||Langsam und groß, ohne Last.|sprung;wade',
+      'r-an2|Wadenheben beidbeinig|3 × 15||Langsam hoch und runter.|wade;sprung',
+      'r-an3|Einbeinstand mit Augen offen|3 × 30 Sek. je Bein||Standbein leicht gebeugt.|sprung,gluteMed;wade',
+      'r-an4|Band-Eversion und -Inversion|3 × 12 je Seite||Fuß gegen das Band drehen.|schien,sprung;wade',
+      'r-an5|Alphabet mit dem Fuß schreiben|1 × je Seite||Im Sitzen, Bein ausgestreckt.|sprung;schien'
+    ],
+    ruecken: [
+      'r-ru1|Katze und Kuh|2 × 10||Im Atemrhythmus.|ruecken,bws;bauch',
+      'r-ru2|Bird Dog|3 × 8 je Seite||Becken ruhig.|ruecken,gluteus;bauch,schulter',
+      'r-ru3|Seitstütz|3 × 20 Sek. je Seite||Gerade Linie.|schraeg,gluteMed;ruecken',
+      'r-ru4|Glute Bridge|3 × 12||Oben 2 Sek. halten.|gluteus,ischio;ruecken,bauch',
+      'r-ru5|Beckenkippen im Liegen|2 × 10||Unteren Rücken sanft an den Boden drücken.|bauch;ruecken'
+    ],
+    huefte: [
+      'r-hu1|Muschel (Clamshell) mit Band|3 × 15 je Seite||Becken bleibt stabil.|gluteMed;gluteus',
+      'r-hu2|Seitliches Beinheben|3 × 12 je Seite||Langsam, Fuß leicht nach unten gedreht.|gluteMed;gluteus',
+      'r-hu3|Adduktoren-Squeeze mit Ball|3 × 10 × 5 Sek.||Ball zwischen den Knien drücken.|adduktor;bauch',
+      'r-hu4|Hüftbeuger-Dehnung im Halbkniestand|2 × 30 Sek. je Seite||Gesäß anspannen.|huefte,quad;bauch',
+      'r-hu5|Monster Walk mit Band|3 × 10 Schritte||Seitlich gehen, Knie nach außen.|gluteMed,gluteus;quad'
+    ],
+    finger: [
+      'r-fi1|Handgelenk-Beugen und -Strecken|3 × 15|1|Mit sehr leichtem Gewicht.|unterarm;schulter',
+      'r-fi2|Fingerspreizen mit Gummiband|3 × 15||Finger gegen das Band öffnen.|unterarm',
+      'r-fi3|Knetball drücken|3 × 15||Langsam und fest.|unterarm',
+      'r-fi4|Unterarm-Dehnung|2 × 20 Sek.||Handfläche vor, dann nach unten.|unterarm'
+    ],
+    ellbogen: [
+      'r-el1|Exzentrische Handgelenkstreckung|3 × 12|1|Langsam absenken.|unterarm',
+      'r-el2|Trizeps-Pushdown mit Band|3 × 12||Ellbogen am Körper.|trizeps;unterarm',
+      'r-el3|Hammer Curl leicht|3 × 12|1|Kontrolliert.|bizeps,unterarm',
+      'r-el4|Schulterblattstabilität: Wall Slides|3 × 10||Unterarme an der Wand.|serratus;schulter,trapez'
+    ]
+  };
+  var REHA_REGIONS = [
+    { id: 'knie', t: 'Knie (Jumper’s Knee)', d: 'Der Phasenplan für die Patellasehne. Wähle eine Phase.' },
+    { id: 'schulter', t: 'Schulter', d: 'Schlagarm entlasten und stabilisieren.' },
+    { id: 'sprung', t: 'Sprunggelenk', d: 'Nach Umknicken oder zur Vorbeugung.' },
+    { id: 'ruecken', t: 'Rücken', d: 'Stabilität für den unteren Rücken.' },
+    { id: 'huefte', t: 'Hüfte und Leiste', d: 'Gesäß, Adduktoren, Hüftbeuger.' },
+    { id: 'finger', t: 'Finger und Handgelenk', d: 'Block- und Abwehr-Belastung abfangen.' },
+    { id: 'ellbogen', t: 'Ellbogen', d: 'Schlagarm-Ellbogen entlasten.' }
+  ];
+
+  /* ---------- Bibliothek aufbauen (lazy, weil KPH weiter unten definiert ist) ---------- */
+  var LIBX = null;
+  function parseLine(line, cat) {
+    var p = line.split('|'), m = (p[5] || '').split(';');
+    return { id: p[0], name: p[1], sets: p[2], load: p[3] === '1', hint: p[4] || '', cat: cat,
+      mus: [m[0] ? m[0].split(',') : [], m[1] ? m[1].split(',') : []] };
+  }
+  function libReg() {
+    if (LIBX) return LIBX;
+    LIBX = {};
+    Object.keys(LIB_RAW).forEach(function (c) { LIB_RAW[c].forEach(function (l) { var e = parseLine(l, c); LIBX[e.id] = e; }); });
+    Object.keys(REHA_RAW).forEach(function (c) { REHA_RAW[c].forEach(function (l) { var e = parseLine(l, 'reha-' + c); LIBX[e.id] = e; }); });
+    Object.keys(SX).forEach(function (id) {
+      var x = SX[id], d = SD[id];
+      LIBX['s-' + id] = { id: 's-' + id, name: x.name, sets: x.sets, load: false, hint: x.hint || '', cat: 'stretch', chips: x.chips || [], sd: id };
+    });
+    KPH.forEach(function (ph, pi) {
+      ph.items.forEach(function (it) {
+        var id = 'kp' + (pi + 1) + '-' + it.id;
+        LIBX[id] = { id: id, name: it.name, sets: it.sets, load: false, hint: it.hint || '', cat: 'reha-knie', chips: it.chips || [], td: it.mus || null, phase: pi };
+      });
+    });
+    /* Standard-Übungen aus dem alten Plan, damit sie auch in der Suche auftauchen */
+    DAYS.forEach(function (d) {
+      d.ex.forEach(function (b) {
+        var id = 'o-' + b.id;
+        if (!LIBX[id]) LIBX[id] = { id: id, name: b.name, sets: b.sets, load: !!b.load, hint: b.hint || '', cat: 'std', chips: b.chips || [], td: b.id };
+      });
+    });
+    return LIBX;
+  }
+  function musOf(item) {
+    var L = item.lib ? libReg()[item.lib] : null;
+    if (item.td && TD[item.td]) return { mode: 't', id: item.td };
+    if (L && L.td && TD[L.td]) return { mode: 't', id: L.td };
+    if (L && L.sd && SD[L.sd]) return { mode: 's', id: L.sd };
+    if (L && L.mus && L.mus[0].length) return { mode: 't', data: L.mus };
+    return null;
+  }
+
+  /* ---------- Plan-Modell ---------- */
+  var ARCH = {
+    ganz: { t: 'Ganzkörper', ids: ['sq', 'pu', 'row1', 'sldl', 'plank', 'cmj'] },
+    ober: { t: 'Oberkörper', ids: ['pu', 'latp', 'ohp', 'row1', 'mbs', 'er90', 'plank'] },
+    bein: { t: 'Beine und Hüfte', ids: ['sq', 'lunge', 'hipth', 'ham', 'cop', 'land2'] },
+    sprung: { t: 'Sprung und Power', ids: ['jsq', 'cmj', 'boxj', 'appr', 'broad', 'land1'] },
+    schlag: { t: 'Schlagarm und Schulter', ids: ['mbs', 'cabs', 'pullo', 'er90', 'yt', 'wood'] },
+    rumpf: { t: 'Rumpf und Rotation', ids: ['plank', 'sp', 'dead', 'rt', 'bird', 'cop'] },
+    speed: { t: 'Schnelligkeit', ids: ['sprint', 'shuffle', 'ladder', 'react', 'dive', 'cop'] }
+  };
+  var ARCH_BY_N = { 1: ['ganz'], 2: ['ganz', 'sprung'], 3: ['ober', 'bein', 'sprung'], 4: ['ober', 'bein', 'schlag', 'sprung'], 5: ['ober', 'bein', 'schlag', 'sprung', 'rumpf'], 6: ['ober', 'bein', 'schlag', 'sprung', 'rumpf', 'speed'] };
+  var DAYS_BY_N = { 1: [3], 2: [1, 4], 3: [1, 3, 5], 4: [0, 1, 3, 5], 5: [0, 1, 3, 4, 5], 6: [0, 1, 2, 3, 4, 5] };
+  function emptyPlan() {
+    var p = { n: 0, vb: [0, 2], days: {} };
+    DAYS.forEach(function (d) { p.days[d.id] = { t: '', items: [] }; });
+    return p;
+  }
+  function pickDays(n, vb) {
+    var base = DAYS_BY_N[n] || DAYS_BY_N[3], out = [];
+    base.forEach(function (i) {
+      if (vb.indexOf(i) < 0) { out.push(i); return; }
+      /* auf einen freien Tag ohne Volleyball ausweichen */
+      for (var k = 1; k < 7; k++) {
+        var c = [(i + k) % 7, (i - k + 7) % 7];
+        for (var j = 0; j < 2; j++) if (vb.indexOf(c[j]) < 0 && base.indexOf(c[j]) < 0 && out.indexOf(c[j]) < 0) { out.push(c[j]); return; }
+      }
+      out.push(i);
+    });
+    out.sort(function (a, b) { return a - b; });
+    return out;
+  }
+  function itemFromLib(libId, dayItems) {
+    var L = libReg()[libId]; if (!L) return null;
+    var id = 'x' + libId, n = 1;
+    while ((dayItems || []).some(function (x) { return x.id === id; })) { n++; id = 'x' + libId + '_' + n; }
+    return { id: id, lib: libId, name: L.name, sets: L.sets, hint: L.hint, load: !!L.load, chips: L.chips || [] };
+  }
+  function generatePlan(n, vb) {
+    var p = emptyPlan(); p.n = n; p.vb = vb.slice();
+    var days = pickDays(n, vb), arch = ARCH_BY_N[n];
+    days.forEach(function (di, k) {
+      var a = ARCH[arch[k]], d = p.days[DAYS[di].id];
+      d.t = a.t;
+      a.ids.forEach(function (lid) { var it = itemFromLib(lid, d.items); if (it) d.items.push(it); });
+    });
+    return p;
+  }
+  function trainingDays() {
+    var out = [];
+    DAYS.forEach(function (d, i) { if (state.plan.days[d.id].items.length) out.push(i); });
+    return out;
+  }
+  function recommendedPerSession() { var n = state.plan.n || trainingDays().length || 3; return n <= 2 ? 8 : (n <= 4 ? 7 : 6); }
+  /* Alter Plan (DAYS + Änderungen) wird in den neuen Plan übernommen. Die IDs bleiben gleich, damit die Gewichtshistorie weiter passt. */
+  function migratePlan() {
+    var p = emptyPlan(), cnt = 0;
+    DAYS.forEach(function (day) {
+      var d = p.days[day.id];
+      d.t = day.title;
+      resolved(day, false).forEach(function (e) {
+        d.items.push({ id: e.id, name: e.name, sets: e.sets, hint: e.hint || '', load: !!e.load, chips: e.chips || [], td: e.custom ? null : e.baseId });
+      });
+      if (d.items.length) cnt++;
+    });
+    p.n = cnt; p.vb = DAYS.map(function (d, i) { return d.vb ? i : -1; }).filter(function (i) { return i >= 0; });
+    return p;
+  }
+  function hasLegacyData() {
+    return state.ts > 0 || Object.keys(state.weights).length || Object.keys(state.done).length || Object.keys(state.mod).length || Object.keys(state.custom).length;
+  }
+
   var jsd = new Date().getDay();
   var todayIdx = (jsd + 6) % 7;
   var storageOK = true;
-  var state = { week: 1, weights: {}, done: {}, sdone: {}, pain: [], custom: {}, mod: {}, alt: {}, body: [], jump: [], tab: 'training', day: todayIdx, sday: todayIdx, prog: 'kraft', jtype: 'cmj', kex: null, ts: 0, kph: 0, kday: todayIdx, kdone: {}, start: '', lastWk: '' };
+  var state = { week: 1, weights: {}, done: {}, sdone: {}, pain: [], custom: {}, mod: {}, alt: {}, body: [], jump: [], tab: 'training', day: todayIdx, sday: todayIdx, prog: 'kraft', jtype: 'cmj', kex: null, ts: 0, kph: 0, kday: todayIdx, kdone: {}, start: '', lastWk: '', plan: null, pday: todayIdx, view: 'home', lcat: null, lsub: null, add: null, q: '' };
   var form = null;
   var editing = false, editKey = null, uid = 0;
 
@@ -530,6 +777,7 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
         if (Array.isArray(p.custom[d])) state.custom[d] = p.custom[d].filter(function (c) { return c && typeof c.id === 'string' && typeof c.name === 'string'; });
       });
     }
+    state.plan = isObj(p.plan) && isObj(p.plan.days) ? p.plan : null;
     state.mod = isObj(p.mod) ? p.mod : {};
     state.alt = isObj(p.alt) ? p.alt : {};
     state.body = Array.isArray(p.body) ? p.body.filter(function (e) { return e && typeof e.kg === 'number' && typeof e.date === 'string'; }) : [];
@@ -537,7 +785,7 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
     return true;
   }
   function snapshot() {
-    return { v: 3, ts: state.ts, start: state.start, lastWk: state.lastWk, kph: state.kph, kdone: state.kdone, week: state.week, weights: state.weights, done: state.done, sdone: state.sdone, pain: state.pain, custom: state.custom, mod: state.mod, alt: state.alt, body: state.body, jump: state.jump };
+    return { v: 3, ts: state.ts, start: state.start, lastWk: state.lastWk, kph: state.kph, kdone: state.kdone, week: state.week, weights: state.weights, done: state.done, sdone: state.sdone, pain: state.pain, custom: state.custom, mod: state.mod, alt: state.alt, body: state.body, jump: state.jump, plan: state.plan };
   }
   function save() {
     state.ts = Date.now();
@@ -728,8 +976,9 @@ function figure(h, s) {
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
   function tag(k, cls) { return '<span class="mtag"><i class="mdot ' + cls + '"></i>' + esc(M[k].l) + '</span>'; }
   function has(mode, id) { return !!((mode === 's' ? SD : TD)[id]); }
-  function html(mode, id) {
-    var d = (mode === 's' ? SD : TD)[id]; if (!d) return null;
+  function html(mode, id) { return htmlData((mode === 's' ? SD : TD)[id], mode); }
+  function htmlData(d, mode) {
+    if (!d) return null;
     var hl = mode === 's' ? 'Gedehnt' : 'Haupt', sl = mode === 's' ? 'Mitgedehnt' : 'Unterstützend';
     var out = figure(d[0], d[1]);
     out += '<div class="mleg"><span><i class="mdot h"></i>' + hl + '</span>' + (d[1].length ? '<span><i class="mdot s"></i>' + sl + '</span>' : '') + '</div>';
@@ -737,7 +986,7 @@ function figure(h, s) {
     if (d[2]) out += '<p class="mnote">' + esc(d[2]) + '</p>';
     return out;
   }
-  return { html: html, has: has };
+  return { html: html, htmlData: htmlData, has: has };
 })();
 
 
