@@ -323,10 +323,11 @@ body, body * { transition: background-color .45s ease, border-color .45s ease, c
 body[data-tab="lib"] { --bg: var(--s-bg); --surface: var(--s-surface); --surface2: var(--s-surface2); --ink: var(--s-ink); --muted: var(--s-muted); --line: var(--s-line); --accent: var(--s-accent); --accent-ink: var(--s-accent-ink); --accent-soft: var(--s-accent-soft); }
 body[data-tab="over"] { --bg: var(--p-bg); --surface: var(--p-surface); --surface2: var(--p-surface2); --ink: var(--p-ink); --muted: var(--p-muted); --line: var(--p-line); --accent: var(--p-accent); --accent-ink: var(--p-accent-ink); --accent-soft: var(--p-accent-soft); }
 .nav { grid-template-columns: repeat(4, 1fr); }
-.navbtn { font-size: 16px; }
+.navbtn { font-size: 15px; }
 .seg.s6 { grid-template-columns: repeat(6, 1fr); margin-bottom: 12px; }
 .lbl2 { margin: 12px 0 6px; font: 600 13px var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.days.dayschk { position: static; padding-block: 0 12px; }
+.days.dayschk { position: static; padding-block: 0 12px; background: transparent; }
+.dayhead h2 { font-size: 26px; }
 .day-btn.has::before { content: ''; position: absolute; right: 6px; top: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--ok); }
 .addb { grid-row: 1; width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--accent); background: var(--accent-soft); color: var(--accent); font: 700 28px/1 var(--font-display); padding: 0; }
 .ex.lib { grid-template-columns: 44px minmax(0, 1fr); }
@@ -667,7 +668,8 @@ body[data-tab="over"] { --bg: var(--p-bg); --surface: var(--p-surface); --surfac
     DAYS.forEach(function (d) {
       d.ex.forEach(function (b) {
         var id = 'o-' + b.id;
-        if (!LIBX[id]) LIBX[id] = { id: id, name: b.name, sets: b.sets, load: !!b.load, hint: b.hint || '', cat: 'std', chips: b.chips || [], td: b.id };
+        var dup = Object.keys(LIBX).some(function (k) { return LIBX[k].name === b.name; });
+        if (!LIBX[id] && !dup) LIBX[id] = { id: id, name: b.name, sets: b.sets, load: !!b.load, hint: b.hint || '', cat: 'std', chips: b.chips || [], td: b.id };
       });
     });
     return LIBX;
@@ -733,7 +735,7 @@ body[data-tab="over"] { --bg: var(--p-bg); --surface: var(--p-surface); --surfac
     DAYS.forEach(function (d, i) { if (state.plan.days[d.id].items.length) out.push(i); });
     return out;
   }
-  function recommendedPerSession() { var n = state.plan.n || trainingDays().length || 3; return n <= 2 ? 8 : (n <= 4 ? 7 : 6); }
+  function recommendedPerSession() { var n = trainingDays().length || state.plan.n || 3; return n <= 2 ? 8 : (n <= 4 ? 7 : 6); }
   /* Alter Plan (DAYS + Änderungen) wird in den neuen Plan übernommen. Die IDs bleiben gleich, damit die Gewichtshistorie weiter passt. */
   function migratePlan() {
     var p = emptyPlan(), cnt = 0;
@@ -1025,9 +1027,10 @@ function figure(h, s) {
     if (d[2]) out += '<p class="mnote">' + esc(d[2]) + '</p>';
     return out;
   }
-  return { html: html, htmlData: htmlData, has: has };
+  return { html: html, htmlData: htmlData, has: has, TD: TD, SD: SD };
 })();
 
+  var TD = MUS.TD, SD = MUS.SD;
 
   function addMus(card, main, mode, id) {
     if (!MUS.has(mode, id)) return;
@@ -1897,7 +1900,8 @@ function figure(h, s) {
   function genBox() {
     var p = ensurePlan();
     var box = h('details', { class: 'card fold' }, h('summary', null, 'Wochenplan einstellen'));
-    if (!p.n || !trainingDays().length) box.setAttribute('open', '');
+    if (state.genOpen || !trainingDays().length) box.setAttribute('open', '');
+    box.addEventListener('toggle', function () { state.genOpen = box.open; });
     var body = h('div', { class: 'foldbody' });
     body.append(h('p', { class: 'small' }, 'Wie viele Tage pro Woche willst oder kannst du trainieren? Die App stellt daraus einen passenden Plan zusammen. Danach kannst du jede Übung ändern, verschieben oder aus der Bibliothek ergänzen.'));
     var gn = state.genN || p.n || 3;
@@ -1915,7 +1919,7 @@ function figure(h, s) {
     var has = trainingDays().length > 0;
     var go = h('button', { type: 'button', class: 'btn', onclick: function () {
       var np = generatePlan(gn, p.vb);
-      state.plan = np; state.genN = null; var first = trainingDays()[0]; state.pday = first == null ? state.pday : first;
+      state.plan = np; state.genN = null; state.genOpen = false; var first = trainingDays()[0]; state.pday = first == null ? state.pday : first;
       save(); render();
     } }, 'Plan für ' + gn + (gn === 1 ? ' Tag' : ' Tage') + ' erstellen');
     body.append(go);
@@ -2246,7 +2250,7 @@ function figure(h, s) {
   document.getElementById('wkMinus').addEventListener('click', function () { if (state.week > 1) { state.week--; save(); render(); } });
   document.getElementById('wkPlus').addEventListener('click', function () { if (state.week < MAXWEEK) { state.week++; save(); render(); } });
   document.querySelectorAll('.navbtn').forEach(function (b) {
-    b.addEventListener('click', function () { goTab(b.dataset.tab); });
+    b.addEventListener('click', function () { if (b.dataset.tab === 'lib' && state.tab !== 'lib') { state.lcat = null; state.lsub = null; } goTab(b.dataset.tab); });
   });
 
   /* Wischen mit dem Finger wechselt zum Nachbar-Tab */

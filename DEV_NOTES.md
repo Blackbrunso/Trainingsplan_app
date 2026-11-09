@@ -5,4 +5,4 @@ Schritte (jeweils eigener Commit):
 2. [x] Plan-Modell + Migration + Generator (Code da, Views fehlen)
 3. [x] Views eingebaut (Home, Plan, Bibliothek, Sheet, Overview)
 4. [x] Navigation + CSS eingebaut
-5. [ ] Test (jsdom/playwright), Fehler beheben, Merge nach main, Nutzer informieren
+5. [x] Getestet (playwright). Offen: Merge nach main (git checkout main && git merge redesign && git push)
